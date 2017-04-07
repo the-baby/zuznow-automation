@@ -6,29 +6,42 @@ var driver = new webdriver.Builder()
     .forBrowser('chrome')
     .build();
 	
-	function waitFor(sec) { 
+function waitFor(sec) { 
 	var ready = false;
+	console.log("waiting %s seconds", sec)
 	setTimeout( _ => ready = true, sec * 1000 )
 	return driver.wait(_ => ready)
 }
+
+function inputById(id, text) {
+	console.log("writing text to field by id: ", id, text);
+	return driver.findElement(By.id(id)).sendKeys(text)
+}
+
+function clickById(id) {
+	console.log("clicking element by id: " , id);
+	return driver.findElement(By.id(id)).click()
+}
+
 //create account link should open create account form
 driver
 .get('https://dashboard-beta.zuznow.com/new')
 .then( _ => waitFor(3) )
-.then( _ => driver.findElement(By.id('btn-register')).click() )
+.then( _ => clickById('btn-register') )
 .then( _ => waitFor(3) )
 
 
 //error messages of create account form
 driver
-.then( _ => driver.findElement(By.id('edit-mail')).sendKeys('Name@LastName') )
-.then( _ => driver.findElement(By.id('edit-field-first-name-und-0-value')).sendKeys('Name') )
-.then( _ => driver.findElement(By.id('edit-field-last-name-und-0-value')).sendKeys('LastName') )
-.then(_ => driver.findElement(By.id('edit-submit')).click() )
-.then(_ => driver.findElement(By.name('op')) )
-.then(_ => driver.findElement(By.className('form-text required error')) )
+.then( _ => inputById('edit-mail','Name@LastName') )
+.then( _ => inputById('edit-field-first-name-und-0-value','Name') )
+.then( _ => inputById('edit-field-last-name-und-0-value','LastName') )
+.then( _ => clickById('edit-submit') )
+.then( _ => driver.findElement(By.name('op')) )
+.then( _ => driver.findElement(By.className('form-text required error')) )
 .then( _ => waitFor(2) )
 
+return
 
 //multiple errors of create account form
 driver
