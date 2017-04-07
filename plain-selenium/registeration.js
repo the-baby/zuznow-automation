@@ -23,6 +23,26 @@ function clickById(id) {
 	return driver.findElement(By.id(id)).click()
 }
 
+function inputByClassName(className, text) {
+	console.log("writing text to field by class: ", className, text);
+	return driver.findElement(By.className(className)).sendKeys(text)
+}
+
+function clickByClassName(className) {
+	console.log("clicking element by class: " , className);
+	return driver.findElement(By.className(className)).click()
+}
+
+function inputByName(name, text) {
+	console.log("writing text to field by name: ", name, text);
+	return driver.findElement(By.name(name)).sendKeys(text)
+}
+
+function clickByName(name) {
+	console.log("clicking element by name: " , name);
+	return driver.findElement(By.name(name)).click()
+}
+
 //create account link should open create account form
 driver
 .get('https://dashboard-beta.zuznow.com/new')
@@ -41,13 +61,12 @@ driver
 .then( _ => driver.findElement(By.className('form-text required error')) )
 .then( _ => waitFor(2) )
 
-return
 
 //multiple errors of create account form
 driver
 .get('https://dashboard-beta.zuznow.com/user/register')
 .then( _ => waitFor(3) )
-.then( _ => driver.findElement(By.id('edit-submit')).click() )
+.then( _ => clickById('edit-submit'))
 .then(_ => driver.findElement(By.className('messages error'))) 
 .then(_ => driver.findElement(By.className(' form-text required error')) )
 .then(_ => driver.findElement(By.className(' text-full form-text required error')) )
@@ -78,9 +97,10 @@ driver
 driver
 .get('https://www.mailinator.com')
 .then( _ => waitFor(3) )
-.then( _ => driver.findElement(By.className('btn btn-dark')).sendKeys('registration-test') )
-.then( _ => driver.findElement(By.className('btn btn-dark')).click() )	
+.then( _ => inputByClassName('btn btn-dark','registration-test') )
+.then( _ => clickByClassName('btn btn-dark') )	
 .then( _ => waitFor(2) )
+	
 	
 driver	
 .get('https://dashboard-beta.zuznow.com/user/register')
