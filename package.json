@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/the-baby/zuznow-automation/issues"
   },
-  "homepage": "https://github.com/the-baby/zuznow-automation#readme"
+  "homepage": "https://github.com/the-baby/zuznow-automation#readme",
+  "dependencies": {
+    "chromedriver": "^2.29.0",
+    "selenium-webdriver": "^3.3.0"
+  }
 }
