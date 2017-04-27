@@ -39,7 +39,7 @@ function getDriver() {
 }
 
 function title(text) {
-	console.log("\n\n Scenario:\n  %s".bold, text)
+	console.log("\n" + "\n Scenario:\n  %s".bold.yellowBG, text)
 }
 
 function logStep() {
@@ -76,7 +76,7 @@ function inputByClassName(className, text) {
 }
 
 function input(locator, locatorDescr, text) {
-	logStep("writing text to field   %s, text: ", locatorDescr, text);
+	logStep("writing text to field   " + locatorDescr.magenta + ", text: ", text.magenta);
 	return locate(locator)
 		.then( e =>  substep("sending input") || e.sendKeys(text) )	
 }
@@ -104,7 +104,7 @@ function clickByXPath(xpath) {
 }
 
 function click(locator, locatorDescr) {
-	logStep("clicking element   ", locatorDescr);
+	logStep("clicking element   ", locatorDescr.magenta);
 	return locate(locator)
 		.then( e => substep("clicking") || e.click() )
 }

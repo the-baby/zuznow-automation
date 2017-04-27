@@ -23,7 +23,7 @@ const {
 } = require('./common');	
 
 const driver = getDriver();
-/*
+
 
 //create account link should open create account form
 driver
@@ -71,7 +71,7 @@ driver
 .then( _ => clickById('edit-submit') )
 .then( _ => clickByLinkText('Have you forgotten your password?') )
 
-         */
+         
 
 //I should write what is written in the error message
 //And about the red frame
@@ -80,18 +80,23 @@ driver
 var mailUser = "reg-tst-" + Math.random().toString().replace("0.","").substr(0,25)
 driver	
 .then( _ => title('submission of valid form details should succeed') )
-.then( _ => logStep('opening zuznow registration') )
-.then( _ => driver.get('https://dashboard-beta.zuznow.com/user/register') )
+.then( _ => 
+    logStep('opening zuznow registration') 
+ || driver.get('https://dashboard-beta.zuznow.com/user/register') 
+ )
 .then( _ => inputById('edit-mail', mailUser + '@mailinator.com' ) )
 .then( _ => inputById('edit-field-first-name-und-0-value','registration') )
 .then( _ => inputById('edit-field-last-name-und-0-value','test') )
 .then( _ => clickById('edit-submit') )
-.then( _ => logStep('opening inbox of: ' + mailUser ) )
-.then( _ => driver.get('https://www.mailinator.com/inbox2.jsp?public_to=' + mailUser + '#/#public_maildirdiv') )
+.then( _ => 
+	logStep('opening inbox of: ' + mailUser.cyan )
+ || driver.get('https://www.mailinator.com/inbox2.jsp?public_to=' + mailUser + '#/#public_maildirdiv') 
+ )
 .then( _ => clickByClassName('innermail ng-binding') )
-.then( _ => logStep('focusing on mail body IFrame') )
-.then( _ => locate(By.id('publicshowmaildivcontent') )
-             .then( e => substep("switching") || driver.switchTo().frame(e) )
+.then( _ => 
+	logStep('focusing on mail body IFrame')  
+ || locate(By.id('publicshowmaildivcontent') )
+     .then( e => substep("switching") || driver.switchTo().frame(e) )
 )
 .then( _ => clickByXPath('/html/body/a[1]'), "first link in mail body" )
 .then( _ => driver.get( 'https://dashboard-beta.zuznow.com/user/reset/708/1493320031/okh1xcZVz8bnX9-7LetZwG1K-lFiEWFfUGzdT2GWeRU/brief' ) )
