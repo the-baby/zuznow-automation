@@ -173,8 +173,9 @@ function assertExistsByName(name) {
 }
 
 function assertExists(locator, descr) {
-    logStep("assertinng that element is found   " , descr.magenta);
+    logStep("assertion:".yellow + " element is found   " , descr.magenta);
     return driver.findElement(locator)
+			.then( _ => logStep(" - OK!".green) )
 }
 
 
