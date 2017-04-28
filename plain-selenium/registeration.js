@@ -20,8 +20,8 @@ const {
 	scenario,
 	logStep, 
 	substep,
-	scenarioFailed,
-	report
+	failedScenario,
+	endResult
 } = require('./common');	
 
 const driver = getDriver();
@@ -47,7 +47,7 @@ driver
 .then( _ => driver.findElement(By.name('op')) )
 .then( _ => logStep('expect error messages are displayed') )
 .then( _ => assertExistsByClassName('form-text required error') )
-.catch( scenarioFailed )
+.catch( failedScenario )
 
 
 //multiple errors of create account form
@@ -60,12 +60,8 @@ driver
 .then( _ => assertExistsByClassName('messages error') ) 
 .then( _ => assertExistsByClassName('form-text required error') )
 .then( _ => assertExistsByClassName('text-full form-text required error') )
-.catch( scenarioFailed )
+.catch( failedScenario )
 //TODO:I should write what is written in the error message
-
-driver
-.then( _ => report() )
-return
 
 //submission of a mail in use should offer the recover password message
 driver
@@ -76,7 +72,7 @@ driver
 .then( _ => inputById('edit-field-last-name-und-0-value','El-Netanany') )
 .then( _ => clickById('edit-submit') )
 .then( _ => clickByLinkText('Have you forgotten your password?') )
-.catch( scenarioFailed )
+.catch( failedScenario )
 //I should write what is written in the error message
 //And about the red frame
 
@@ -113,10 +109,10 @@ driver
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
-.catch( scenarioFailed )
+.catch( failedScenario )
 
 
 driver
-.then( _ => report() )
+.then( _ => endResult() )
 
 

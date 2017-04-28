@@ -34,8 +34,8 @@ module.exports = {
     scenario,
     logStep,
     substep,
-    scenarioFailed,
-    report
+    failedScenario,
+    endResult
 };
 
 
@@ -48,7 +48,7 @@ function getDriver() {
 }
 
 function scenario(text) {
-    report.scenariosCount++;
+    endResult.scenariosCount++;
     currentScenario = text;
     console.log("\r\n\r\n Scenario:\r\n  %s".bold.yellowBG, text)
 }
@@ -65,29 +65,29 @@ function substep() {
     console.log.apply( console, args ) 
 }
 
-function scenarioFailed(e) {
-    report.failedScenarios.push(currentScenario);
+function failedScenario(e) {
+    endResult.failedScenarios.push(currentScenario);
     logStep("SENARIO FAILED".redBG.black + "\n    " + e.message.replace(/\n/g, "\n    ").red)
 }
 
-report.scenariosCount  = 0;
-report.failedScenarios = [];
-function report() {
-    if (report.failedScenarios.length) {
+endResult.scenariosCount  = 0;
+endResult.failedScenarios = [];
+function endResult() {
+    if (endResult.failedScenarios.length) {
         
 		console.log([ "\n\n",
           "  FAILURE  ".redBG.white.bold,
-		  "  " + report.scenariosCount + " scenarios ran".bold,
-          ("  " + report.failedScenarios.length + " scenarios failed:").red,
-          "   - " + report.failedScenarios.join("   - ")
+		  "  " + endResult.scenariosCount + " scenarios ran".bold,
+          ("  " + endResult.failedScenarios.length + " scenarios failed:").red,
+          "   - " + endResult.failedScenarios.join("   - ")
         ].join("\n"))
 		
     } else {
 		
         console.log([ "\n\n",
           "  SUCCESS  ".greenBG.white.bold,
-		  "  " + report.scenariosCount + " scenarios ran".bold,
-          "  " + report.scenariosCount + " scenarios Passed :)".green.bold,
+		  "  " + endResult.scenariosCount + " scenarios ran".bold,
+          "  " + endResult.scenariosCount + " scenarios Passed :)".green.bold,
 		].join("\n"))
 		
     } 
