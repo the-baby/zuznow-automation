@@ -68,6 +68,7 @@ driver
 .then( _ => inputById('edit-field-last-name-und-0-value','El-Netanany') )
 .then( _ => clickById('edit-submit') )
 .then( _ => clickByLinkText('Have you forgotten your password?') )
+.then( _ => logStep("TODO: what is checked here?".yellow) )
 .catch( failedScenario )
 
 //submission of valid form details should succeed
@@ -97,6 +98,7 @@ driver
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
+.then( _ => logStep("TODO: what is checked here?".yellow) )
 .catch( failedScenario )
 
 
