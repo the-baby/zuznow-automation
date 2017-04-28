@@ -34,6 +34,7 @@ driver
 .then( _ => scenario('create account link should open create account form') )
 .then( _ => openPage('https://dashboard-beta.zuznow.com/new', "new account page") )
 .then( _ => clickById('btn-register') )
+.then( _ => logStep("TODO: what is checked here?".yellow) )
 
 //error messages of create account form
 driver
