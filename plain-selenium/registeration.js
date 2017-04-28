@@ -16,10 +16,12 @@ const {
 	clickByXPath,
 	click,
 	locate, 
-	findByClassName,
-	title,
+	assertExistsByClassName,
+	scenario,
 	logStep, 
-	substep
+	substep,
+	scenarioFailed,
+	report
 } = require('./common');	
 
 const driver = getDriver();
@@ -27,14 +29,14 @@ const driver = getDriver();
 
 //create account link should open create account form
 driver
-.then( _ => title('create account link should open create account form') )
+.then( _ => scenario('create account link should open create account form') )
 .then( _ => logStep("opening zuznow new account page") )
 .then( _ => driver.get('https://dashboard-beta.zuznow.com/new') )
 .then( _ => clickById('btn-register') )
 
 //error messages of create account form
 driver
-.then( _ => title('error messages of create account form') )
+.then( _ => scenario('error messages of create account form') )
 .then( _ => driver.get('https://dashboard-beta.zuznow.com/user/register') )
 .then( _ => driver.wait(until.elementLocated(By.id('edit-mail'))) )
 .then( e => driver.wait(until.elementIsVisible( e ) ) )
@@ -43,43 +45,45 @@ driver
 .then( _ => inputById('edit-field-last-name-und-0-value','LastName') )
 .then( _ => clickById('edit-submit') )
 .then( _ => driver.findElement(By.name('op')) )
-.then( _ => logStep('exectomg error messages are displayed') )
-.then( _ => findByClassName('form-text required error') )
+.then( _ => logStep('expect error messages are displayed') )
+.then( _ => assertExistsByClassName('form-text required error') )
+.catch( scenarioFailed )
 
 
 //multiple errors of create account form
 driver
-.then( _ => title('error messages of create account form') )
+.then( _ => scenario('error messages of create account form') )
 .then( _ => driver.get('https://dashboard-beta.zuznow.com/user/register') )
 .then( _ => clickById('edit-submit') )
 
-.then( _ => logStep(' - assertions - exectomg error messages are displayed') )
-.then( _ => findByClassName('messages error') ) 
-.then( _ => findByClassName('form-text required error') )
-.then( _ => findByClassName('text-full form-text required error') )
-	
+.then( _ => logStep(' - assertions - expect error messages are displayed') )
+.then( _ => assertExistsByClassName('messages error') ) 
+.then( _ => assertExistsByClassName('form-text required error') )
+.then( _ => assertExistsByClassName('text-full form-text required error') )
+.catch( scenarioFailed )
 //TODO:I should write what is written in the error message
 
+driver
+.then( _ => report() )
+return
 
 //submission of a mail in use should offer the recover password message
 driver
-.then( _ => title('submission of a mail in use should offer the recover password message') )
+.then( _ => scenario('submission of a mail in use should offer the recover password message') )
 .then( _ => driver.get('https://dashboard-beta.zuznow.com/user/register') )
 .then( _ => inputById('edit-mail','larisa@zuznow.com') )
 .then( _ => inputById('edit-field-first-name-und-0-value','Larisa') )
 .then( _ => inputById('edit-field-last-name-und-0-value','El-Netanany') )
 .then( _ => clickById('edit-submit') )
 .then( _ => clickByLinkText('Have you forgotten your password?') )
-
-         
-
+.catch( scenarioFailed )
 //I should write what is written in the error message
 //And about the red frame
 
 //submission of valid form details should succeed
 var mailUser = "reg-tst-" + Math.random().toString().replace("0.","").substr(0,25)
 driver	
-.then( _ => title('submission of valid form details should succeed') )
+.then( _ => scenario('submission of valid form details should succeed') )
 .then( _ => 
     logStep('opening zuznow registration') 
  || driver.get('https://dashboard-beta.zuznow.com/user/register') 
@@ -98,8 +102,21 @@ driver
  || locate(By.id('publicshowmaildivcontent') )
      .then( e => substep("switching") || driver.switchTo().frame(e) )
 )
-.then( _ => clickByXPath('/html/body/a[1]'), "first link in mail body" )
-.then( _ => driver.get( 'https://dashboard-beta.zuznow.com/user/reset/708/1493320031/okh1xcZVz8bnX9-7LetZwG1K-lFiEWFfUGzdT2GWeRU/brief' ) )
-.then( _ => inputByClassName('password-field form-text required', 'Aabcd5') )
-.then( _ => inputByClassName('password-confirm form-text required','Aabcd5') )
+.then( _ => 
+	logStep("navigating to URL from mail ", "/html/body/a[1]".magenta)
+ || locate(By.xpath("/html/body/a[1]"))
+	 .then( e => 
+		 substep("navigatin to href") 
+	  || driver.get( e.getAttribute("href") ) 
+	 )
+)
+.then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
+.then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
+.catch( scenarioFailed )
+
+
+driver
+.then( _ => report() )
+
+
