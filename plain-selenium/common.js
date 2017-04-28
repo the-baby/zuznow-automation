@@ -12,6 +12,8 @@ module.exports = {
     getDriver,
     waitFor,
     
+	openPage,
+	
     inputById,
     inputByName,
     inputByClassName,
@@ -47,10 +49,15 @@ function getDriver() {
     return driver
 }
 
+function openPage(url, title) {
+	logStep("opening page: ", (title || url).magenta);
+	return driver.get(url)
+}
+
 function scenario(text) {
     endResult.scenariosCount++;
     currentScenario = text;
-    console.log("\r\n\r\n Scenario:\r\n  %s".bold.yellowBG, text)
+    console.log("\n\n Scenario:\n  %s".bold.yellowBG, text)
 }
 
 function logStep() {
@@ -67,7 +74,7 @@ function substep() {
 
 function failedScenario(e) {
     endResult.failedScenarios.push(currentScenario);
-    logStep("SENARIO FAILED".redBG.black + "\n    " + e.message.replace(/\n/g, "\n    ").red)
+    logStep("SENARIO FAILED".redBG.black + "\n    " + e.stack.replace(/\n/g, "\n    ").red)
 }
 
 endResult.scenariosCount  = 0;
