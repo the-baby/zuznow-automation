@@ -46,6 +46,8 @@ function getDriver() {
         .forBrowser('chrome')
         .build();
     
+    console.log("\n\n" + "  Starting Tests  ".greenBG.white.bold )
+	
     return driver
 }
 
