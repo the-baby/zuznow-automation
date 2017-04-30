@@ -63,13 +63,13 @@ function scenario(text) {
 }
 
 function logStep() {
-    let args = [].slice.apply(arguments)
+    const args = [].slice.apply(arguments)
     args.unshift("    %s")
     console.log.apply( console, args ) 
 }
 
 function substep() {
-    let args = [].slice.apply(arguments)
+    const args = [].slice.apply(arguments)
     args.unshift("        ..%s".gray)
     console.log.apply( console, args ) 
 }
@@ -86,7 +86,7 @@ function endResult() {
         
 		console.log([ "\n\n",
           "  FAILURE  ".redBG.white.bold,
-		  "  " + endResult.scenariosCount + " scenarios ran".bold,
+		  ("  " + endResult.scenariosCount + " scenarios ran").bold,
           ("  " + endResult.failedScenarios.length + " scenarios failed:").red,
           "   - " + endResult.failedScenarios.join("   - ")
         ].join("\n"))
@@ -107,7 +107,7 @@ function endResult() {
 
 function waitFor(sec) { 
     var ready = false;
-    logStep("waiting " + sec + " seconds")
+    logStep("waiting " + sec.toString().magenta + " seconds")
     setTimeout( _ => ready = true, sec * 1000 )
     return driver.wait(_ => ready)
 }
