@@ -12,7 +12,8 @@ module.exports = {
     getDriver,
     waitFor,
     
-	openPage,
+	clearCookies, 
+    openPage,
 	
     inputById,
     inputByName,
@@ -42,13 +43,16 @@ module.exports = {
 
 
 function getDriver() {
-    driver = new Builder()
-        .forBrowser('chrome')
-        .build();
+    driver = new Builder()        .forBrowser('chrome')        .build();
     
     console.log("\n\n" + "  Starting Tests  ".greenBG.white.bold )
 	
     return driver
+}
+
+function clearCookies() {
+    logStep("clearing all cookies");
+    return driver.manage().deleteAllCookies()
 }
 
 function openPage(url, title) {

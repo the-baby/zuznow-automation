@@ -15,13 +15,13 @@ driver
 .then( _ => z.scenario('Log in with wrong password'))
 .then( _ => z.openPage ('https://dashboard-beta.zuznow.com/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Tom@zuznow.com'))
-.then(  _ => z.inputById('edit-pass', 'Computer1'))
+.then( _ => z.inputById('edit-pass', 'Computer1'))
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.assertExists(By.linkText('Have you forgotten your password?'), "recover password link" ) )
 .catch( z.failedScenario )
 
 driver
-.then( _=> z.scenario('Log in with wrong username'))
+.then( _ => z.scenario('Log in with wrong username'))
 .then( _ => z.openPage ('https://dashboard-beta.zuznow.com/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Tim@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Adminuser1'))
@@ -30,7 +30,8 @@ driver
 .catch( z.failedScenario )
 
 driver
-.then( _=> z.scenario('successful log in'))
+.then( _ => z.scenario('successful log in of user with applications should show homepage'))
+.then( _ => z.clearCookies() )
 .then( _ => z.openPage ('https://dashboard-beta.zuznow.com/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Tom@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Adminuser1'))
@@ -38,9 +39,9 @@ driver
 .then( _ => z.assertExists(By.className('menu-item new-site'), "new app point" ) )
 .catch( z.failedScenario )
 
-//Log In functionality testing with a Non-admin trial user with no applications 
 driver
-.then( _=> z.scenario('successful log in'))
+.then( _ => z.scenario('successful log in of users without applications should show new-app screen'))
+.then( _ => z.clearCookies() )
 .then( _ => z.openPage ('https://dashboard-beta.zuznow.com/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Polly@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Newuser1'))
