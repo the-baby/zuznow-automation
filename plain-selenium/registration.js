@@ -32,14 +32,15 @@ const driver = getDriver();
 //create account link should open create account form
 driver
 .then( _ => scenario('create account link should open create account form') )
-.then( _ => openPage('https://dashboard-beta.zuznow.com/new', "new account page") )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/login', "new account page") )
+.then( _ => waitFor(3))
 .then( _ => clickById('btn-register') )
 .then( _ => logStep("TODO: what is checked here?".yellow) )
 
 //error messages of create account form
 driver
 .then( _ => scenario('error messages of create account form') )
-.then( _ => openPage('https://dashboard-beta.zuznow.com/user/register', 'register page') )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => inputById('edit-mail','Name@LastName') )
 .then( _ => inputById('edit-field-first-name-und-0-value','Name') )
 .then( _ => inputById('edit-field-last-name-und-0-value','LastName') )
@@ -51,10 +52,10 @@ driver
 
 //multiple errors of create account form
 driver
-.then( _ => scenario('error messages of create account form') )
-.then( _ => openPage('https://dashboard-beta.zuznow.com/user/register', 'register page') )
+.then( _ => scenario('multiple error messages of create account form') )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => waitFor(3))
 .then( _ => clickById('edit-submit') )
-.then( _ => assertExistsByClassName('messages error') ) 
 .then( _ => assertExistsByClassName('form-text required error') )
 .then( _ => assertExistsByClassName('text-full form-text required error') )
 .then( _ => logStep("TODO: check text in error messages?".yellow) )
@@ -63,11 +64,12 @@ driver
 //submission of a mail in use should offer the recover password message
 driver
 .then( _ => scenario('submission of a mail in use should offer the recover password message') )
-.then( _ => openPage('https://dashboard-beta.zuznow.com/user/register', 'register page') )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => inputById('edit-mail','larisa@zuznow.com') )
 .then( _ => inputById('edit-field-first-name-und-0-value','Larisa') )
 .then( _ => inputById('edit-field-last-name-und-0-value','El-Netanany') )
 .then( _ => clickById('edit-submit') )
+.then( _ => waitFor(3))
 .then( _ => clickByLinkText('Have you forgotten your password?') )
 .then( _ => logStep("TODO: what is checked here?".yellow) )
 .catch( failedScenario )
@@ -76,7 +78,7 @@ driver
 var mailUser = "reg-tst-" + Math.random().toString().replace("0.","").substr(0,25)
 driver	
 .then( _ => scenario('submission of valid form details should succeed') )
-.then( _ => openPage('https://dashboard-beta.zuznow.com/user/register', 'register page') )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => inputById('edit-mail', mailUser + '@mailinator.com' ) )
 .then( _ => inputById('edit-field-first-name-und-0-value','registration') )
 .then( _ => inputById('edit-field-last-name-und-0-value','test') )
