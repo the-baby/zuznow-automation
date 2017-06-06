@@ -24,6 +24,7 @@ module.exports = {
     clickByName,
     clickByClassName,
     clickByLinkText,
+    clickByPartialLinkText,
     clickByXPath,
     click,
     
@@ -152,6 +153,10 @@ function clickByClassName(className) {
 
 function clickByLinkText(text) {
     return click(By.linkText(text), "by link text: " + text )
+}
+
+function clickByPartialLinkText(text) {
+    return click(By.partialLinkText(text), "by partial link text: " + text )
 }
 
 function clickByXPath(xpath) {

@@ -13,6 +13,7 @@ const {
 	clickById,
 	clickByName,
 	clickByLinkText,
+    clickByPartialLinkText,
 	clickByClassName,
 	clickByXPath,
 	click,
@@ -75,32 +76,31 @@ driver
 .catch( failedScenario )
 
 //submission of valid form details should succeed
-
+var mailUser = "reg-tst-" + Math.random().toString().replace("0.","").substr(0,20)
+driver	
 .then( _ => scenario('submission of valid form details should succeed') )
 .then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => inputById('edit-mail', 'automationlarisa@gmail.com' ) )
 .then( _ => inputById('edit-field-first-name-und-0-value','registration') )
 .then( _ => inputById('edit-field-last-name-und-0-value','test') )
 .then( _ => clickById('edit-submit') )
-.then( _ => openPage('https://mail.google.com/mail/u/1/#inbox' ) )
+.then( _ => openPage('https://www.gmail.com', 'gmail home') )
 .then( _ => inputById('identifierId', 'automationlarisa') )
-.then( _ => waitFor(3))
-.then ( _ => clickByClassName('CwaK9'))
+.then( _ => waitFor(1))
+.then( _ => clickByClassName('RveJvd snByac') )
 .then( _ => inputByName('password', 'Apples32') )
-.then( _ => waitFor(3))
-.then ( _ => clickByClassName('CwaK9'))
-.then( _ => 
-	logStep('focusing on mail body IFrame')  
- || locate(By.className('info@conversation.one') )
-     .then( e => substep("switching") || driver.switchTo().frame(e) )
-)
-.then( _ => 
-	logStep("navigating to URL from mail ", "/html/body/a[2]".magenta)
- || locate(By.xpath("/html/body/a[2]"))
-	 .then( e => 
-		 substep("navigatin to href") 
-	  || driver.get( e.getAttribute("href") ) 
-	 )
+.then( _ => waitFor(1))
+.then( _ => clickByClassName('RveJvd snByac') )
+.then( _ => waitFor(1))
+.then( _ => clickByPartialLinkText( 'Your conversational apps are on their way!' ) )
+.then( _ => waitFor(1))
+.then( _ =>
+  substep('finding activation link')
+  || locate(By.partialLinkText( 'one/tracking/click' ))
+     .then( e => 
+        substep("navigatin to href of activation link") 
+     || driver.get( e.getAttribute("href") )
+     )
 )
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
