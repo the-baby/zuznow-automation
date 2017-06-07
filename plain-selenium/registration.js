@@ -36,7 +36,7 @@ driver
 .then( _ => openPage('https://dashboard-beta.conversation.one/user/login', "new account page") )
 .then( _ => waitFor(3))
 .then( _ => clickById('btn-register') )
-.then( _ => logStep("TODO: what is checked here?".yellow) )
+.then( _ => logStep("registration form opens".yellow) )
 
 //error messages of create account form
 driver
@@ -72,7 +72,7 @@ driver
 .then( _ => clickById('edit-submit') )
 .then( _ => waitFor(3))
 .then( _ => clickByLinkText('Have you forgotten your password?') )
-.then( _ => logStep("TODO: what is checked here?".yellow) )
+.then( _ => logStep("The mail in use is not accepted".yellow) )
 .catch( failedScenario )
 
 //submission of valid form details should succeed
