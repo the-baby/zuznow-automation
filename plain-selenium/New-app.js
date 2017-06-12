@@ -27,3 +27,65 @@ driver
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
+.then( _ => z.inputById ('org-name', 'test'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z. clickById ('btnNext'))
+.then( _ => z.waitFor(4))
+.then( _ => z.assertExistsById('btnFinish'), "Alexa skill is ready"  )
+.catch( z.failedScenario )
+
+.then( _ => z.scenario('Checking that demo content is present in the custom app') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Custom')) 
+.then( _ => z.inputById ('org-name', 'test'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z. clickById ('btnNext'))
+.then( _ => z.waitFor(3))
+.then( _ => z.assertExistsById('btnFinish'), "Alexa skill is ready"  )
+.then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
+//.then( _ => z.assertExistsById('collapseCON1Launch'), 'intent from the demo content')
+//TO DO: find a way to locate intent
+.catch( z.failedScenario )
+
+//The next button is unavailable when one of the parameters is missing
+.then( _ => z.scenario('The user remains on the same screen after clicking the Next button') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Custom'))
+.then( _ => z.assertExistsById('btnNext'))
+
+//TO DO : find a way to deal with a disabled button
+
+//Adding other voice assistants to the app
+.then( _ => z.scenario('Checking that it is possible to add other assistants to the app') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Custom')) 
+.then( _ => z.inputById ('org-name', 'test'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z.clickByClassName('comingSoon'))
+.then( _ => z.assertExistsByClassName('checkmark draw'),'the assistant is selected' )
+.catch( z.failedScenario )
+
+//Customization of a new custom app with demo content
+.then( _ => z.scenario('Clicking the Customize button opens the Editor Interaction tab') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Custom')) 
+.then( _ => z.inputById ('org-name', 'test'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z. clickById ('btnNext'))
+.then( _ => z.waitFor(3))
+.then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
+.then( _ => z.waitFor(3))
+.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'))
+.catch( z.failedScenario )
+
+
+
+ 
