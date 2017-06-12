@@ -33,6 +33,8 @@ module.exports = {
     assertExistsById,
     assertExistsByName,
     assertExistsByClassName,
+	assertExistsByLinkText,
+	assertExistsByXPath,
     assertExists,
     
     scenario,
@@ -179,9 +181,18 @@ function assertExistsByClassName(className) {
     return assertExists(By.className(className), "by className: " + className )
 }
 
+function assertExistsByLinkText(linkText) {
+    return assertExists(By.linkText(linkText), "by linktext: " + linkText )
+}	
+	
 function assertExistsByName(name) {
     return assertExists(By.name(name), "by name: " + name )
 }
+
+function assertExistsByXPath(XPath) {
+    return assertExists(By.XPath(XPath), "by XPath: " + name )
+}
+
 
 function assertExists(locator, descr) {
     logStep("assertion:".yellow + " element is found   " , descr.magenta);
