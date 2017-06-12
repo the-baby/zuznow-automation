@@ -83,8 +83,46 @@ driver
 .then( _ => z.waitFor(3))
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.waitFor(3))
-.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'))
+.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'), "the Interaction tab is open")
 .catch( z.failedScenario )
+
+//Feature: Creating a new app with a predefined bank industry
+
+//Successful creation of a predefined banking app
+
+.then( _ => z.scenario('Clicking the Next button opens the Test your skill screen') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Banking'))
+.then( _ => z.inputById ('org-name', 'Golden 1 Credit Union'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z. clickById ('btnNext'))
+.then( _ => z.assertExistsById('simulator'),'the Play simulator button' )
+.catch( z.failedScenario )
+
+.then( _ => z.scenario('Clicking the Customize button opens the Interaction Editor tab') )
+.then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
+.then( _ => z.waitFor(7))
+.then( _ => z.assertExistsById('accordion_interaction'), "the Interaction tab is open")
+.catch( z.failedScenario )
+
+//Publishing of a new predefined banking app
+.then( _ => z.scenario('Clicking the Publish button opens the Publish Skill Wizard') )
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+.then( _ => z.clickByLinkText('Banking'))
+.then( _ => z.inputById ('org-name', 'Golden 1 Credit Union'))
+.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.waitFor(2))
+.then( _ => z. clickById ('btnNext'))
+
+.then( _ => z.clickByClassName ('btn btn-success btn-square btn-create finish'))
+.then( _ => z.waitFor(8))
+.then( _ => z.assertExistsByLinkText('developer.amazon.com'), "the wizard is open")
+.catch( z.failedScenario )
+
+
 
 
 
