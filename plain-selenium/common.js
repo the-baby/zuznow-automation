@@ -182,7 +182,7 @@ function assertExistsByClassName(className) {
 }
 
 function assertExistsByLinkText(linkText) {
-    return assertExists(By.linkText(linkText), "by linktext: " + linkText )
+    return assertExists(By.linkText(linkText), "by link-text: " + linkText )
 }	
 	
 function assertExistsByName(name) {
@@ -200,6 +200,18 @@ function assertExists(locator, descr) {
 			.then( _ => logStep(" - OK!".green) )
 }
 
+function assertElementHasClass(locator, descr, className) {
+    z.logStep("assertion:".yellow + " " + descr , 'element should have class `' + className + '`'.magenta);
+    driver.findElement(locator)
+    .getAttribute('class')
+    .then( cssclass => {
+        if (cssclass.indexOf(className) == -1)
+            return Promise.reject(new Error('element does not have class `' + className+ '`'));
+
+        z.logStep(" - OK!".green)
+        return Promise.resolve()
+    })
+}
 
 
 function locate(locator) {
