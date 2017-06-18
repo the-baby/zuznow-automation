@@ -28,6 +28,7 @@ const {
 } = require('./common');	
 
 const driver = getDriver();
+const z = require('./common');
 
 
 //create account link should open create account form
@@ -86,7 +87,7 @@ driver
 .then( _ => clickById('edit-submit') )
 .then( _ => openPage('https://www.gmail.com', 'gmail home') )
 .then( _ => inputById('identifierId', 'automationlarisa') )
-.then( _ => waitFor(1))
+.then( _ => waitFor(3))
 .then( _ => clickByClassName('RveJvd snByac') )
 .then( _ => inputByName('password', 'Apples32') )
 .then( _ => waitFor(1))
@@ -102,6 +103,7 @@ driver
      || driver.get( e.getAttribute("href") )
      )
 )
+.then( _ => z.clearCookies() )
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
