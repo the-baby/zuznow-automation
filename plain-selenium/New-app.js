@@ -51,7 +51,7 @@ driver
 .then( _ => z.locate(By.id('btnSave')))
 .then( _ => z.assertExistsByLinkText('CalcIntent'), 'intent from the demo content')
 .catch( z.failedScenario )
-*/
+
 //The next button is unavailable when one of the parameters is missing
 driver
 .then( _ => z.scenario('The user remains on the same screen after clicking the Next button') )
@@ -119,7 +119,7 @@ driver
 .then( _ => z.waitFor(3))
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.waitFor(3))
-.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'), "the Interaction tab is open")
+.then( _ => z.assertExistsByClassName('endSessionCheckBox'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
 //Feature: Creating a new app with a predefined bank industry
