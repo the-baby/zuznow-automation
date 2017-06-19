@@ -30,6 +30,8 @@ module.exports = {
     
     locate, 
 
+    assertElementHasClass,
+    
     assertExistsById,
     assertExistsByName,
     assertExistsByClassName,
@@ -64,9 +66,9 @@ function openPage(url, title) {
 }
 
 function scenario(text) {
-    endResult.scenariosCount++;
-    currentScenario = text;
-    console.log("\n\n Scenario:\n  %s".bold.yellowBG, text)
+    const number = ++endResult.scenariosCount;
+    currentScenario = "#" + number + " - " + text;
+    console.log("\n\n Scenario #%s:\n  %s".bold.yellowBG, number, text)
 }
 
 function logStep() {
@@ -201,14 +203,14 @@ function assertExists(locator, descr) {
 }
 
 function assertElementHasClass(locator, descr, className) {
-    z.logStep("assertion:".yellow + " " + descr , 'element should have class `' + className + '`'.magenta);
+    logStep("assertion:".yellow + " " + descr , ('should have class `' + className + '`').magenta);
     driver.findElement(locator)
     .getAttribute('class')
     .then( cssclass => {
         if (cssclass.indexOf(className) == -1)
             return Promise.reject(new Error('element does not have class `' + className+ '`'));
 
-        z.logStep(" - OK!".green)
+        logStep(" - OK!".green)
         return Promise.resolve()
     })
 }

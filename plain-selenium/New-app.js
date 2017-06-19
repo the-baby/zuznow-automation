@@ -6,6 +6,7 @@ process.on('exit', () => z.endResult() )
 //Feature: Creating a new app with a custom industry
 
 driver
+.then( _ => z.scenario('Sign-in successfully leads to homepage') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','admin') )
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
@@ -14,7 +15,7 @@ driver
 .then( _ => z.assertExistsByClassName('menu-item new-site'), "home page"  )
 .catch( z.failedScenario )
 
-/
+
 
 //Successful creation of a default custom app with demo content
 driver
@@ -54,26 +55,13 @@ driver
 
 //The next button is unavailable when one of the parameters is missing
 driver
-.then( _ => z.scenario('The user remains on the same screen after clicking the Next button') )
+.then( _ => z.scenario('The next button is unavailable when one of the parameters is missing') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom'))
 .then( _ => z.assertElementHasClass(By.id('btnNext'), "`next` button is disabled", "disabled"))
-.then( _ => {
-
-  z.logStep("assertion:".yellow + "`next` button is disabled" , 'button should have class `disabled`'.magenta);
-  driver.findElement(By.id('btnNext'))
-  .getAttribute('class')
-  .then( cssclass => {
-      if(cssclass.indexOf('disabled') == -1) 
-          return Promise.reject(new Error('element does not have class `disabled`'));
-      
-      z.logStep(" - OK!".green)
-      return Promise.resolve()
-  })
-})
 .catch( z.failedScenario )
-return
+
 
 //Adding other voice assistants to the app
 driver
