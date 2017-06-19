@@ -97,7 +97,7 @@ function endResult() {
           "  FAILURE  ".redBG.white.bold,
 		  ("  " + endResult.scenariosCount + " scenarios ran").bold,
           ("  " + endResult.failedScenarios.length + " scenarios failed:").red,
-          "   - " + endResult.failedScenarios.join("   - ")
+          "    " + endResult.failedScenarios.join("\n    ")
         ].join("\n"))
 		
     } else {
