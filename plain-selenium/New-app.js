@@ -53,6 +53,7 @@ driver
 .then( _ => z.assertExistsByLinkText('CalcIntent'), 'intent from the demo content')
 .catch( z.failedScenario )
 
+
 //The next button is unavailable when one of the parameters is missing
 driver
 .then( _ => z.scenario('The next button is unavailable when one of the parameters is missing') )
