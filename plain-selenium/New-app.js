@@ -50,6 +50,7 @@ driver
 .then( _ => z.assertExistsById('btnFinish'), "Alexa skill is ready"  )
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.locate(By.id('btnSave')))
+.then( _ => z.waitFor(2))
 .then( _ => z.assertExistsByLinkText('CalcIntent'), 'intent from the demo content')
 .catch( z.failedScenario )
 
@@ -128,7 +129,8 @@ driver
 
 .then( _ => z.scenario('Clicking the Customize button opens the Interaction Editor tab') )
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
-.then( _ => z.waitFor(7))
+.then( _ => z.locate(By.id('btnSave')))
+.then( _ => z.waitFor(2))
 .then( _ => z.assertExistsById('accordion_interaction'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
@@ -143,7 +145,9 @@ driver
 .then( _ => z.waitFor(2))
 .then( _ => z. clickById ('btnNext'))
 .then( _ => z.clickByClassName ('btn btn-success btn-square btn-create finish'))
-.then( _ => z.waitFor(8))
+.then( _ => z.locate(By.id('amazon-tab1')))
+.then( _ => z.waitFor(2))
 .then( _ => z.assertExistsByLinkText('developer.amazon.com'), "the wizard is open")
 .catch( z.failedScenario )
+
 
