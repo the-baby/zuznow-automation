@@ -18,6 +18,7 @@ module.exports = {
     inputById,
     inputByName,
     inputByClassName,
+	inputByXPath,
     input,
     
     clickById,
@@ -133,14 +134,18 @@ function inputByName(name, text) {
 
 function inputByClassName(className, text) {
     return input(By.className(className), "by className: " + className, text)
+
 }
 
+
+function inputByXPath(xpath, text) {
+    return input(By.xpath(xpath), "by XPath: " + xpath, text)
+}
 function input(locator, descr, text) {
     logStep("writing text to field   " + descr.magenta + ", text: ", text.magenta);
     return locate(locator)
         .then( e =>  substep("sending input") || e.sendKeys(text) )    
 }
-
 
 
 function clickById(id) {
@@ -191,8 +196,8 @@ function assertExistsByName(name) {
     return assertExists(By.name(name), "by name: " + name )
 }
 
-function assertExistsByXPath(XPath) {
-    return assertExists(By.XPath(XPath), "by XPath: " + name )
+function assertExistsByXPath(xpath) {
+    return assertExists(By.xpath(xpath), "by xpath: " + xpath )
 }
 
 
@@ -223,3 +228,6 @@ function locate(locator) {
                  || driver.wait(until.elementIsVisible( e ) ) 
         )
 }
+
+
+
