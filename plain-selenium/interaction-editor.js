@@ -93,3 +93,44 @@ driver
 .then( _ => z.clickByXPath ('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/div[1]/i'))
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 .catch( z.failedScenario )
+
+//Edit sample sentence
+driver
+.then( _ => z.scenario('Clicking the edit button allows editing a sample sentence') )
+.then( _ => z.clickByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/a[1]/i'))
+.then( _ => driver.findElement(By.xpath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/input')).clear())
+.then( _ => z.inputByXPath ('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/input', 'Was the test easy'))
+.then( _ => z.clickByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/i[1]'))
+.then( _ => z.assertExistsByXPath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span'), 'the phrase was edited')
+.catch( z.failedScenario )
+//TODO: how to check that the text was edited
+
+//Cancel editing of a sample sentence
+driver
+.then( _ => z.scenario('Clicking cancel editing button cancels editing of a sample sentence') )
+.then( _ => z.clickByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/a[1]/i'))
+.then( _ => driver.findElement(By.xpath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/input')).clear())
+.then( _ => z.inputByXPath ('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/input', 'Was the test hard'))
+.then( _ => z.clickByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/i[2]'))
+.then( _ => z.assertExistsByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span'), 'the phrase remained the same')
+.catch( z.failedScenario )
+//TODO: how to check that the text remained the same
+
+//Delete sample sentence
+/*
+driver
+.then( _ => z.scenario('Clicking delete button deletes a sample sentence') )
+.then( _ => z.clickByXPath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/a[2]/i'))
+.then( _ => z.assertExistsByXPath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/div[1]/input'), 'the intent was deleted')
+*/
+//TODO:how to check that the intent was deleted
+
+
+//Adding discovery suggestion
+driver
+.then( _ => z.scenario('Clicking the Add button adds a new discovery suggestion') )
+.then( _ => z.inputByXPath ('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/div[2]/input', 'what is my balance'))
+.then( _ => z.clickById ('btnSave'))
+.then( _ => z.assertExistsByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/div[2]/input'), 'new discovery')
+.catch( z.failedScenario )
+//TODO: how to check that new text was added
