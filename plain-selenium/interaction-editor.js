@@ -77,7 +77,9 @@ driver
 .then( _ => z.assertExistsByLinkText('exam'),'intent name not modified' )                        
 .catch( z.failedScenario )
 
-/*
+
+
+
 //Feature: Adding, editing and deleting a sample sentence
 
 //Successful adding of a sample sentence
@@ -99,8 +101,8 @@ driver
 //Edit sample sentence
 driver
 .then( _ => z.scenario('Clicking the edit button allows editing a sample sentence') )
-.then( _ => z.clickByXPath('//*[@id="editbox_interaction_gui"]/div[3]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/a[1]/i'))
-.then( _ => z.assertExistsByXPath('//*[@id="accordion_interaction"]/div[1]/div[2]/div/div/div/div[1]/table/tbody/tr/td[1]/span[2]/input'), 'the field became editable')
+.then( _ => z.clickByCss('#collapsetest .fa-edit'))
+.then( _ => z.assertExistsByCss('.newSample'), 'the field became editable')
 .catch( z.failedScenario )
 
 /*
