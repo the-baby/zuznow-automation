@@ -1,7 +1,7 @@
 const { By } = require('selenium-webdriver');
 const z = require('./common');
 const driver = z.getDriver();
-process.on('exit', () => z.endResult() )
+
 
 //Feature: Creating a new intent and editing its name
 
@@ -64,7 +64,7 @@ driver
 
 //TODO: add this function to common
 
-/*
+
 //Cancelling the Editing of Intent name
 driver
 .then( _ => z.scenario('Clicking the Cancel button cancels editing of intent name') )
@@ -76,8 +76,8 @@ driver
 .then( _ => z.clickByXPath ('//*[@id="accordion_interaction"]/div[1]/div[1]/i[2]'))
 .then( _ => z.assertExistsByLinkText('exam'),'intent name not modified' )                        
 .catch( z.failedScenario )
-*/
 
+/*
 //Feature: Adding, editing and deleting a sample sentence
 
 //Successful adding of a sample sentence
