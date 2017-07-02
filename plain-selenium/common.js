@@ -32,7 +32,7 @@ module.exports = {
     locate, 
 
     assertElementHasClass,
-    
+    assertContainsValue,
     assertExistsById,
     assertExistsByName,
     assertExistsByClassName,
@@ -49,8 +49,11 @@ module.exports = {
 
 
 function getDriver() {
-    driver = new Builder()        .forBrowser('chrome')        .build();
-    
+    driver = new Builder()        
+        .forBrowser('chrome')
+        .build();
+
+    process.once('beforeExit', endResult );
     console.log("\n\n" + "  Starting Tests  ".greenBG.white.bold )
 	
     return driver
@@ -111,7 +114,8 @@ function endResult() {
 		
     } 
     
-    return driver.quit()
+    if (!~process.argv.indexOf('su'))
+        return driver.quit().catch(e => {})
 }
 
 
@@ -146,8 +150,8 @@ function input(locator, descr, text) {
     return locate(locator)
         .then( e =>  substep("sending input") || e.sendKeys(text) )    
 }
-
-
+            
+       
 function clickById(id) {
     return click(By.id(id), "by id: " + id);
 }
@@ -219,6 +223,22 @@ function assertElementHasClass(locator, descr, className) {
         return Promise.resolve()
     })
 }
+
+
+function assertContainsValue(locator, descr, text) {
+    logStep("assertion:".yellow + " " + descr , ('should contain text `' + text + '`').magenta);
+    driver.findElement(locator)
+    .getAttribute('value')
+    .then( value => {
+        if (value.indexOf(text) == -1)
+            return Promise.reject(new Error('element does include value`' + text + '`'));
+
+        logStep(" - OK!".green)
+        return Promise.resolve()
+    })
+}
+
+
 
 
 function locate(locator) {
