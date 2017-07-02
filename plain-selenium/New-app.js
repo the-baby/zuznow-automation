@@ -1,7 +1,7 @@
 const { By } = require('selenium-webdriver');
 const z = require('./common');
 const driver = z.getDriver();
-process.on('exit', () => z.endResult() )
+process.on('beforeExit', () => z.endResult() )
 
 //Feature: Creating a new app with a custom industry
 
