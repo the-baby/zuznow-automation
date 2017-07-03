@@ -77,7 +77,7 @@ driver
 .then( _ => z.assertExistsByLinkText('exam'),'intent name not modified' )                        
 .catch( z.failedScenario )
 
-/*
+
 //Feature: Adding, editing and deleting a sample sentence
 
 //Successful adding of a sample sentence
