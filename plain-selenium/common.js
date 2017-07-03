@@ -24,6 +24,7 @@ module.exports = {
     clickById,
     clickByName,
     clickByClassName,
+    clickByCss,
     clickByLinkText,
     clickByPartialLinkText,
     clickByXPath,
@@ -38,6 +39,7 @@ module.exports = {
     assertExistsByClassName,
 	assertExistsByLinkText,
 	assertExistsByXPath,
+    assertExistsByCss,
     assertExists,
     
     scenario,
@@ -164,6 +166,10 @@ function clickByClassName(className) {
     return click(By.className(className), "by className: " + className);
 }
 
+function clickByCss(selector) {
+    return click(By.css(selector), "by css: " + selector);
+}
+
 function clickByLinkText(text) {
     return click(By.linkText(text), "by link text: " + text )
 }
@@ -204,6 +210,9 @@ function assertExistsByXPath(xpath) {
     return assertExists(By.xpath(xpath), "by xpath: " + xpath )
 }
 
+function assertExistsByCss(selector) {
+    return assertExists(By.css(selector), "by css: " + selector)
+}
 
 function assertExists(locator, descr) {
     logStep("assertion:".yellow + " element is found   " , descr.magenta);
