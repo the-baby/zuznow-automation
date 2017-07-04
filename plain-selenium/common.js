@@ -19,6 +19,7 @@ module.exports = {
     inputByName,
     inputByClassName,
 	inputByXPath,
+	inputByCss,
     input,
     
     clickById,
@@ -140,6 +141,11 @@ function inputByName(name, text) {
 
 function inputByClassName(className, text) {
     return input(By.className(className), "by className: " + className, text)
+
+}
+
+function inputByCss(css, text) {
+    return input(By.css(css), "by Css: " + css, text)
 
 }
 
