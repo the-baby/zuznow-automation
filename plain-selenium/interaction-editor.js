@@ -70,7 +70,7 @@ driver
 
 .catch( z.failedScenario )
 
-
+/*
 
 //Creating an empty intent
 
@@ -137,18 +137,18 @@ driver
 //TODO: add this function to common
 
 
-/*
+
 //Cancelling the Editing of Intent name
 
 driver
 
 .then( _ => z.scenario('Clicking the Cancel button cancels editing of intent name') )
 
-.then( _ => z.waitFor(3))
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 	
 .then( _ => z.clickByCss('#accordion_interaction > div:nth-child(1) > div.panel-heading > i.fa.fa-pencil'))
 
-.then( _ => driver.findElement(By.className('intent_name')).clear())
+.then( _ => driver.findElement(By.css('#accordion_interaction > div:nth-child(1) > div.panel-heading > input')).clear())
 
 .then( _ => z.inputByClassName('newIntentName', 'flower'))
 
@@ -162,7 +162,7 @@ driver
 
 .catch( z.failedScenario )
 
-*/
+
 
 //Feature: Disabling and deleting intent
 
@@ -249,11 +249,14 @@ driver
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
+.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input')).clear())
+
 .catch( z.failedScenario )
 
 
 
-/*
+
+
 
 //Edit sample sentence
 
@@ -274,9 +277,11 @@ driver
 .then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
 
 .catch( z.failedScenario )
-
 */
 
+
+
+/*
 
 //Delete sample sentence
 
@@ -297,11 +302,37 @@ driver
 
 .then( _ => z.assertExistsByCss('#deleteIntentModal > div > div > div.modal-body'), 'the confirmation message appeared')
 
- .then( _ => z.clickByClassName(' btn btn-danger'))             
+.then( _ => z.clickByClassName(' btn btn-danger'))             
 
  .catch( z.failedScenario )
 
 //TODO:how to check that the sample sentence was deleted
+
+*/
+
+
+/*
+//Feature: discovery suggestions
+
+// Adding discovery suggestion
+
+.then( _ => z.scenario('It is possible to add a discovery suggestion is the corresponding field') )
+
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.inputById ('newIntentInput', 'discovery'))
+
+.then( _ => z.clickByClassName ('input-group-addon btn'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input', 'what is my mark'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input'), "the expected text in the element", 'what is my mark') ) 
+
+.catch( z.failedScenario )
 
 
 
@@ -378,6 +409,8 @@ driver
 
  .catch( z.failedScenario )
  
+ */
+ 
 
 //Feature: Manage entities section
 
@@ -389,7 +422,7 @@ driver
 
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
-.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(2) > td.entityName'))
+.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(2) > td.entityName'), 'the list of entities is present')
 
 .catch( z.failedScenario )
 
@@ -398,17 +431,26 @@ driver
 
 .then( _ => z.scenario('Clicking Create button creates a new entity') )
 
-.then( _ => z.inputByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > input'), 'zuznow')
+.then( _ => z.inputByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > input', 'zuznow'))
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
 
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.clickByClassName ('fa fa-refresh'))
-
-.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName'))
+.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName'), 'the new entity is added')
 
 .catch( z.failedScenario )
 
 
+//Adding of an empty entity
 
+.then( _ => z.scenario('An error message should appear when trying to create an empty entity') )
+
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
+
+.then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
+
+.catch( z.failedScenario )
+
+
+//TODO: delete entity
