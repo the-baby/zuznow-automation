@@ -363,8 +363,6 @@ driver
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(2))
-	
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr > td.entity_name > input'), 'the new entity was added')
@@ -411,11 +409,36 @@ driver
  
  */
  
+ //Feature: Parameters
+ 
+//Adding of a new key
 
+.then( _ => z.scenario('It is possible to enter a key in the corresponding field') )
+
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.inputById ('newIntentInput', 'larisa'))
+
+.then( _ => z.clickByClassName ('input-group-addon btn'))
+
+.then( _ => z.clickById ('btnSave'))
+ 
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(3))
+
+.then( () => z.assertContainsValue(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+
+.catch( z.failedScenario )
+ 
 //Feature: Manage entities section
 
 //The section contanins the list of entities
-
+ /*
 .then( _ => z.scenario('Clicking “Manage entities” button opens the corresponding section') )
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
@@ -439,12 +462,16 @@ driver
 
 .catch( z.failedScenario )
 
+//TODO: what's the problem with save button? (it is not clickable at the point)
+
 
 //Adding of an empty entity
 
 .then( _ => z.scenario('An error message should appear when trying to create an empty entity') )
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
 
@@ -454,3 +481,4 @@ driver
 
 
 //TODO: delete entity
+*/
