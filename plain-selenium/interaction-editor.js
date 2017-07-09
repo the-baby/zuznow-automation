@@ -70,6 +70,10 @@ driver
 
 .catch( z.failedScenario )
 
+
+
+
+
 /*
 
 //Creating an empty intent
@@ -409,6 +413,8 @@ driver
  
  */
  
+ /*
+ 
  //Feature: Parameters
  
 //Adding of a new key
@@ -421,19 +427,100 @@ driver
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
-.then( _ => z.clickById ('btnSave'))
- 
 .then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'))
+
+.then( () => z.assertContainsValue(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+
+.catch( z.failedScenario )
+
+//Successful adding of a new value and saving the parameter
+
+.then( _ => z.scenario('It is possible to enter a value in the corresponding field') )
+
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'number'))
+ 
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.param-table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
+
+.catch( z.failedScenario )
+
+
+//Adding of invalid key
+
+.then( _ => z.scenario('Adding invalid key should return an error message') )
+
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', '123'))
+
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+
+.then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
+
+.catch( z.failedScenario )
+
+//Adding of an empty parameter
+
+.then( _ => z.scenario('Trying to enter an empty parameter should return an error message') )
+
+.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input')).clear())
+
+.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input')).clear())
+
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', ''))
+
+.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+
+.then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
+
+.catch( z.failedScenario )
+ 
+ */
+ 
+ //Feature: Response section
+
+//Enter text response message
+
+.then( _ => z.scenario('It is possible to enter a text response message in the corresponding field') )
+
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.inputById ('newIntentInput', 'Response'))
+
+.then( _ => z.clickByClassName ('input-group-addon btn'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input', 'new message'))
 
 .then( _ => z.waitFor(2))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(2))
 
-.then( () => z.assertContainsValue(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+	
+.then( () => z.assertContainsValue(By.css('#collapseresponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
 
 .catch( z.failedScenario )
+
+//TODO: what's wrong with the save button
  
 //Feature: Manage entities section
 
