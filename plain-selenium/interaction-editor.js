@@ -507,8 +507,8 @@ driver
 .then( _ => z.inputByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input', 'new message'))
 
 .then( _ => z.waitFor(2))
-
-.then( _ => z.clickById ('btnSave'))
+	
+.then( _ => z.clickByCss('#btnSave'))
 
 .then( _ => z.waitFor(2))
 
@@ -516,11 +516,67 @@ driver
 
 .then( _ => z.waitFor(2))
 	
-.then( () => z.assertContainsValue(By.css('#collapseresponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
 
 .catch( z.failedScenario )
 
-//TODO: what's wrong with the save button
+//TODO: Find out how to scroll the page up
+
+
+/*
+//Enter code response 
+
+.then( _ => z.scenario('It is possible to enter code response in the corresponding field') )
+
+.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(2) > div > select'))
+
+.then( _ => z.clickByCss(''))
+
+//TODO: how to select an item from the drop-down list
+
+*/
+
+//End session checkbox
+
+.then( _ => z.scenario('It is possible to check the corresponding box and the mark is saved') )
+
+.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(4) > label > input'))
+
+.then( _ => z.clickByCss ('#btnSave'))
+
+.then( _ => z.waitFor(3))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(3))
+	
+.then( _ => z.assertExistsByCss('#accordion_interaction > div:nth-child(1) > div.panel-collapse.collapse.in > div > div > div > div.col-md-4.response_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
+
+.catch( z.failedScenario )
+
+//TODO: Find out how to scroll the page up
+
+
+
+//Adding reprompt text
+
+.then( _ => z.scenario('It is possible to check the corresponding box and the mark is saved') )
+
+.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input', 'How can I help you'))
+
+.then( _ => z.clickByCss ('#btnSave'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
+
+.catch( z.failedScenario )
+
+//TODO: Find out how to scroll the page up
  
 //Feature: Manage entities section
 
@@ -549,7 +605,7 @@ driver
 
 .catch( z.failedScenario )
 
-//TODO: what's the problem with save button? (it is not clickable at the point)
+//TODO: Find out how to scroll the page up
 
 
 //Adding of an empty entity
@@ -567,5 +623,5 @@ driver
 .catch( z.failedScenario )
 
 
-//TODO: delete entity
+//TODO: Find out how to delete entity
 */
