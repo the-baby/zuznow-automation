@@ -151,7 +151,8 @@ driver
 .catch( z.failedScenario )
 
 
-
+driver
+.then( _ => z.endResult() )
 
 
 
