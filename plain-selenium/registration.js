@@ -93,16 +93,19 @@ driver
 .then( _ => waitFor(1))
 .then( _ => clickByClassName('RveJvd snByac') )
 .then( _ => waitFor(1))
+	
 .then( _ => clickByPartialLinkText( 'Your conversational apps are on their way!' ) )
-.then( _ => waitFor(1))
+.then( _ => waitFor(3))
+	
 .then( _ =>
   substep('finding activation link')
-  || locate(By.partialLinkText( 'one/tracking/click' ))
+  || locate(By.partialLinkText( 'here' ))
      .then( e => 
         substep("navigatin to href of activation link") 
      || driver.get( e.getAttribute("href") )
      )
 )
+
 .then( _ => z.clearCookies() )
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
