@@ -423,13 +423,13 @@ driver
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
-.then( _ => z.inputById ('newIntentInput', 'larisa'))
+.then( _ => z.inputById ('newIntentInput', 'osher'))
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'))
 
-.then( () => z.assertContainsValue(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
 
 .catch( z.failedScenario )
 
@@ -437,9 +437,9 @@ driver
 
 .then( _ => z.scenario('It is possible to enter a value in the corresponding field') )
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'number'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'number'))
  
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -449,7 +449,7 @@ driver
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.param-table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
+.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.param-table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
 
 .catch( z.failedScenario )
 
@@ -458,11 +458,11 @@ driver
 
 .then( _ => z.scenario('Adding invalid key should return an error message') )
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', '123'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', '123'))
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
 
 .then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
 
@@ -473,15 +473,15 @@ driver
 
 .then( _ => z.scenario('Trying to enter an empty parameter should return an error message') )
 
-.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input')).clear())
 
-.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input')).clear())
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', ''))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', ''))
 
-.then( _ => z.inputByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
 
 .then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
 
