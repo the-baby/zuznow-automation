@@ -74,7 +74,7 @@ driver
 
 
 
-/*
+
 
 //Creating an empty intent
 
@@ -281,7 +281,7 @@ driver
 .then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
 
 .catch( z.failedScenario )
-*/
+
 
 
 
@@ -315,7 +315,7 @@ driver
 */
 
 
-/*
+
 //Feature: discovery suggestions
 
 // Adding discovery suggestion
@@ -411,9 +411,9 @@ driver
 
  .catch( z.failedScenario )
  
- */
  
- /*
+ 
+ 
  
  //Feature: Parameters
  
@@ -468,6 +468,7 @@ driver
 
 .catch( z.failedScenario )
 
+
 //Adding of an empty parameter
 
 .then( _ => z.scenario('Trying to enter an empty parameter should return an error message') )
@@ -486,7 +487,7 @@ driver
 
 .catch( z.failedScenario )
  
- */
+ 
  
  //Feature: Response section
 
@@ -581,7 +582,7 @@ driver
 //Feature: Manage entities section
 
 //The section contanins the list of entities
- /*
+ 
 .then( _ => z.scenario('Clicking “Manage entities” button opens the corresponding section') )
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
@@ -624,4 +625,3 @@ driver
 
 
 //TODO: Find out how to delete entity
-*/
