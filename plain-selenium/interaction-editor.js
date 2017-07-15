@@ -1,10 +1,8 @@
 const { By } = require('selenium-webdriver');
 
 const z = require('./common');
-
+const scenario = z.scenario;
 const driver = z.getDriver();
-
-
 
 
 
@@ -12,9 +10,8 @@ const driver = z.getDriver();
 
 
 
-driver
 
-.then( _ => z.scenario('Sign-in successfully leads to homepage') )
+scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
 
@@ -34,9 +31,7 @@ driver
 
 //Interaction Editor opens after creating a new app
 
-driver
-
-.then( _ => z.scenario('Clicking the Next button opens the Test your skill screen') )
+scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
 
@@ -58,7 +53,7 @@ driver
 
 
 
-.then( _ => z.scenario('Clicking the Customize button opens the Interaction Editor tab') )
+scenario('Clicking the Customize button opens the Interaction Editor tab')
 
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 
@@ -78,9 +73,7 @@ driver
 
 //Creating an empty intent
 
-driver
-
-.then( _ => z.scenario('Creating an empty intent returns an error message') )
+scenario('Creating an empty intent returns an error message')
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
@@ -92,9 +85,7 @@ driver
 
 //Creating a new intent
 
-driver
-
-.then( _ => z.scenario('Clicking the Add button adds a new intent') )
+scenario('Clicking the Add button adds a new intent')
 
 .then( _ => z.inputById ('newIntentInput', 'test'))
 
@@ -112,9 +103,8 @@ driver
 
 //Editing Intent name
 
-driver
 
-.then( _ => z.scenario('Clicking the Edit name button allows editing intent name') )
+scenario('Clicking the Edit name button allows editing intent name')
 
 .then( _ => z.waitFor(3))
 
@@ -144,9 +134,7 @@ driver
 
 //Cancelling the Editing of Intent name
 
-driver
-
-.then( _ => z.scenario('Clicking the Cancel button cancels editing of intent name') )
+scenario('Clicking the Cancel button cancels editing of intent name')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 	
@@ -172,9 +160,7 @@ driver
 
 //Disabling intent
 
-driver
-
-.then( _ => z.scenario('Clicking the Disable button disables intent') )
+scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -184,12 +170,33 @@ driver
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span'),'intent name not modified' )              
+.then( _ => z.waitFor(3) )
+
+.then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
 
 .catch( z.failedScenario )
 
 //Deleting intent
-//TODO: find out how to delete an intent
+
+scenario('Clicking the Delete button deletes intent')
+
+.then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
+
+.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1) > .panel-heading > .deleteIntentButton'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickByClassName( 'btn btn-danger'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.assertNoSuchElements(By.className('exam'), 'the deleted intent' ) )
+
+.catch( z.failedScenario )
 
 
 //Feature: Adding, editing and deleting a sample sentence
@@ -198,9 +205,7 @@ driver
 
 //Successful adding of a sample sentence
 
-driver
-
-.then( _ => z.scenario('Clicking the Add button adds a new sample phrase') )
+scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -231,9 +236,7 @@ driver
 
 //Unsuccessful adding of a sample sentence
 
-driver
-
-.then( _ => z.scenario('Clicking the Add button adds a new sample phrase') )
+scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -264,9 +267,7 @@ driver
 
 //Edit sample sentence
 
-driver
-
-.then( _ => z.scenario('Clicking the edit button allows editing a sample sentence') )
+scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
@@ -285,14 +286,12 @@ driver
 
 
 
-/*
+//*
 
 //Delete sample sentence
 
 
-driver
-
-.then( _ => z.scenario('Clicking delete button deletes a sample sentence') )
+scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.inputById ('newIntentInput', 'delete'))
 
@@ -312,15 +311,15 @@ driver
 
 //TODO:how to check that the sample sentence was deleted
 
-*/
+// */
 
 
-
+// /*
 //Feature: discovery suggestions
 
 // Adding discovery suggestion
 
-.then( _ => z.scenario('It is possible to add a discovery suggestion is the corresponding field') )
+scenario('It is possible to add a discovery suggestion is the corresponding field')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -345,9 +344,7 @@ driver
 
 //Successful adding of an entity
 
-driver
-
-.then( _ => z.scenario('Clicking the add entity button allows adding a new entity') )
+scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -377,9 +374,7 @@ driver
 
 //adding of an empty entity
 
-driver
-
-.then( _ => z.scenario('Creating an empty entity should return an error message') )
+scenario('Creating an empty entity should return an error message')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -392,10 +387,7 @@ driver
 
 //Deleting entity
 
-driver
-
-
-.then( _ => z.scenario('Clicking delete button deletes an entity') )
+scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -418,8 +410,7 @@ driver
  //Feature: Parameters
  
 //Adding of a new key
-
-.then( _ => z.scenario('It is possible to enter a key in the corresponding field') )
+scenario('It is possible to enter a key in the corresponding field')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -435,7 +426,7 @@ driver
 
 //Successful adding of a new value and saving the parameter
 
-.then( _ => z.scenario('It is possible to enter a value in the corresponding field') )
+scenario('It is possible to enter a value in the corresponding field')
 
 .then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'number'))
  
@@ -455,8 +446,7 @@ driver
 
 
 //Adding of invalid key
-
-.then( _ => z.scenario('Adding invalid key should return an error message') )
+scenario('Adding invalid key should return an error message')
 
 .then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', '123'))
 
@@ -470,8 +460,7 @@ driver
 
 
 //Adding of an empty parameter
-
-.then( _ => z.scenario('Trying to enter an empty parameter should return an error message') )
+scenario('Trying to enter an empty parameter should return an error message')
 
 .then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input')).clear())
 
@@ -492,8 +481,7 @@ driver
  //Feature: Response section
 
 //Enter text response message
-
-.then( _ => z.scenario('It is possible to enter a text response message in the corresponding field') )
+scenario('It is possible to enter a text response message in the corresponding field')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -526,8 +514,7 @@ driver
 
 /*
 //Enter code response 
-
-.then( _ => z.scenario('It is possible to enter code response in the corresponding field') )
+scenario('It is possible to enter code response in the corresponding field')
 
 .then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(2) > div > select'))
 
@@ -535,11 +522,11 @@ driver
 
 //TODO: how to select an item from the drop-down list
 
-*/
+// */
 
+//*
 //End session checkbox
-
-.then( _ => z.scenario('It is possible to check the corresponding box and the mark is saved') )
+scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(4) > label > input'))
 
@@ -560,8 +547,7 @@ driver
 
 
 //Adding reprompt text
-
-.then( _ => z.scenario('It is possible to check the corresponding box and the mark is saved') )
+scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input', 'How can I help you'))
 
@@ -582,8 +568,7 @@ driver
 //Feature: Manage entities section
 
 //The section contanins the list of entities
- 
-.then( _ => z.scenario('Clicking “Manage entities” button opens the corresponding section') )
+scenario('Clicking “Manage entities” button opens the corresponding section')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -595,8 +580,7 @@ driver
 
 
 //Successful adding of a new entity
-
-.then( _ => z.scenario('Clicking Create button creates a new entity') )
+scenario('Clicking Create button creates a new entity')
 
 .then( _ => z.inputByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > input', 'zuznow'))
 
@@ -610,8 +594,7 @@ driver
 
 
 //Adding of an empty entity
-
-.then( _ => z.scenario('An error message should appear when trying to create an empty entity') )
+scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
@@ -622,6 +605,6 @@ driver
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
 .catch( z.failedScenario )
-
+// */
 
 //TODO: Find out how to delete entity

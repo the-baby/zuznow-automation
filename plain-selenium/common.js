@@ -33,6 +33,7 @@ module.exports = {
     
     locate, 
 
+    assertNoSuchElements,
     assertElementHasClass,
     assertContainsValue,
     assertExistsById,
@@ -73,9 +74,11 @@ function openPage(url, title) {
 }
 
 function scenario(text) {
-    const number = ++endResult.scenariosCount;
-    currentScenario = "#" + number + " - " + text;
-    console.log("\n\n Scenario #%s:\n  %s".bold.yellowBG, number, text)
+    return driver.then(() => {
+        const number = ++endResult.scenariosCount;
+        currentScenario = "#" + number + " - " + text;
+        console.log("\n\n Scenario #%s:\n  %s".bold.yellowBG, number, text)
+    })
 }
 
 function logStep() {
@@ -239,7 +242,6 @@ function assertElementHasClass(locator, descr, className) {
     })
 }
 
-
 function assertContainsValue(locator, descr, text) {
     logStep("assertion:".yellow + " " + descr , ('should contain text `' + text + '`').magenta);
     driver.findElement(locator)
@@ -253,6 +255,18 @@ function assertContainsValue(locator, descr, text) {
     })
 }
 
+function assertNoSuchElements(locator, text) {
+    logStep("assertion:".yellow + " no such element " + text.magenta);
+    return driver
+      .findElements(locator)
+      .then(elements => { 
+          if (elements.length) 
+              return Promise.reject(new Error('found elements that should not exist'));
+                
+          logStep(" - OK!".green)
+          return Promise.resolve()
+      })
+}
 
 
 
