@@ -94,7 +94,7 @@ function substep() {
 }
 
 function failedScenario(e) {
-    endResult.failedScenarios.push(currentScenario);
+    endResult.failedScenarios.push({ scenario: currentScenario, error: e });
     logStep("SENARIO FAILED".redBG.black + "\n    " + e.stack.replace(/\n/g, "\n    ").red)
 }
 
@@ -107,7 +107,15 @@ function endResult() {
           "  FAILURE  ".redBG.white.bold,
 		  ("  " + endResult.scenariosCount + " scenarios ran").bold,
           ("  " + endResult.failedScenarios.length + " scenarios failed:").red,
-          "    " + endResult.failedScenarios.join("\n    ")
+          "    " + endResult.failedScenarios
+                    .map( ({scenario, error}) => 
+                        scenario.yellowBG.white.bold
+                        + "\n      reason: " 
+                        + error.message
+                            .replace(/\(Session info: .*\n.*/m,"")
+                            .replace(/\n/g, "\n      ").red
+                    )
+                    .join("\n    ")
         ].join("\n"))
 		
     } else {
