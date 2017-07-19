@@ -199,6 +199,8 @@ scenario('Clicking the Delete button deletes intent')
 .catch( z.failedScenario )
 
 
+/*
+
 //Feature: Adding, editing and deleting a sample sentence
 
 
@@ -286,35 +288,28 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 
 
-//*
-
 //Delete sample sentence
 
 
 scenario('Clicking delete button deletes a sample sentence')
 
-.then( _ => z.inputById ('newIntentInput', 'delete'))
-
-.then( _ => z.clickByClassName ('input-group-addon btn'))
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(2))
 
-.then( _ => z.clickByCss('#accordion_interaction > div:nth-child(1) > div.panel-heading > a.deleteIntentButton > i'))
+.then( _ => z.clickByClassName ('fa fa-refresh'))	
 
-.then( _ => z.assertExistsByCss('#deleteIntentModal > div > div > div.modal-body'), 'the confirmation message appeared')
-
-.then( _ => z.clickByClassName(' btn btn-danger'))             
+.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td.sample_content > span'), 'the deleted sample sentence' ) )           
 
  .catch( z.failedScenario )
 
-//TODO:how to check that the sample sentence was deleted
-
-// */
 
 
-// /*
+
+
+
 //Feature: discovery suggestions
 
 // Adding discovery suggestion
@@ -337,7 +332,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .catch( z.failedScenario )
 
-
+*/
 
 
 //Feature: Adding and deleting entities
@@ -397,15 +392,25 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.clickById ('btnSave'))
 
+.then( _ => z.waitFor(2))
+	
 .then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr > td:nth-child(3) > a > i'))
 
-.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table'))
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr:nth-child(2) > td.entity_name > input'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
  
  
  
- 
+ /*
  
  //Feature: Parameters
  
@@ -423,6 +428,7 @@ scenario('It is possible to enter a key in the corresponding field')
 .then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
 
 .catch( z.failedScenario )
+
 
 //Successful adding of a new value and saving the parameter
 
@@ -524,7 +530,7 @@ scenario('It is possible to enter code response in the corresponding field')
 
 // */
 
-//*
+/*
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
@@ -547,6 +553,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 
 //Adding reprompt text
+
 scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input', 'How can I help you'))
@@ -564,10 +571,12 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 .catch( z.failedScenario )
 
 //TODO: Find out how to scroll the page up
- 
+
+  */
 //Feature: Manage entities section
 
 //The section contanins the list of entities
+
 scenario('Clicking “Manage entities” button opens the corresponding section')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
@@ -580,11 +589,20 @@ scenario('Clicking “Manage entities” button opens the corresponding section'
 
 
 //Successful adding of a new entity
+
 scenario('Clicking Create button creates a new entity')
 
 .then( _ => z.inputByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > input', 'zuznow'))
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
+
+.then( _ => z.clickByCss ('#btnSave'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
 
 .then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName'), 'the new entity is added')
 
@@ -594,6 +612,7 @@ scenario('Clicking Create button creates a new entity')
 
 
 //Adding of an empty entity
+
 scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
@@ -605,6 +624,25 @@ scenario('An error message should appear when trying to create an empty entity')
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
 .catch( z.failedScenario )
-// */
+ 
+ //Deleting entity
+ 
+ scenario('Clicking delete button deletes an entity')
+
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td:nth-child(2) > a.delete > i'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.assertNoSuchElements(By.css('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName.bold'), 'the deleted entity' ) ) 
+
+ .catch( z.failedScenario )
 
 //TODO: Find out how to delete entity
