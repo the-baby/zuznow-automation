@@ -596,6 +596,7 @@ scenario('Clicking Create button creates a new entity')
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
 
+  
 .then( _ => z.clickByCss ('#btnSave'))
 
 .then( _ => z.waitFor(2))
@@ -610,6 +611,7 @@ scenario('Clicking Create button creates a new entity')
 
 //TODO: Find out how to scroll the page up
 
+/*
 
 //Adding of an empty entity
 
@@ -646,3 +648,4 @@ scenario('An error message should appear when trying to create an empty entity')
  .catch( z.failedScenario )
 
 //TODO: Find out how to delete entity
+*/
