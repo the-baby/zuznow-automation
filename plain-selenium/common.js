@@ -31,7 +31,9 @@ module.exports = {
     clickByXPath,
     click,
     
-    locate, 
+    act,
+    locate,
+    scrollToTop,
 
     assertNoSuchElements,
     assertElementHasClass,
@@ -166,8 +168,7 @@ function inputByXPath(xpath, text) {
 }
 function input(locator, descr, text) {
     logStep("writing text to field   " + descr.magenta + ", text: ", text.magenta);
-    return locate(locator)
-        .then( e =>  substep("sending input") || e.sendKeys(text) )    
+    return act(locator, "clicking element", (e) => e.sendKeys(text) )    
 }
             
        
@@ -201,9 +202,9 @@ function clickByXPath(xpath) {
 
 function click(locator, descr) {
     logStep("clicking element   ", descr.magenta);
-    return locate(locator)
-        .then( e => substep("clicking") || e.click() )
+    return act(locator, "clicking element", (e) => e.click() )
 }
+
 
 
 
@@ -278,8 +279,21 @@ function assertNoSuchElements(locator, text) {
 
 
 
+function act(locator, descr, action) {
+    let el;
+    return locate(locator)
+        .then( e => substep(descr) || action(el = e) )
+        .catch( _ => 
+            substep("not visible." .yellow + " trying scroll into view")
+            || driver
+                .executeScript("arguments[0].focus()", el)
+                .then( _ => driver.sleep(300) )
+                .then( _ => substep(descr) || action(el) )
+        )
+}
+
 function locate(locator) {
-    substep("waiting for element to be found")
+    substep("waiting for element to be found in DOM")
     return driver.wait(until.elementLocated(locator)) 
         .then( e => substep("waiting for element to be visibile") 
                  || driver.wait(until.elementIsVisible( e ) ) 
@@ -287,4 +301,9 @@ function locate(locator) {
 }
 
 
-
+function scrollToTop() {
+    logStep("scrolling to top");
+    return driver
+             .executeScript("window.scroll(0,0);")
+             .then( _ => driver.sleep(500) );
+}
