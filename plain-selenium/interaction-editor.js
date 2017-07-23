@@ -604,14 +604,7 @@ scenario('Clicking Create button creates a new entity')
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
 
-  
-.then( _ => z.clickByCss ('#btnSave'))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
-
-.then( _ => z.waitFor(2))
+.then( _ => saveAndRefresh() )
 
 .then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName'), 'the new entity is added')
 
@@ -642,18 +635,24 @@ scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
+
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td:nth-child(2) > a.delete > i'))
 
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
-
-.then( _ => z.waitFor(2))
+.then( _ => saveAndRefresh() )
 
 .then( _ => z.assertNoSuchElements(By.css('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName.bold'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
 
-*/
+//TODO: Find out how to delete entity
+
+
+function saveAndRefresh() {
+    return driver
+        .then( _ => z.scrollToTop())
+        .then( _ => z.clickById ('btnSave'))
+        .then( _ => z.waitFor(2))
+        .then( _ => z.clickByClassName ('fa fa-refresh'))
+        .then( _ => z.waitFor(2))
+}
