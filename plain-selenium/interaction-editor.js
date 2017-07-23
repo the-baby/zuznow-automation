@@ -176,6 +176,7 @@ scenario('Clicking the Disable button disables intent')
 
 .catch( z.failedScenario )
 
+
 //Deleting intent
 
 scenario('Clicking the Delete button deletes intent')
@@ -534,7 +535,7 @@ scenario('It is possible to enter code response in the corresponding field')
 
 //TODO: how to select an item from the drop-down list
 
-// */
+ */
 
 
 //End session checkbox
@@ -579,7 +580,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 //TODO: Find out how to scroll the page up
 
   
- /*
+ 
   
 //Feature: Manage entities section
 
