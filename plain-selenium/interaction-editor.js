@@ -47,7 +47,7 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z. clickById ('btnNext'))
 
-.then( _ => z.assertExistsById('simulator'),'the Play simulator button' )
+.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )
 
 .catch( z.failedScenario )
 
@@ -199,7 +199,7 @@ scenario('Clicking the Delete button deletes intent')
 .catch( z.failedScenario )
 
 
-/*
+
 
 //Feature: Adding, editing and deleting a sample sentence
 
@@ -221,6 +221,8 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.inputByCss ('#collapsesample > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
+.then( _ => z.waitFor(3))
+
 .then( _ => z.clickByCss ('#collapsesample > div > div > div > div.col-md-4.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.clickById ('btnSave'))
@@ -238,8 +240,6 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 //Unsuccessful adding of a sample sentence
 
-scenario('Clicking the Add button adds a new sample phrase')
-
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
 .then( _ => z.inputById ('newIntentInput', 'larisa'))
@@ -253,6 +253,8 @@ scenario('Clicking the Add button adds a new sample phrase')
 .then( _ => z.scenario('Entering a phrase with invalid characters returns an error message') )
 
 .then( _ => z.inputByCss ('#collapselarisa> div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence?'))
+
+.then( _ => z.waitFor(3))
 
 .then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > i'))
 
@@ -326,13 +328,15 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input', 'what is my mark'))
 
+.then( _ => z.waitFor(3))
+
 .then( _ => z.clickById ('btnSave'))
 
 .then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input'), "the expected text in the element", 'what is my mark') ) 
 
 .catch( z.failedScenario )
 
-*/
+
 
 
 //Feature: Adding and deleting entities
@@ -352,6 +356,8 @@ scenario('Clicking the add entity button allows adding a new entity')
 .then( _ => z.waitFor(3))
 
 .then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > input', 'class'))
+
+.then( _ => z.waitFor(3))
 
 .then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
 
@@ -410,7 +416,7 @@ scenario('Clicking delete button deletes an entity')
  
  
  
- /*
+ 
  
  //Feature: Parameters
  
@@ -530,7 +536,7 @@ scenario('It is possible to enter code response in the corresponding field')
 
 // */
 
-/*
+
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
@@ -572,7 +578,9 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 //TODO: Find out how to scroll the page up
 
-  */
+  
+ /*
+  
 //Feature: Manage entities section
 
 //The section contanins the list of entities
@@ -611,7 +619,7 @@ scenario('Clicking Create button creates a new entity')
 
 //TODO: Find out how to scroll the page up
 
-/*
+
 
 //Adding of an empty entity
 
@@ -626,6 +634,7 @@ scenario('An error message should appear when trying to create an empty entity')
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
 .catch( z.failedScenario )
+
  
  //Deleting entity
  
@@ -647,5 +656,4 @@ scenario('An error message should appear when trying to create an empty entity')
 
  .catch( z.failedScenario )
 
-//TODO: Find out how to delete entity
 */
