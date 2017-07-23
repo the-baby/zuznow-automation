@@ -124,7 +124,7 @@ driver
 .then( _ => z.clickByClassName ('pager wizard'))
 .then( _ => z.waitFor(2))
 .then( _ => z. clickById ('btnNext'))
-.then( _ => z.assertExistsById('simulator'),'the Play simulator button' )
+.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )
 .catch( z.failedScenario )
 
 .then( _ => z.scenario('Clicking the Customize button opens the Interaction Editor tab') )
@@ -144,7 +144,7 @@ driver
 .then( _ => z.clickByClassName ('pager wizard'))
 .then( _ => z.waitFor(2))
 .then( _ => z. clickById ('btnNext'))
-.then( _ => z.clickByClassName ('btn btn-success btn-square btn-create finish'))
+.then( _ => z.clickById ('btnPublish'))
 .then( _ => z.locate(By.id('amazon-tab1')))
 .then( _ => z.waitFor(2))
 .then( _ => z.assertExistsByLinkText('developer.amazon.com'), "the wizard is open")
