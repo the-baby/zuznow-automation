@@ -88,9 +88,8 @@ driver
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Alexa'))
 .then( _ => z.inputById('alexa_redirect_urls_stg', 
-'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q
- https://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
+'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q\nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
 .then( _ => z.clickById('btnGenerateAlexaLinking_stg', 'Generate button')  )
-.then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa')
-.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6')
+.then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa'))
+.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6'))
 .catch(z.failedScenario)
