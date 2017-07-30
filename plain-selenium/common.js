@@ -148,6 +148,12 @@ function inputById(id, text) {
     input(By.id(id), "by id: " + id, text)
 }
 
+/*
+function inputById(id, link) {
+    input(By.id(id), "by id: " + id, link)
+}
+*/
+
 function inputByName(name, text) {
     return input(By.name(name), "by name: " + name, text)
 }
