@@ -66,7 +66,7 @@ driver
 .then( _ => z.clickByLinkText('Staging'))
 .then( () => z.assertContainsValue(By.css('#log_level_stg'), "the expected text in the element", 'warn') )
 .catch(z.failedScenario)
-*/
+
 
 //Feature: Alexa subtab (staging)
 //Alexa support and Account linking checkboxes are marked
@@ -87,9 +87,34 @@ driver
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Alexa'))
-.then( _ => z.inputById('alexa_redirect_urls_stg', 
-'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q\nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
+.then( _ => z.inputById('alexa_redirect_urls_stg', 'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q/nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
 .then( _ => z.clickById('btnGenerateAlexaLinking_stg', 'Generate button')  )
-.then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa'))
-.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6'))
+//.then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa'))
+//.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6'))
 .catch(z.failedScenario)
+*/
+
+//Feature:Google subtab (staging)
+//Google support and Account linking checkboxes are not marked
+
+.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Staging'))
+.then( _ => z.clickByLinkText('Google'))
+.then( _ => z.assertExistsByCss('#google_support_stg:not(:checked)'), 'the checkbox is not marked')
+.then( _ => z.assertExistsByCss('#google_account_linking_stg:not(:checked)'), 'the checkbox is not marked')
+.catch(z.failedScenario)
+
+//Feature: Production tab
+//Clicking the production button opens the Production tab
+
+.then( _ => z.scenario('Clicking the Production button opens the productoin tab') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( _ => z.assertExistsByCss('#prod-tab > li.active > a'), 'the production tab opened')
+.catch( z.failedScenario )
+
+//Selecting a certain value from the Log level drop-down menu
+
