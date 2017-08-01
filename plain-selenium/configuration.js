@@ -92,7 +92,7 @@ driver
 //.then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa'))
 //.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6'))
 .catch(z.failedScenario)
-*/
+
 
 //Feature:Google subtab (staging)
 //Google support and Account linking checkboxes are not marked
@@ -118,3 +118,63 @@ driver
 
 //Selecting a certain value from the Log level drop-down menu
 
+.then( _ => z.scenario('It is possible to select a certain value from the Log level drop-down menu ') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( _ => z. clickById ('log_level'))
+.then( _ => z. clickByCss ('#log_level > option:nth-child(5)'))
+.then( _ => z. clickById('btnSave'))
+.then( _ => z. clickByCss ('#btnEdit > i'))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( () => z.assertContainsValue(By.css('#log_level'), "the expected text in the element", 'debug') )
+.catch(z.failedScenario)
+*/
+//Feature: Alexa subtab (Production)
+//Alexa support and Account linking checkboxes are marked
+
+.then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( _ => z.clickByLinkText('Alexa'))
+.then( _ => z.assertExistsByCss('#alexa_support:checked'), 'the checkbox is marked')
+.then( _ => z.assertExistsByCss('#alexa_account_linking:checked'), 'the checkbox is marked')
+.catch(z.failedScenario)
+/*
+//Clicking the Generate button generates client id and client secret values
+.then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( _ => z.clickByLinkText('Alexa'))
+.then( _ => z.inputById('alexa_redirect_urls', 'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q/nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
+.then( _ => z.clickById('btnGenerateAlexaLinking', 'Generate button')  )
+//.then( _ => z.assertContainsValue(By.id('alexa_client_id'), "the expected text in the element", 'alexa'))
+//.then( _ => z.assertContainsValue(By.id('alexa_client_secret'), "the expected text in the element", 'lM01me7zL6'))
+.catch(z.failedScenario)
+
+
+//Feature: Google subtab (staging)
+//Google support and Account linking checkboxes are not marked
+
+.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByLinkText('Production'))
+.then( _ => z.clickByLinkText('Google'))
+.then( _ => z.assertExistsByCss('#google_support:not(:checked)'), 'the checkbox is not marked')
+.then( _ => z.assertExistsByCss('#google_account_linking:not(:checked)'), 'the checkbox is not marked')
+.catch(z.failedScenario)
+*/
+//Feature: Delete skill
+//Clicking Delete button deletes the app
+
+.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
+.then( _ => z.waitFor(3))
+.then( _ => driver.switchTo().alert().accept() ) 
+.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
