@@ -15,6 +15,7 @@ module.exports = {
 	clearCookies, 
     openPage,
 	
+	
     inputById,
     inputByName,
     inputByClassName,
@@ -34,6 +35,7 @@ module.exports = {
     act,
     locate,
     scrollToTop,
+
 
     assertNoSuchElements,
     assertElementHasClass,
