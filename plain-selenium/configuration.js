@@ -41,7 +41,7 @@ driver
 .then( _ => z.assertExistsByCss('#tab-1 > div.col-lg-8 > div:nth-child(1) > div.portlet-header > div'), 'the general tab')
 .catch( z.failedScenario )
 
-/*
+
 //Feature: Staging tab
 //Clicking the configuration button opens the general part of the Configuration tab
 
@@ -130,7 +130,7 @@ driver
 .then( _ => z.clickByLinkText('Production'))
 .then( () => z.assertContainsValue(By.css('#log_level'), "the expected text in the element", 'debug') )
 .catch(z.failedScenario)
-*/
+
 //Feature: Alexa subtab (Production)
 //Alexa support and Account linking checkboxes are marked
 
@@ -142,7 +142,7 @@ driver
 .then( _ => z.assertExistsByCss('#alexa_support:checked'), 'the checkbox is marked')
 .then( _ => z.assertExistsByCss('#alexa_account_linking:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
-/*
+
 //Clicking the Generate button generates client id and client secret values
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
@@ -167,7 +167,7 @@ driver
 .then( _ => z.assertExistsByCss('#google_support:not(:checked)'), 'the checkbox is not marked')
 .then( _ => z.assertExistsByCss('#google_account_linking:not(:checked)'), 'the checkbox is not marked')
 .catch(z.failedScenario)
-*/
+
 //Feature: Delete skill
 //Clicking Delete button deletes the app
 
@@ -178,3 +178,4 @@ driver
 .then( _ => z.waitFor(3))
 .then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
+.catch(z.failedScenario)
