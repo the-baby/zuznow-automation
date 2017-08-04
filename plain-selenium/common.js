@@ -302,7 +302,7 @@ function act(locator, descr, action) {
 
 function locate(locator) {
     substep("waiting for element to be found in DOM")
-    return driver.wait(until.elementLocated(locator)) 
+    return driver.wait(until.elementLocated(locator),30000) 
         .then( e => substep("waiting for element to be visibile") 
                  || driver.wait(until.elementIsVisible( e ) ) 
         )
