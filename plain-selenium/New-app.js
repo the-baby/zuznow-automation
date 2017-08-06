@@ -1,13 +1,14 @@
 const { By } = require('selenium-webdriver');
 const z = require('./common');
 const driver = z.getDriver();
-process.on('beforeExit', () => z.endResult() )
+
 
 //Feature: Creating a new app with a custom industry
 
 driver
 .then( _ => z.scenario('Sign-in successfully leads to homepage') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.inputById('edit-name','admin') )
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
 .then( _ => z.clickById('edit-submit') )
@@ -21,12 +22,14 @@ driver
 driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/userpage'))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('menu-item new-site'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
 .catch( z.failedScenario )                               
 
 .then( _ => z.scenario('Clicking the next button should open the New app Ready screen') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.inputById ('org-name', 'test'))
@@ -40,6 +43,7 @@ driver
 driver
 .then( _ => z.scenario('Checking that demo content is present in the custom app') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.inputById ('org-name', 'test'))
@@ -59,6 +63,7 @@ driver
 driver
 .then( _ => z.scenario('The next button is unavailable when one of the parameters is missing') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom'))
 .then( _ => z.assertElementHasClass(By.id('btnNext'), "`next` button is disabled", "disabled"))
@@ -69,6 +74,7 @@ driver
 driver
 .then( _ => z.scenario('Checking that it is possible to add other assistants to the app') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.inputById ('org-name', 'test'))
@@ -82,6 +88,7 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Customize button opens the Editor Interaction tab') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.inputById ('org-name', 'test'))
@@ -98,6 +105,7 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Customize button opens the Editor Interaction tab') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.waitFor(3))
@@ -109,6 +117,7 @@ driver
 .then( _ => z.waitFor(3))
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.waitFor(3))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
@@ -117,7 +126,8 @@ driver
 //Successful creation of a predefined banking app
 driver
 .then( _ => z.scenario('Clicking the Next button opens the Test your skill screen') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+.then( _ => driver.manage().window().maximize()) 
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Banking'))
 .then( _ => z.inputById ('org-name', 'TJX Rewards'))
@@ -138,6 +148,7 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Publish button opens the Publish Skill Wizard') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Banking'))
 .then( _ => z.inputById ('org-name', 'Golden 1 Credit Union'))
@@ -151,8 +162,7 @@ driver
 .catch( z.failedScenario )
 
 
-driver
-.then( _ => z.endResult() )
+
 
 
 
