@@ -41,6 +41,7 @@ driver
 
 //error messages of create account form
 driver
+
 .then( _ => scenario('error messages of create account form') )
 .then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => inputById('edit-mail','Name@LastName') )
