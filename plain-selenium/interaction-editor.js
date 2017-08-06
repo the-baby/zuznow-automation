@@ -15,6 +15,8 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.inputById('edit-name','admin') )
 
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
@@ -34,6 +36,8 @@ scenario('Sign-in successfully leads to homepage')
 scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+
+.then( _ => driver.manage().window().maximize())
 
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 
@@ -137,6 +141,8 @@ scenario('Clicking the Edit name button allows editing intent name')
 scenario('Clicking the Cancel button cancels editing of intent name')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => driver.manage().window().maximize())
 	
 .then( _ => z.clickByCss('#accordion_interaction > div:nth-child(1) > div.panel-heading > i.fa.fa-pencil'))
 
@@ -164,6 +170,8 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1) > div.panel-heading > a.intentDisable.fa.fa-toggle-on.pull-right'))
 
 .then( _ => z.clickById ('btnSave'))
@@ -175,7 +183,6 @@ scenario('Clicking the Disable button disables intent')
 .then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
 
 .catch( z.failedScenario )
-
 
 //Deleting intent
 
@@ -212,6 +219,8 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.inputById ('newIntentInput', 'sample'))
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
@@ -242,6 +251,8 @@ scenario('Clicking the Add button adds a new sample phrase')
 //Unsuccessful adding of a sample sentence
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => driver.manage().window().maximize())
 
 .then( _ => z.inputById ('newIntentInput', 'larisa'))
 
@@ -321,6 +332,8 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.inputById ('newIntentInput', 'discovery'))
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
@@ -347,6 +360,8 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => driver.manage().window().maximize())
 
 .then( _ => z.inputById ('newIntentInput', 'NewEntity'))
 
@@ -380,6 +395,8 @@ scenario('Creating an empty entity should return an error message')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
 
 .then( _ => z.assertExistsById('jGrowl'), 'error message appeared')
@@ -392,6 +409,8 @@ scenario('Creating an empty entity should return an error message')
 scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => driver.manage().window().maximize())
 
 .then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > input', 'DeleteEntity'))
 
@@ -425,6 +444,8 @@ scenario('Clicking delete button deletes an entity')
 scenario('It is possible to enter a key in the corresponding field')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+
+.then( _ => driver.manage().window().maximize())
 
 .then( _ => z.inputById ('newIntentInput', 'osher'))
 
@@ -498,6 +519,8 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.inputById ('newIntentInput', 'Response'))
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
@@ -535,7 +558,7 @@ scenario('It is possible to enter code response in the corresponding field')
 
 //TODO: how to select an item from the drop-down list
 
- */
+// */
 
 
 //End session checkbox
@@ -590,6 +613,8 @@ scenario('Clicking “Manage entities” button opens the corresponding section'
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
 .then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(2) > td.entityName'), 'the list of entities is present')
@@ -621,6 +646,8 @@ scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
@@ -636,6 +663,8 @@ scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
+.then( _ => driver.manage().window().maximize())
+
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
 .then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td:nth-child(2) > a.delete > i'))
@@ -645,6 +674,9 @@ scenario('An error message should appear when trying to create an empty entity')
 .then( _ => z.assertNoSuchElements(By.css('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName.bold'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
+ 
+ driver
+.then( _ => z.endResult() )
 
 //TODO: Find out how to delete entity
 
@@ -657,3 +689,6 @@ function saveAndRefresh() {
         .then( _ => z.clickByClassName ('fa fa-refresh'))
         .then( _ => z.waitFor(2))
 }
+
+driver
+.then( _ => z.endResult() )
