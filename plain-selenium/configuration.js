@@ -7,6 +7,7 @@ const driver = z.getDriver();
 driver
 .then( _ => z.scenario('Sign-in successfully leads to homepage') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.inputById('edit-name','admin') )
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
 .then( _ => z.clickById('edit-submit') )
@@ -19,12 +20,14 @@ driver
 driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/userpage'))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('menu-item new-site'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
 .catch( z.failedScenario )                               
 
 .then( _ => z.scenario('Clicking the next button should open the New app Ready screen') )
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
 .then( _ => z.inputById ('org-name', 'test'))
@@ -56,6 +59,7 @@ driver
 
 .then( _ => z.scenario('It is possible to select a certain value from the Log level drop-down menu ') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z. clickById ('log_level_stg'))
@@ -73,6 +77,7 @@ driver
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Alexa'))
@@ -84,6 +89,7 @@ driver
 
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Alexa'))
@@ -99,6 +105,7 @@ driver
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Google'))
@@ -136,6 +143,7 @@ driver
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z.clickByLinkText('Alexa'))
@@ -146,6 +154,7 @@ driver
 //Clicking the Generate button generates client id and client secret values
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z.clickByLinkText('Alexa'))
@@ -171,11 +180,15 @@ driver
 //Feature: Delete skill
 //Clicking Delete button deletes the app
 
-.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
+.then( _ => z.scenario('Clicking Delete button deletes the app') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => driver.manage().window().maximize())
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
 .then( _ => z.waitFor(3))
 .then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
 .catch(z.failedScenario)
+
+driver
+.then( _ => z.endResult() )
