@@ -42,7 +42,7 @@ driver
 .then( _ => z.scenario('Clicking the Sets button opens the rules sets section') )
 .then( _ => driver.manage().window().maximize())
 .then( _ => z. clickById ('btnShowEditInfo'))
-.then( _ => z. clickById ('btnSave'))
+.then( _ => z.waitFor(3))
 .then( _ => z.assertExistsByCss('#rulesSetTableBody > tr:nth-child(1) > td.setName'), "rules sets section"  )
 .catch( z.failedScenario )                          
 
@@ -52,11 +52,49 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Plus button adds a rules set') )
 .then( _ => z. clickById ('btnAddRulesSet'))
-.then( _ => z.waitFor(3))
-.then( _ => z. clickById ('btnReset'))
+.then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.waitFor(3))
 .then( _ => z.assertExistsByCss('#rulesSetTableBody > tr.dd-handle.selected > td.setName'), "rules sets section"  )
 .catch( z.failedScenario )
 
+
+//Scenario: Clicking the Edit button enables the editing of the set name
+driver
+.then( _ => z.scenario('Clicking the Edit button enables the editing of the set name') )
+.then( _ => z. clickByClassName ('btnRenameSet btn'))
+.then( _ => z.assertExistsByClassName('setRenameInput'), "rename set field"  )
+.catch( z.failedScenario )
+
+//Scenario: It is possible to enter a new name for the Set
+
+driver
+.then( _ => z.scenario('It is possible to enter a new name for the Set') )
+.then( _ => driver.findElement(By.className('setRenameInput')).clear())
+.then( _ => z. inputByClassName ('setRenameInput', 'Test set'))
+.then( _ => z. clickByClassName ('btnSaveSetInfo btn'))
+.then( _ => z. clickById ('btnReset'))            
+.then( () => z.assertContainsValue(By.css('#txtName'), "the expected text in the element", 'Test set') )
+.then( _ => z.waitFor(3))
+.catch( z.failedScenario )
+
+
+
+//Scenario: Clicking Delete button deletes the set
+driver
+.then( _ => z.scenario('Clicking Delete button deletes the set') )
+.then( _ => z. clickByCss('#rulesSetTableBody > tr.dd-handle.selected > td.setActions > div > button.btnDeleteSet.btn > i'))
+.then( _ => driver.switchTo().alert().accept() )
+.then( _ => z.assertNoSuchElements(By.css('#rulesSetTableBody > tr.dd-handle.selected > td.setName'), 'the deleted rules set' ) )  
+.catch( z.failedScenario )
+
+//Clicking Delete button deletes the app
+
+.then( _ => z.scenario('Clicking Delete button deletes the app') )
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
+.then( _ => z.waitFor(3))
+.then( _ => driver.switchTo().alert().accept() ) 
+.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
+.catch(z.failedScenario)
 
 
