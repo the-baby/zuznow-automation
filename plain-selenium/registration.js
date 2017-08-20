@@ -91,6 +91,9 @@ driver
 .then( _ => waitFor(3))
 .then( _ => clickByClassName('RveJvd snByac') )
 .then( _ => inputByName('password', 'Apples32') )
+
+
+
 .then( _ => waitFor(1))
 .then( _ => clickByClassName('RveJvd snByac') )
 .then( _ => waitFor(1))
