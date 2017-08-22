@@ -1,34 +1,34 @@
+const config = require('config')
+const baseUrl = config.baseUrl
+const admin = config.creds.admin
+
 const { By } = require('selenium-webdriver');
 const z = require('./common');
+const scenario = z.scenario;
 const driver = z.getDriver();
-
 
 //Feature: Creating a new app with a custom industry
 
-driver
-.then( _ => z.scenario('Sign-in successfully leads to homepage') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
-.then( _ => driver.manage().window().maximize())
-.then( _ => z.inputById('edit-name','admin') )
-.then( _ => z.inputById('edit-pass','vs8Sr7aU') )
+scenario('Sign-in successfully leads to homepage')
+.then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
+.then( _ => z.maximizeWindow() )
+.then( _ => z.inputById('edit-name', admin.user) )
+.then( _ => z.inputById('edit-pass', admin.password) )
 .then( _ => z.clickById('edit-submit') )
-.then( _ => z.waitFor(3))
-.then( _ => z.assertExistsByClassName('menu-item new-site'), "home page"  )
+.then( _ => z.waitFor(3) )
+.then( _ => z.assertExistsByClassName('menu-item new-site', 'home page') )
 .catch( z.failedScenario )
 
-
-
 //Successful creation of a default custom app with demo content
-driver
-.then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/userpage'))
+scenario('Clicking the new app button opens the Create new app screen')
+.then( _ => z.openPage(baseUrl + '/userpage'))
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('menu-item new-site'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
 .catch( z.failedScenario )                               
 
-.then( _ => z.scenario('Clicking the next button should open the New app Ready screen') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+scenario('Clicking the next button should open the New app Ready screen') 
+.then( _ => z.openPage(baseUrl + '/new'))
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
@@ -40,9 +40,8 @@ driver
 .then( _ => z.assertExistsById('btnFinish'), "Alexa skill is ready"  )
 .catch( z.failedScenario )
 
-driver
-.then( _ => z.scenario('Checking that demo content is present in the custom app') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+scenario('Checking that demo content is present in the custom app')
+.then( _ => z.openPage(baseUrl + '/new')) 
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
@@ -60,9 +59,8 @@ driver
 
 
 //The next button is unavailable when one of the parameters is missing
-driver
-.then( _ => z.scenario('The next button is unavailable when one of the parameters is missing') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+scenario('The next button is unavailable when one of the parameters is missing')
+.then( _ => z.openPage(baseUrl + '/new'))
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom'))
@@ -71,9 +69,8 @@ driver
 
 
 //Adding other voice assistants to the app
-driver
-.then( _ => z.scenario('Checking that it is possible to add other assistants to the app') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+scenario('Checking that it is possible to add other assistants to the app')
+.then( _ => z.openPage(baseUrl + '/new')) 
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
@@ -85,9 +82,8 @@ driver
 .catch( z.failedScenario )
 
 //Customization of a new custom app with demo content
-driver
-.then( _ => z.scenario('Clicking the Customize button opens the Editor Interaction tab') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+scenario('Clicking the Customize button opens the Editor Interaction tab')
+.then( _ => z.openPage(baseUrl + '/new')) 
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
@@ -102,9 +98,8 @@ driver
 .catch( z.failedScenario )
 
 //Successful creation of a custom app without demo content 
-driver
-.then( _ => z.scenario('Clicking the Customize button opens the Editor Interaction tab') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+scenario('Clicking the Customize button opens the Editor Interaction tab')
+.then( _ => z.openPage(baseUrl + '/new')) 
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
@@ -124,9 +119,8 @@ driver
 //Feature: Creating a new app with a predefined bank industry
 
 //Successful creation of a predefined banking app
-driver
-.then( _ => z.scenario('Clicking the Next button opens the Test your skill screen') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
+scenario('Clicking the Next button opens the Test your skill screen')
+.then( _ => z.openPage(baseUrl + '/new'))
 .then( _ => driver.manage().window().maximize()) 
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Banking'))
@@ -137,7 +131,7 @@ driver
 .then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )
 .catch( z.failedScenario )
 
-.then( _ => z.scenario('Clicking the Customize button opens the Interaction Editor tab') )
+scenario('Clicking the Customize button opens the Interaction Editor tab')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.locate(By.id('btnSave')))
 .then( _ => z.waitFor(2))
@@ -145,9 +139,8 @@ driver
 .catch( z.failedScenario )
 
 //Publishing of a new predefined banking app
-driver
-.then( _ => z.scenario('Clicking the Publish button opens the Publish Skill Wizard') )
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+scenario('Clicking the Publish button opens the Publish Skill Wizard')
+.then( _ => z.openPage(baseUrl + '/new')) 
 .then( _ => driver.manage().window().maximize())
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Banking'))
