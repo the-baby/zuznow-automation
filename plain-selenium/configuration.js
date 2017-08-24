@@ -4,9 +4,13 @@ const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
 
+const config = require('config')
+const baseUrl = config.baseUrl
+const admin = config.creds.admin
+
 driver
 .then( _ => z.scenario('Sign-in successfully leads to homepage') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 .then( _ => z.maximizeWindow() )
 .then( _ => z.inputById('edit-name','admin') )
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
@@ -19,7 +23,7 @@ driver
 
 driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/userpage'))
+.then( _ => z.openPage(baseUrl + '/userpage'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickByClassName('menu-item new-site'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
@@ -58,7 +62,7 @@ driver
 //Selecting a certain value from the Log level drop-down menu
 
 .then( _ => z.scenario('It is possible to select a certain value from the Log level drop-down menu ') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
@@ -76,7 +80,7 @@ driver
 //Alexa support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
@@ -88,7 +92,7 @@ driver
 //Clicking the Generate button generates client id and client secret values
 
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
@@ -104,7 +108,7 @@ driver
 //Google support and Account linking checkboxes are not marked
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
@@ -117,7 +121,7 @@ driver
 //Clicking the production button opens the Production tab
 
 .then( _ => z.scenario('Clicking the Production button opens the productoin tab') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z.assertExistsByCss('#prod-tab > li.active > a'), 'the production tab opened')
@@ -126,7 +130,7 @@ driver
 //Selecting a certain value from the Log level drop-down menu
 
 .then( _ => z.scenario('It is possible to select a certain value from the Log level drop-down menu ') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z. clickById ('log_level'))
@@ -142,7 +146,7 @@ driver
 //Alexa support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
@@ -153,7 +157,7 @@ driver
 
 //Clicking the Generate button generates client id and client secret values
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
@@ -169,7 +173,7 @@ driver
 //Google support and Account linking checkboxes are not marked
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z.clickByLinkText('Google'))
@@ -181,7 +185,7 @@ driver
 //Clicking Delete button deletes the app
 
 .then( _ => z.scenario('Clicking Delete button deletes the app') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor '))
+.then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
