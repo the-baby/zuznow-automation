@@ -4,11 +4,15 @@ const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
 
+const config = require('config')
+const baseUrl = config.baseUrl
+const admin = config.creds.admin
+
 
 driver
 scenario('Sign-in successfully leads to homepage')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
 .then( _ => z.maximizeWindow() )
 
@@ -29,7 +33,7 @@ scenario('Sign-in successfully leads to homepage')
 driver
 scenario('Clicking the User button opens the User menu')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => z.maximizeWindow() )
 
@@ -95,7 +99,7 @@ scenario('Entering a new invalid password returns error message')
 driver
 scenario(' Clicking the Save button saves a valid password')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => z.maximizeWindow() )
 
@@ -124,7 +128,7 @@ scenario('successful log in of admin user with applications should show homepage
 
 .then( _ => z.clearCookies() )
 
-.then( _ => z.openPage ('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => z.openPage (baseUrl + '/user/login', 'login page') )
 
 .then( _ => z.inputById('edit-name','Tom@zuznow.com'))
 
