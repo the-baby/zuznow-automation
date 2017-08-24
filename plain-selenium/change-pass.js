@@ -10,7 +10,7 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById('edit-name','Tom@zuznow.com') )
 
@@ -31,7 +31,7 @@ scenario('Clicking the User button opens the User menu')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li:nth-child(3) > a > span') )
 
@@ -97,7 +97,7 @@ scenario(' Clicking the Save button saves a valid password')
 
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li:nth-child(3) > a > span') )
 
