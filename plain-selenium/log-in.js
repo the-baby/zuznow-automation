@@ -6,7 +6,7 @@ const driver = z.getDriver();
 driver
 .then( _ => z.scenario('Log In without password should show an error message') )
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 .then( _ => z.inputById('edit-name','Tom@zuznow.com') )
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.waitFor(3))
