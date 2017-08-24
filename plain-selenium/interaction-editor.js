@@ -1,3 +1,7 @@
+const config = require('config')
+const baseUrl = config.baseUrl
+const admin = config.creds.admin
+
 const { By } = require('selenium-webdriver');
 
 const z = require('./common');
@@ -13,13 +17,13 @@ const driver = z.getDriver();
 
 scenario('Sign-in successfully leads to homepage')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/login', 'login page') )
+.then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
 .then( _ => driver.manage().window().maximize())
 
-.then( _ => z.inputById('edit-name','admin') )
+.then( _ => z.inputById('edit-name', admin.user) )
 
-.then( _ => z.inputById('edit-pass','vs8Sr7aU') )
+.then( _ => z.inputById('edit-pass', admin.password) )
 
 .then( _ => z.clickById('edit-submit') )
 
@@ -35,7 +39,7 @@ scenario('Sign-in successfully leads to homepage')
 
 scenario('Clicking the Next button opens the Test your skill screen')
 
-.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new')) 
+.then( _ => z.openPage(baseUrl + '/new')) 
 
 .then( _ => driver.manage().window().maximize())
 
@@ -140,7 +144,7 @@ scenario('Clicking the Edit name button allows editing intent name')
 
 scenario('Clicking the Cancel button cancels editing of intent name')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 	
@@ -168,7 +172,7 @@ scenario('Clicking the Cancel button cancels editing of intent name')
 
 scenario('Clicking the Disable button disables intent')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -217,7 +221,7 @@ scenario('Clicking the Delete button deletes intent')
 
 scenario('Clicking the Add button adds a new sample phrase')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -250,7 +254,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 //Unsuccessful adding of a sample sentence
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -330,7 +334,7 @@ scenario('Clicking delete button deletes a sample sentence')
 
 scenario('It is possible to add a discovery suggestion is the corresponding field')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -359,7 +363,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 scenario('Clicking the add entity button allows adding a new entity')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -393,7 +397,7 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 scenario('Creating an empty entity should return an error message')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -408,7 +412,7 @@ scenario('Creating an empty entity should return an error message')
 
 scenario('Clicking delete button deletes an entity')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -443,7 +447,7 @@ scenario('Clicking delete button deletes an entity')
 //Adding of a new key
 scenario('It is possible to enter a key in the corresponding field')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -517,7 +521,7 @@ scenario('Trying to enter an empty parameter should return an error message')
 //Enter text response message
 scenario('It is possible to enter a text response message in the corresponding field')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -611,7 +615,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 scenario('Clicking “Manage entities” button opens the corresponding section')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -644,7 +648,7 @@ scenario('Clicking Create button creates a new entity')
 
 scenario('An error message should appear when trying to create an empty entity')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 
@@ -661,7 +665,7 @@ scenario('An error message should appear when trying to create an empty entity')
  
  scenario('Clicking delete button deletes an entity')
 
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
+.then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => driver.manage().window().maximize())
 

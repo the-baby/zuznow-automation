@@ -14,7 +14,7 @@ module.exports = {
     
 	clearCookies, 
     openPage,
-	
+    maximizeWindow,
 	
     inputById,
     inputByName,
@@ -35,7 +35,6 @@ module.exports = {
     act,
     locate,
     scrollToTop,
-
 
     assertNoSuchElements,
     assertElementHasClass,
@@ -75,6 +74,11 @@ function clearCookies() {
 function openPage(url, title) {
 	logStep("opening page: ", (title || url).magenta);
 	return driver.get(url)
+}
+
+function maximizeWindow() {
+    logStep("maximizing window")
+    return driver.manage().window().maximize()
 }
 
 function scenario(text) {
