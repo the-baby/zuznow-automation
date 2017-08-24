@@ -19,7 +19,7 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById('edit-name', admin.user) )
 
@@ -41,7 +41,7 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z.openPage(baseUrl + '/new')) 
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 
@@ -146,7 +146,7 @@ scenario('Clicking the Cancel button cancels editing of intent name')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 	
 .then( _ => z.clickByCss('#accordion_interaction > div:nth-child(1) > div.panel-heading > i.fa.fa-pencil'))
 
@@ -174,7 +174,7 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1) > div.panel-heading > a.intentDisable.fa.fa-toggle-on.pull-right'))
 
@@ -223,7 +223,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'sample'))
 
@@ -256,7 +256,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'larisa'))
 
@@ -336,7 +336,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'discovery'))
 
@@ -365,7 +365,7 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'NewEntity'))
 
@@ -399,7 +399,7 @@ scenario('Creating an empty entity should return an error message')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
 
@@ -414,7 +414,7 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > input', 'DeleteEntity'))
 
@@ -449,7 +449,7 @@ scenario('It is possible to enter a key in the corresponding field')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'osher'))
 
@@ -523,7 +523,7 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'Response'))
 
@@ -617,7 +617,7 @@ scenario('Clicking “Manage entities” button opens the corresponding section'
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
@@ -650,7 +650,7 @@ scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
@@ -667,7 +667,7 @@ scenario('An error message should appear when trying to create an empty entity')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => driver.manage().window().maximize())
+.then( _ => z.maximizeWindow() )
 
 .then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
 
