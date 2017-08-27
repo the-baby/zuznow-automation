@@ -125,6 +125,7 @@ function endResult() {
                     )
                     .join("\n    ")
         ].join("\n"))
+        process.exit(1)
 		
     } else {
 		
