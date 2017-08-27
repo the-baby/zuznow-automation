@@ -88,7 +88,8 @@ driver
 .then( _ => z.scenario('Clicking Delete button deletes the set') )
 .then( _ => z. clickByCss('#rulesSetTableBody > tr.dd-handle.selected > td.setActions > div > button.btnDeleteSet.btn > i'))
 .then( _ => driver.switchTo().alert().accept() )
-.then( _ => z.assertNoSuchElements(By.css('#rulesSetTableBody > tr.dd-handle.selected > td.setName'), 'the deleted rules set' ) )  
+.then( _ => z.waitFor(3))
+.then( _ => z.assertNoSuchElements(By.xpath('//*[@id="rulesSetTableBody"]/tr[2]/td[2]'), 'the deleted rules set' ) )  
 .catch( z.failedScenario )
 
 //Clicking Delete button deletes the app
@@ -100,5 +101,4 @@ driver
 .then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
 .catch(z.failedScenario)
-
 
