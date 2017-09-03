@@ -8,6 +8,7 @@ const config = require('config')
 const baseUrl = config.baseUrl
 const admin = config.creds.admin
 
+
 driver
 .then( _ => z.scenario('Sign-in successfully leads to homepage') )
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
@@ -72,16 +73,16 @@ driver
 //Scenario: It is possible to enter a new name for the Set
 
 driver
-.then( _ => z.scenario('It is possible to enter a new name for the Set') )
+.then( _ => z.scenario('It is possible to enter a new name for the Set'))
 .then( _ => driver.findElement(By.className('setRenameInput')).clear())
 .then( _ => z. inputByClassName ('setRenameInput', 'Test set'))
 .then( _ => z.waitFor(3))
 .then( _ => z. clickByClassName ('btnSaveSetInfo btn'))
+.then( _ => z. clickById ('btnReset'))       
 .then( _ => z.waitFor(3))
-.then( _ => z. clickById ('btnReset'))            
-.then( () => z.assertContainsValue(By.css('#txtName'), "the expected text in the element", 'Test set') )
+.then( _ => z.assertContainsText(By.css('#rulesSetTableBody > tr:nth-child(2) > td.setName'), "the expected text in the element", 'Test set') )
 .then( _ => z.waitFor(3))
-.catch( z.failedScenario )
+.catch( z.failedScenario)
 
 
 
@@ -103,4 +104,5 @@ driver
 .then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
 .catch(z.failedScenario)
+
 
