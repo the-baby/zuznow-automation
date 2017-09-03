@@ -30,7 +30,7 @@ driver
 .catch( z.failedScenario )                               
 
 .then( _ => z.scenario('Clicking the next button should open the New app Ready screen') )
-.then( _ => z.openPage(baseUrl + '/new'))
+.then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Custom')) 
