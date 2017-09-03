@@ -39,6 +39,7 @@ module.exports = {
     assertNoSuchElements,
     assertElementHasClass,
     assertContainsValue,
+    assertContainsText,
     assertExistsById,
     assertExistsByName,
     assertExistsByClassName,
@@ -271,6 +272,18 @@ function assertContainsValue(locator, descr, text) {
     .then( value => {
         if (value.indexOf(text) == -1)
             return Promise.reject(new Error('element does include value`' + text + '`'));
+
+        logStep(" - OK!".green)
+        return Promise.resolve()
+    })
+}
+function assertContainsText(locator,descr,text) {
+    logStep("assertion:".yellow + " " + descr , ('should contain text `' + text + '`').magenta);
+    driver.findElement(locator)
+    .getText()
+    .then( elmText => {
+        if (elmText.indexOf(text) == -1)
+            return Promise.reject(new Error('element does include text`' + text + '`'));
 
         logStep(" - OK!".green)
         return Promise.resolve()
