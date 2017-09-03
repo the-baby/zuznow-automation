@@ -59,6 +59,7 @@ driver
 .then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
 .then( _ => waitFor(3))
 .then( _ => clickById('edit-submit') )
+.then( _ => waitFor(3))
 .then( _ => assertExistsByClassName('form-text required error') )
 .then( _ => assertExistsByClassName('text-full form-text required error') )
 .then( _ => logStep("TODO: check text in error messages?".yellow) )
