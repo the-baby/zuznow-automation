@@ -61,9 +61,11 @@ scenario('Clicking the Save button adds a new user')
 
 .then( _ => z. inputById ('new_user_password2', 'Zuznow1'))
 
+.then( _ => z.clickById('new_user_admin_all_domains') )
+
 .then( _ => z.clickById('btnSaveNewUser') )
                      
-.then( _ => z.assertExistsById('newIntentInput'), "a new intent field"  )
+.then( _ => z.assertExistsById('user_selection'), "the user form closed"  )
 
 .catch( z.failedScenario )
 
@@ -71,7 +73,7 @@ scenario('Clicking the Save button adds a new user')
 driver
 scenario('Clicking the Sign out button leads to the Log In screen')
 
-.then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li.dropdown.open > a > span') )
+.then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li:nth-child(3) > a') )
 
 .then( _ => z.clickByLinkText('Sign Out') )
 
@@ -90,6 +92,8 @@ scenario('Sign-in successfully leads to homepage')
 .then( _ => z.inputById('edit-name','ZuzNow') )
 
 .then( _ => z.inputById('edit-pass','Zuznow1') )
+
+.then( _ => z.clickById('edit-submit') )
 
 .then( _ => z.waitFor(3))
 
@@ -206,7 +210,7 @@ scenario('successful log in of admin user with applications should show homepage
 
 .then( _ => z.inputById('edit-pass', 'Larisa1'))
 
-.then( _ => z.clickById('edit-submit') )
+.then( _ => z.clickByClassName('form-submit') )
 
 .then( _ => z.assertExists(By.className('menu-item editor'), "Editor" ) )
 
