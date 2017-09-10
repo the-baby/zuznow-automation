@@ -38,12 +38,11 @@ scenario('Clicking the Bot icon marks it')
 
 scenario('Clicking the Customize button opens the Interaction Editor tab')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
-.then( _ => z.waitFor(5))
+.then( _ => z.waitFor(60))
 .catch( z.failedScenario )
 
 //Feature: Chat bot button and screen
 scenario('The corresponding button opens the chat bot menu')
-.then( _ => z.clickByClassName('btn btn-default dropdown-toggle'))                           
-.then( _ => z.clickByCss('#chatbot_preview')) 
-.then( _ => driver.switchTo().window(winHandle))  
-//.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )                
+.then( _ => z.clickByCss('#toggle_simulator'))                           
+.then( _ => driver.switchTo().window())  
+.then( _ => z.assertExistsByCss('#conv_input > div > span:nth-child(2) > button'),'the clear history button' )                
