@@ -12,15 +12,16 @@ module.exports = {
     getDriver,
     waitFor,
     
-	clearCookies, 
+    clearCookies, 
     openPage,
     maximizeWindow,
-	
+    switchTab,
+  
     inputById,
     inputByName,
     inputByClassName,
-	inputByXPath,
-	inputByCss,
+    inputByXPath,
+    inputByCss,
     input,
     
     clickById,
@@ -43,8 +44,8 @@ module.exports = {
     assertExistsById,
     assertExistsByName,
     assertExistsByClassName,
-	assertExistsByLinkText,
-	assertExistsByXPath,
+    assertExistsByLinkText,
+    assertExistsByXPath,
     assertExistsByCss,
     assertExists,
     
@@ -63,7 +64,7 @@ function getDriver() {
 
     process.once('beforeExit', endResult );
     console.log("\n\n" + "  Starting Tests  ".greenBG.white.bold )
-	
+  
     return driver
 }
 
@@ -73,13 +74,20 @@ function clearCookies() {
 }
 
 function openPage(url, title) {
-	logStep("opening page: ", (title || url).magenta);
-	return driver.get(url)
+  logStep("opening page: ", (title || url).magenta);
+  return driver.get(url)
 }
 
 function maximizeWindow() {
     logStep("maximizing window")
     return driver.manage().window().maximize()
+}
+
+function switchTab(ix, text) {
+    logStep("switching to tab", text || ('index:' + ix));
+    return driver.switchTo().window(
+      driver.getAllWindowHandles().then(h => h[ix])
+    )
 }
 
 function scenario(text) {
@@ -111,33 +119,35 @@ endResult.scenariosCount  = 0;
 endResult.failedScenarios = [];
 function endResult() {
     if (endResult.failedScenarios.length) {
-        
-		console.log([ "\n\n",
+
+        console.log([ 
+          "\n\n",
           "  FAILURE  ".redBG.white.bold,
-		  ("  " + endResult.scenariosCount + " scenarios ran").bold,
+          ("  " + endResult.scenariosCount + " scenarios ran").bold,
           ("  " + endResult.failedScenarios.length + " scenarios failed:").red,
           "    " + endResult.failedScenarios
                     .map( ({scenario, error}) => 
                         scenario.yellowBG.white.bold
-                        + "\n      reason: " 
-                        + error.message
+                         + "\n      reason: " 
+                         + error.message
                             .replace(/\(Session info: .*\n.*/m,"")
                             .replace(/\n/g, "\n      ").red
                     )
                     .join("\n    ")
-        ].join("\n"))
+          ].join("\n")
+        )
         process.exit(1)
-		
+
     } else {
-		
+
         console.log([ "\n\n",
           "  SUCCESS  ".greenBG.white.bold,
-		  "  " + endResult.scenariosCount + " scenarios ran".bold,
+          "  " + endResult.scenariosCount + " scenarios ran".bold,
           "  " + endResult.scenariosCount + " scenarios Passed :)".green.bold,
-		].join("\n"))
-		
+        ].join("\n"))
+
     } 
-    
+
     if (!~process.argv.indexOf('su'))
         return driver.quit().catch(e => {})
 }
@@ -232,8 +242,8 @@ function assertExistsByClassName(className) {
 
 function assertExistsByLinkText(linkText) {
     return assertExists(By.linkText(linkText), "by link-text: " + linkText )
-}	
-	
+}  
+  
 function assertExistsByName(name) {
     return assertExists(By.name(name), "by name: " + name )
 }
@@ -249,7 +259,7 @@ function assertExistsByCss(selector) {
 function assertExists(locator, descr) {
     logStep("assertion:".yellow + " element is found   " , descr.magenta);
     return driver.findElement(locator)
-			.then( _ => logStep(" - OK!".green) )
+      .then( _ => logStep(" - OK!".green) )
 }
 
 function assertElementHasClass(locator, descr, className) {
