@@ -55,7 +55,7 @@ scenario('Clicking the Bot icon marks it')
  
 .then( _ => z. clickById ('btnNext'))
  
-.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )
+.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6', 'the Play simulator button' )
  
 .catch( z.failedScenario )
  
@@ -104,7 +104,7 @@ scenario('The corresponding button opens the chat bot menu')
 
 .then( _ => z.switchTab(2, 'popped up log in window'))
 
-.then( _ => z.assertExistsByClassName('Input__field'))
+.then( _ => z.assertExistsByClassName('Input__field', 'the input credentials fields'))
 
 .catch( z.failedScenario )
  
@@ -119,8 +119,13 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
- .then( _ => z.clickById('login_button'))
+.then( _ => z.clickById('login_button'))
  
+.then( _ => z.switchTab(3, 'popped up log in window'))
+
+//.then( _ => z.assertExistsByClassName('Input__field'))
+
+ .catch( z.failedScenario )
  
  
  
