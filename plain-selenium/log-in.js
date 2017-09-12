@@ -38,7 +38,7 @@ driver
 .catch( z.failedScenario )
 
 driver
-.then( _ => z.scenario('successful log in of admin user with applications should show homepage'))
+.then( _ => z.scenario('successful log in of admin user with applications should show editor'))
 .then( _ => z.clearCookies() )
 .then( _ => z.openPage (baseUrl + '/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Tom@zuznow.com'))
@@ -58,7 +58,7 @@ driver
 .catch( z.failedScenario )
 
 driver
-.then( _ => z.scenario('successful log in of non-admin user with applications should show homepage'))
+.then( _ => z.scenario('successful log in of non-admin user with applications should show editor'))
 .then( _ => z.clearCookies() )
 .then( _ => z.openPage (baseUrl + '/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Martin@zuznow.com'))

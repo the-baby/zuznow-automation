@@ -10,7 +10,7 @@ const admin = config.creds.admin
 
 
 driver
-scenario('Sign-in successfully leads to homepage')
+scenario('Sign-in successfully leads to the Editor')
 
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
@@ -22,10 +22,9 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.clickById('edit-submit') )                       
 
-
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExistsByClassName('menu-item editor'), "Editor"  )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 
 .catch( z.failedScenario )
 
@@ -36,6 +35,8 @@ scenario('Clicking the Users button opens the Users screen')
 .then( _ => z.clickByClassName('menu-item users') )
 
 .then( _ => z.assertExistsById('user_selection'), "users drop-down menu"  )
+
+.then( _ => z.waitFor(3))
 
 .catch( z.failedScenario )
 
@@ -64,6 +65,8 @@ scenario('Clicking the Save button adds a new user')
 .then( _ => z.clickById('new_user_admin_all_domains') )
 
 .then( _ => z.clickById('btnSaveNewUser') )
+
+.then( _ => z.waitFor(3))
                      
 .then( _ => z.assertExistsById('user_selection'), "the user form closed"  )
 
@@ -83,7 +86,7 @@ scenario('Clicking the Sign out button leads to the Log In screen')
 
 
 driver
-scenario('Sign-in successfully leads to homepage')
+scenario('Sign-in successfully leads to the Editor')
 
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
@@ -91,13 +94,17 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.inputById('edit-name','ZuzNow') )
 
+.then( _ => z.waitFor(1))
+
 .then( _ => z.inputById('edit-pass','Zuznow1') )
 
+.then( _ => z.waitFor(1))
+	
 .then( _ => z.clickById('edit-submit') )
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExistsByClassName('menu-item editor'), "Editor"  )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 
 .catch( z.failedScenario )
 
@@ -195,12 +202,12 @@ scenario(' Clicking the Save button saves a valid password')
 
 .then( _ => z.clickByClassName('form-submit btn btn-success') )  
 
-.then( _ => z.assertExistsById('failed_to_load_traffic'), "the homepage screen opens"  )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 
 .catch( z.failedScenario )
 
 driver
-scenario('successful log in of admin user with applications should show homepage')
+scenario('successful log in of admin user with applications should show Editor')
 
 .then( _ => z.clearCookies() )
 
@@ -212,9 +219,8 @@ scenario('successful log in of admin user with applications should show homepage
 
 .then( _ => z.clickByClassName('form-submit') )
 
-.then( _ => z.assertExists(By.className('menu-item editor'), "Editor" ) )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 
 .catch( z.failedScenario )
-
 
 

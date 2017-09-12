@@ -9,14 +9,14 @@ const baseUrl = config.baseUrl
 const admin = config.creds.admin
 
 driver
-.then( _ => z.scenario('Sign-in successfully leads to homepage') )
+.then( _ => z.scenario('Sign-in successfully leads to Editor') )
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 .then( _ => z.maximizeWindow() )
 .then( _ => z.inputById('edit-name','admin') )
 .then( _ => z.inputById('edit-pass','vs8Sr7aU') )
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.waitFor(3))
-.then( _ => z.assertExistsByClassName('menu-item new-site'), "home page"  )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 .catch( z.failedScenario )
 
 
@@ -33,7 +33,7 @@ driver
 .then( _ => z.openPage(' https://dashboard-beta.conversation.one/new'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
-.then( _ => z.clickByLinkText('Custom')) 
+.then( _ => z.clickByLinkText('Education')) 
 .then( _ => z.inputById ('org-name', 'test'))
 .then( _ => z.clickByClassName ('pager wizard'))
 .then( _ => z.waitFor(2))
