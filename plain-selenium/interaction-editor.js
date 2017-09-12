@@ -15,7 +15,7 @@ const driver = z.getDriver();
 
 
 
-scenario('Sign-in successfully leads to homepage')
+scenario('Sign-in successfully leads to Editor')
 
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 
@@ -29,7 +29,7 @@ scenario('Sign-in successfully leads to homepage')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExistsByClassName('menu-item new-site'), "home page"  )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 
 .catch( z.failedScenario )
 
