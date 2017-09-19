@@ -55,7 +55,7 @@ scenario('Clicking the Bot icon marks it')
  
 .then( _ => z. clickById ('btnNext'))
  
-.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6', 'the Play simulator button' )
+.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6', 'the Play simulator button' ))
  
 .catch( z.failedScenario )
  
@@ -81,7 +81,7 @@ scenario('The corresponding button opens the chat bot menu')
  
 .then( _ => z.locate(By.css('#conv_input > div'), 'chat frame'))
  
-.then( _ => z.assertExistsByCss('#conv_input > div > span:nth-child(2) > button', 'the clear history button'))
+.then( _ => z.assertExistsByClassName('submitBtn form-control btn btn-primary', 'the Save button'))
 
 .catch( z.failedScenario ) 
 
@@ -91,7 +91,9 @@ scenario('The corresponding button opens the chat bot menu')
  
 .then( _ => z.inputById ('input', 'What is my balance'))
 
-//.then( _ => 
+.then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
+
+.then( _ => z.waitFor(3) )
 
 .then( _ => z.assertExistsByLinkText('Open log-in window'))
 
@@ -115,19 +117,37 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.inputById ('bank_fields_101732002', 'go'))
 
- .then( _ => z.inputByCss ('#pincode_fields > div:nth-child(2) > div > div > div', '0541234456'))                      
+.then( _ => z.inputByCss ('#pincode_fields > div:nth-child(2) > div > div > div', '0541234456'))                      
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
+
+
+
 .then( _ => z.clickById('login_button'))
+
+.then( _ => z.waitFor(2) )
  
 .then( _ => z.switchTab(3, 'popped up log in window'))
 
 //.then( _ => z.assertExistsByClassName('Input__field'))
 
- .catch( z.failedScenario )
+.then( _ => z.waitFor(5) )
+
+.catch( z.failedScenario )
+
+
+ scenario('A pincode should be entered to give requests')
  
+.then( _ => z.switchTab(1, 'bot screen'))
  
+.then( _ => z.inputById ('input', 'What is my balance'))
+
+.then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
+
+.then( () => z.assertContainsValue(By.css('#conv-wrap > div:nth-child(9) > span'), "the expected text in the element", ' To continue, please provide your pincode.') )
+
+.catch( z.failedScenario )
  
  
 
