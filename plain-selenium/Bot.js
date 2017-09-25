@@ -121,16 +121,13 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
-
-
-
 .then( _ => z.clickById('login_button'))
 
 .then( _ => z.waitFor(2) )
  
-.then( _ => z.switchTab(3, 'popped up log in window'))
+//.then( _ => z.switchTab(3, 'popped up log in window'))
 
-//.then( _ => z.assertExistsByClassName('Input__field'))
+//.then( _ => z.assertExistsByClassName('Input__field')) Assertion according to thank for linking your account message on the main bot screen
 
 .then( _ => z.waitFor(5) )
 
@@ -145,8 +142,12 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
 
-.then( () => z.assertContainsValue(By.css('#conv-wrap > div:nth-child(9) > span'), "the expected text in the element", ' To continue, please provide your pincode.') )
+.then( _ => z.waitFor(2) )
 
+.then( () => z.assertContainsText(
+
+By.css('#conv-wrap > div:nth-child(9) > span.bubble-content'), "the bot requires pincode", ' To continue, please provide your pincode') )
+        //#conv-wrap > div:nth-child(9) > span
 .catch( z.failedScenario )
  
  
