@@ -176,7 +176,7 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1) > div.panel-heading > a.intentDisable.fa.fa-toggle-on.pull-right'))
+.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(2) > div.panel-heading > a.intentDisable.fa.pull-right.fa-toggle-on'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -187,6 +187,8 @@ scenario('Clicking the Disable button disables intent')
 .then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
 
 .catch( z.failedScenario )
+
+
 
 //Deleting intent
 
@@ -233,11 +235,11 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.inputByCss ('#collapsesample > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence'))
+.then( _ => z.inputByCss ('#collapsesample > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('#collapsesample > div > div > div > div.col-md-4.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapsesample > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -268,15 +270,15 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.scenario('Entering a phrase with invalid characters returns an error message') )
 
-.then( _ => z.inputByCss ('#collapselarisa> div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence?'))
+.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence?'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
-.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input')).clear())
+.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input')).clear())
 
 .catch( z.failedScenario )
 
@@ -289,17 +291,17 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 scenario('Clicking the edit button allows editing a sample sentence')
 
-.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > input', 'new sample sentence'))
+.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-4.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td:nth-child(2) > a.rename > i'))
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td:nth-child(2) > a.rename > i'))
 
-.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
+.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
 
 .catch( z.failedScenario )
 
@@ -311,7 +313,7 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 scenario('Clicking delete button deletes a sample sentence')
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -319,7 +321,7 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))	
 
-.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.col-md-4.samples_div > table > tbody > tr > td.sample_content > span'), 'the deleted sample sentence' ) )           
+.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td.sample_content > span'), 'the deleted sample sentence' ) )           
 
  .catch( z.failedScenario )
 
@@ -344,13 +346,13 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input', 'what is my mark'))
+.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'what is my mark'))
 
 .then( _ => z.waitFor(3))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.col-md-4.samples_div > div.form-group.discoveryDiv > input'), "the expected text in the element", 'what is my mark') ) 
+.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input'), "the expected text in the element", 'what is my mark') ) 
 
 .catch( z.failedScenario )
 
@@ -374,12 +376,14 @@ scenario('Clicking the add entity button allows adding a new entity')
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(3))
+	
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
 
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > input', 'class'))
+.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'class'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
 
 .then( _ => z.waitFor(2))
 
@@ -387,7 +391,7 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr > td.entity_name > input'), 'the new entity was added')
+.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr > td.entity_name > input'), 'the new entity was added')
 
  .catch( z.failedScenario )
  
@@ -401,7 +405,11 @@ scenario('Creating an empty entity should return an error message')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
+.then( _ => z.clickByLinkText ('NewEntity'))
+
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
+
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.assertExistsById('jGrowl'), 'error message appeared')
 
@@ -416,15 +424,19 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > input', 'DeleteEntity'))
+.then( _ => z.clickByLinkText ('NewEntity'))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
+
+.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'DeleteEntity'))
+
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr > td:nth-child(3) > a > i'))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -433,8 +445,10 @@ scenario('Clicking delete button deletes an entity')
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByLinkText ('NewEntity'))
 
-.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.entities-table > tbody > tr:nth-child(2) > td.entity_name > input'), 'the deleted entity' ) ) 
+.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
  
@@ -455,13 +469,13 @@ scenario('It is possible to enter a key in the corresponding field')
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', 'house'))
 
-.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
 
 .catch( z.failedScenario )
 
-
+/*
 //Successful adding of a new value and saving the parameter
 
 scenario('It is possible to enter a value in the corresponding field')
@@ -564,7 +578,7 @@ scenario('It is possible to enter code response in the corresponding field')
 
 // */
 
-
+/*
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
@@ -681,7 +695,7 @@ scenario('An error message should appear when trying to create an empty entity')
  
  driver
 .then( _ => z.endResult() )
-
+*/
 //TODO: Find out how to delete entity
 
 
