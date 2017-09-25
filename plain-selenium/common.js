@@ -276,24 +276,26 @@ function assertElementHasClass(locator, descr, className) {
 }
 
 function assertContainsValue(locator, descr, text) {
-    logStep("assertion:".yellow + " " + descr , ('should contain text `' + text + '`').magenta);
+    logStep("assertion:".yellow + " " + descr , ('value should contain text `' + text + '`').magenta);
     driver.findElement(locator)
     .getAttribute('value')
     .then( value => {
         if (value.indexOf(text) == -1)
-            return Promise.reject(new Error('element does include value`' + text + '`'));
+            return Promise.reject(new Error('element value does not include `' + text + '`'));
 
         logStep(" - OK!".green)
         return Promise.resolve()
     })
 }
 function assertContainsText(locator,descr,text) {
-    logStep("assertion:".yellow + " " + descr , ('should contain text `' + text + '`').magenta);
+    logStep("assertion:".yellow + " " + descr , ('element text should contain text `' + text + '`').magenta);
     driver.findElement(locator)
     .getText()
+    //.getAttribute('innerHTML')
     .then( elmText => {
+console.log('elmText: ', typeof elmText, elmText)      
         if (elmText.indexOf(text) == -1)
-            return Promise.reject(new Error('element does include text`' + text + '`'));
+            return Promise.reject(new Error('element text does not include text`' + text + '`'));
 
         logStep(" - OK!".green)
         return Promise.resolve()
