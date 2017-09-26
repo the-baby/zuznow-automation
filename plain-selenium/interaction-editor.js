@@ -475,14 +475,14 @@ scenario('It is possible to enter a key in the corresponding field')
 
 .catch( z.failedScenario )
 
-/*
+
 //Successful adding of a new value and saving the parameter
 
 scenario('It is possible to enter a value in the corresponding field')
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'number'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'number'))
  
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -492,7 +492,11 @@ scenario('It is possible to enter a value in the corresponding field')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > table.table.table-striped.table-bordered.table-hover.param-table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
+.then( _ => z.clickByLinkText ('osher'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
 
 .catch( z.failedScenario )
 
@@ -500,11 +504,11 @@ scenario('It is possible to enter a value in the corresponding field')
 //Adding of invalid key
 scenario('Adding invalid key should return an error message')
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', '123'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', '123'))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
 
 .then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
 
@@ -514,15 +518,17 @@ scenario('Adding invalid key should return an error message')
 //Adding of an empty parameter
 scenario('Trying to enter an empty parameter should return an error message')
 
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input')).clear())
 
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input')).clear())
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > input', ''))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', ''))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-4.entities_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
+
+.then( _ => z.waitFor(2))
 
 .then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
 
@@ -547,7 +553,7 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input', 'new message'))
+.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(3) > input', 'new message'))
 
 .then( _ => z.waitFor(2))
 	
@@ -559,7 +565,7 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.waitFor(2))
 	
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
 
 .catch( z.failedScenario )
 
@@ -578,11 +584,13 @@ scenario('It is possible to enter code response in the corresponding field')
 
 // */
 
-/*
+
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
-.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(4) > label > input'))
+.then( _ => z.clickByLinkText ('Response'))
+
+.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(4) > label > input'))
 
 .then( _ => z.clickByCss ('#btnSave'))
 
@@ -592,11 +600,13 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.assertExistsByCss('#accordion_interaction > div:nth-child(1) > div.panel-collapse.collapse.in > div > div > div > div.col-md-4.response_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
+.then( _ => z.clickByLinkText ('Response'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.assertExistsByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
 
 .catch( z.failedScenario )
-
-//TODO: Find out how to scroll the page up
 
 
 
@@ -604,7 +614,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 scenario('It is possible to check the corresponding box and the mark is saved')
 
-.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input', 'How can I help you'))
+.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(5) > input', 'How can I help you'))
 
 .then( _ => z.clickByCss ('#btnSave'))
 
@@ -613,8 +623,12 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByLinkText ('Response'))
 
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
+.then( _ => z.waitFor(2))
+
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
 
 .catch( z.failedScenario )
 
@@ -695,7 +709,7 @@ scenario('An error message should appear when trying to create an empty entity')
  
  driver
 .then( _ => z.endResult() )
-*/
+
 //TODO: Find out how to delete entity
 
 
