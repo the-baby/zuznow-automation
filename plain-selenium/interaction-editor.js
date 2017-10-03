@@ -49,7 +49,9 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z.inputById ('org-name', 'TJX Rewards'))
 
-.then( _ => z.clickByClassName ('pager wizard'))
+//.then( _ => z.clickByCss('#tab1 > div.form-horizontal > div:nth-child(2) > div > ul > li > a > strong'))
+
+//.then( _ => z.clickByClassName ('pager wizard'))
 
 .then( _ => z.waitFor(2))
 
@@ -62,6 +64,8 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 
 scenario('Clicking the Customize button opens the Interaction Editor tab')
+
+.then( _ => z. clickById ('btnNext'))
 
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 
@@ -136,7 +140,7 @@ scenario('Clicking the Edit name button allows editing intent name')
 
 
 
-//TODO: add this function to common
+
 
 
 
@@ -176,9 +180,13 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.maximizeWindow() )
 
+.then( _ => z.waitFor(2) )
+
 .then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(2) > div.panel-heading > a.intentDisable.fa.pull-right.fa-toggle-on'))
 
 .then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(2) )
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
@@ -235,11 +243,11 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.inputByCss ('#collapsesample > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence'))
+.then( _ => z.inputByCss ('#collapsesample > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('#collapsesample > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapsesample > div > div > div > div.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -247,7 +255,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertExistsByCss('#collapsesample td.sample_content'), 'the new sample phrase')
+.then( _ => z.assertExistsByCss('#collapsesample > div > div > div > div.samples_div > table > tbody > tr > td.sample_content'), 'the new sample phrase')
 
 .catch( z.failedScenario )
 
@@ -270,15 +278,15 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.scenario('Entering a phrase with invalid characters returns an error message') )
 
-.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence?'))
+.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence?'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
-.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input')).clear())
+.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input')).clear())
 
 .catch( z.failedScenario )
 
@@ -291,17 +299,17 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 scenario('Clicking the edit button allows editing a sample sentence')
 
-.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'new sample sentence'))
+.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence'))
 
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td:nth-child(2) > a.rename > i'))
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td:nth-child(2) > a.rename > i'))
 
-.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
+.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
 
 .catch( z.failedScenario )
 
@@ -313,7 +321,7 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 scenario('Clicking delete button deletes a sample sentence')
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
+.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -321,7 +329,7 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))	
 
-.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.col-md-6.samples_div > table > tbody > tr > td.sample_content > span'), 'the deleted sample sentence' ) )           
+.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the deleted sample sentence' ) )           
 
  .catch( z.failedScenario )
 
@@ -346,13 +354,13 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input', 'what is my mark'))
+.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.response_div.param_div > div.form-group.discoveryDiv > input', 'what is my mark'))
 
 .then( _ => z.waitFor(3))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.col-md-6.samples_div > div.input-icon.right > input'), "the expected text in the element", 'what is my mark') ) 
+.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.response_div.param_div > div.form-group.discoveryDiv > input'), "the expected text in the element", 'what is my mark') ) 
 
 .catch( z.failedScenario )
 
@@ -377,21 +385,29 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
 
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'class'))
+.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'class'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
-
-.then( _ => z.waitFor(2))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
+.then( _ => z.waitFor(2))
+
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr > td.entity_name > input'), 'the new entity was added')
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByLinkText ('NewEntity'))
+
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr > td.entity_name > input'), 'the new entity was added')
 
  .catch( z.failedScenario )
  
@@ -407,9 +423,9 @@ scenario('Creating an empty entity should return an error message')
 
 .then( _ => z.clickByLinkText ('NewEntity'))
 
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
 
 .then( _ => z.assertExistsById('jGrowl'), 'error message appeared')
 
@@ -426,17 +442,17 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.clickByLinkText ('NewEntity'))
 
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > h4:nth-child(7) > i'))
+.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
 
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'DeleteEntity'))
+.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'DeleteEntity'))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'))
+.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -448,7 +464,7 @@ scenario('Clicking delete button deletes an entity')
 	
 .then( _ => z.clickByLinkText ('NewEntity'))
 
-.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.col-md-6.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'), 'the deleted entity' ) ) 
+.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td.entity_name > input'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
  
@@ -469,9 +485,13 @@ scenario('It is possible to enter a key in the corresponding field')
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', 'house'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', 'house'))
 
-.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+.then( _ => z.scrollToTop())
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
 
 .catch( z.failedScenario )
 
@@ -480,9 +500,15 @@ scenario('It is possible to enter a key in the corresponding field')
 
 scenario('It is possible to enter a value in the corresponding field')
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'number'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'number'))
+
+.then( _ => z.waitFor(2))
  
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.scrollToTop())
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -496,7 +522,7 @@ scenario('It is possible to enter a value in the corresponding field')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > table > tbody > tr > td.param_value > span'), 'the key and value fields are present' ) 
+.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.response_div.param_div > table > tbody > tr > td.param_key > span'), 'the key and value fields are present' ) 
 
 .catch( z.failedScenario )
 
@@ -504,11 +530,11 @@ scenario('It is possible to enter a value in the corresponding field')
 //Adding of invalid key
 scenario('Adding invalid key should return an error message')
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', '123'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', '123'))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
 
 .then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
 
@@ -518,15 +544,15 @@ scenario('Adding invalid key should return an error message')
 //Adding of an empty parameter
 scenario('Trying to enter an empty parameter should return an error message')
 
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input')).clear())
 
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input')).clear())
+.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input')).clear())
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > input', ''))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', ''))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > input', 'tulip'))
+.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'tulip'))
 
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.col-md-6.response_div.param_div > div.form-inline > div > i' ))
+.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
 
 .then( _ => z.waitFor(2))
 
@@ -553,7 +579,7 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(3) > input', 'new message'))
+.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(3) > input', 'new message'))
 
 .then( _ => z.waitFor(2))
 	
@@ -565,7 +591,7 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.waitFor(2))
 	
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
 
 .catch( z.failedScenario )
 
@@ -590,7 +616,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.clickByLinkText ('Response'))
 
-.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(4) > label > input'))
+.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(4) > label > input'))
 
 .then( _ => z.clickByCss ('#btnSave'))
 
@@ -604,7 +630,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.assertExistsByCss('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
+.then( _ => z.assertExistsByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
 
 .catch( z.failedScenario )
 
@@ -612,9 +638,9 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 //Adding reprompt text
 
-scenario('It is possible to check the corresponding box and the mark is saved')
+scenario('It is possible to add and save reprompt message')
 
-.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(5) > input', 'How can I help you'))
+.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(5) > input', 'How can I help you'))
 
 .then( _ => z.clickByCss ('#btnSave'))
 
@@ -628,7 +654,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.waitFor(2))
 
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.col-md-6.response_div.param_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
+.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
 
 .catch( z.failedScenario )
 
