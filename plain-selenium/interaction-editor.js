@@ -352,11 +352,15 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
+.then( _ => z.scrollToTop())
+
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.response_div.param_div > div.form-group.discoveryDiv > input', 'what is my mark'))
 
 .then( _ => z.waitFor(3))
+	
+.then( _ => z.scrollToTop())
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -503,7 +507,9 @@ scenario('It is possible to enter a value in the corresponding field')
 .then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'number'))
 
 .then( _ => z.waitFor(2))
- 
+	
+.then( _ => z.scrollToTop())
+	
 .then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
 
 .then( _ => z.waitFor(2))
@@ -552,6 +558,8 @@ scenario('Trying to enter an empty parameter should return an error message')
 
 .then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'tulip'))
 
+.then( _ => z.scrollToTop())
+
 .then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
 
 .then( _ => z.waitFor(2))
@@ -575,6 +583,8 @@ scenario('It is possible to enter a text response message in the corresponding f
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
+.then( _ => z.scrollToTop())
+
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(2))
@@ -582,6 +592,8 @@ scenario('It is possible to enter a text response message in the corresponding f
 .then( _ => z.inputByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(3) > input', 'new message'))
 
 .then( _ => z.waitFor(2))
+	
+.then( _ => z.clickById ('btnSave'))
 	
 .then( _ => z.clickByCss('#btnSave'))
 
@@ -618,11 +630,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.clickByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(4) > label > input'))
 
-.then( _ => z.clickByCss ('#btnSave'))
-
-.then( _ => z.waitFor(3))
-	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => saveAndRefresh() )
 
 .then( _ => z.waitFor(3))
 	

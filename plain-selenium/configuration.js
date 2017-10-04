@@ -35,7 +35,7 @@ driver
 .then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
 .then( _ => z.clickByLinkText('Education')) 
 .then( _ => z.inputById ('org-name', 'test'))
-.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.clickByClassName ('btn btn-success btn-square next button-next full-width'))
 .then( _ => z.waitFor(2))
 .then( _ => z. clickById ('btnNext'))
 .then( _ => z.waitFor(4))
