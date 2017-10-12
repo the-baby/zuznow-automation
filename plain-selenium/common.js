@@ -36,6 +36,7 @@ module.exports = {
     act,
     locate,
     scrollToTop,
+    scrollToBottom,
 
     assertNoSuchElements,
     assertElementHasClass,
@@ -343,5 +344,12 @@ function scrollToTop() {
     logStep("scrolling to top");
     return driver
              .executeScript("window.scroll(0,0);")
+             .then( _ => driver.sleep(500) );
+}
+
+function scrollToBottom() {
+    logStep("scrolling to bottom");
+    return driver
+             .executeScript("window.scroll(0,500);")
              .then( _ => driver.sleep(500) );
 }
