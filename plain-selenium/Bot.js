@@ -43,15 +43,15 @@ scenario('Clicking the Bot icon marks it')
  
 .then( _ => z.waitFor(3))
  
-.then( _ => z. clickByCss ('#tab1 > div.form-horizontal > div:nth-child(2) > div.col-md-6 > div > ul > li.active > a'))
+.then( _ => z. clickByCss ('#tab1 > div.form-horizontal > div:nth-child(2) > div > ul > li:nth-child(1) > a'))
  
-.then( _ => z.clickByClassName ('pager wizard'))
+.then( _ => z.clickByClassName ('btn btn-success btn-square next button-next full-width'))
  
 .then( _ => z.waitFor(2))
  
 .then(_ => z.clickByCss('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary > img'))
  
-//.then( _ => z.assertElementHasClass(By.css('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary > img'), "the checkbox is marked", "checkmark draw"))
+.then( _ => z.assertElementHasClass(By.css('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary.check > div > div'), "the checkbox is marked", "checkmark draw"))
  
 .then( _ => z. clickById ('btnNext'))
  
@@ -64,8 +64,6 @@ scenario('Clicking the Bot icon marks it')
 scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
- 
-.then( _ => z.waitFor(60))
  
 .catch( z.failedScenario )
  
@@ -87,6 +85,8 @@ scenario('The corresponding button opens the chat bot menu')
 
  //Feature: Log In window
  
+ .then( _ => z.waitFor(60))
+ 
  scenario('Asking about balance makes the Log in window link appear')
  
 .then( _ => z.inputById ('input', 'What is my balance'))
@@ -94,7 +94,7 @@ scenario('The corresponding button opens the chat bot menu')
 .then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
 
 .then( _ => z.waitFor(3) )
-
+  
 .then( _ => z.assertExistsByLinkText('Open log-in window'))
 
 .catch( z.failedScenario ) 
@@ -121,22 +121,23 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
-.then( _ => z.clickById('login_button'))
-
 .then( _ => z.waitFor(2) )
- 
-//.then( _ => z.switchTab(3, 'popped up log in window'))
+  
+.then( _ => z.scrollToBottom())
+  
+.then(z.clickById('login_button'))
 
-//.then( _ => z.assertExistsByClassName('Input__field')) Assertion according to thank for linking your account message on the main bot screen
+.then( _ => z.waitFor(7) )
+  
+.then( _ => z.switchTab(1, 'bot screen'))
 
-.then( _ => z.waitFor(5) )
+
+.then( () => z.assertContainsText(By.css('#conv-wrap > div:nth-child(10) > span'), "the expected text in the element", 'Thank you for linking your account.') ) 
 
 .catch( z.failedScenario )
 
 
  scenario('A pincode should be entered to give requests')
- 
-.then( _ => z.switchTab(1, 'bot screen'))
  
 .then( _ => z.inputById ('input', 'What is my balance'))
 
@@ -144,11 +145,21 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.waitFor(2) )
 
-.then( () => z.assertContainsText(
+//.then( () => z.assertContainsText(By.css('#conv-wrap > div:nth-child(10) > span'), "the bot requires pincode", 'To continue, please provide your pincode.') ) 
 
-By.css('#conv-wrap > div:nth-child(9) > span.bubble-content'), "the bot requires pincode", ' To continue, please provide your pincode') )
-        //#conv-wrap > div:nth-child(9) > span
 .catch( z.failedScenario )
+
+
+ scenario('Entering pincode enables iving the answer to the request')
  
+.then( _ => z.inputById ('input', '1234'))
+
+.then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
+
+.then( _ => z.waitFor(1) )
+
+.then( () => z.assertContainsText(By.css('#conv-wrap > div:nth-child(11) > span > p:nth-child(3)'), "the bot approved the pincode", 'Thank you . Your pincode is correct.Auto Loan account balance is.') ) 
+
+.catch( z.failedScenario )
  
 
