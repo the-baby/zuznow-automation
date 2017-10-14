@@ -4,6 +4,7 @@ const admin = config.creds.admin
 
 const { By } = require('selenium-webdriver');
 const z = require('./common');
+require('./bot-utils').extend(z);
 const scenario = z.scenario;
 const driver = z.getDriver();
 
@@ -87,11 +88,11 @@ scenario('The corresponding button opens the chat bot menu')
  
  .then( _ => z.waitFor(30))
  
- scenario('Asking about balance makes the Log in window link appear')
+ scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
  
-.then( _ => userSays('What is my balance', 3))
+.then( _ => z.userSays('What is my balance', 3))
 
-.then( _ => assertBotReply('To continue you must link your account'))
+.then( _ => z.assertBotReply('To continue you must link your account'))
 
 .then( _ => z.assertExistsByLinkText('Open log-in window'))
 
@@ -121,13 +122,13 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.scrollToBottom())
   
-.then(z.clickById('login_button'))
+.then( _ => z.clickById('login_button'))
 
 .then( _ => z.waitFor(7) )
   
 .then( _ => z.switchTab(1, 'bot screen'))
 
-.then( () => assertBotReply('Thank you for linking your account'))
+.then( _ => z.assertBotReply('Thank you for linking your account'))
 
 .catch( z.failedScenario )
 
@@ -160,23 +161,3 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 
 
-function assertBotReply(reply) {  
-    z.logAssert('Account link successfull', 'bot replies "' + reply + '"')
-    return z.locate(By.id('conv-wrap'))
-      .then(e => e
-        .getAttribute("innerText")
-        .then(text => console.log(text) ||
-          text
-            .trim()
-            .split(/[\n\r]+/)
-            .some(line => line.indexOf(reply) != -1 )
-        )
-      )
-}
-
-
-function userSays(text, waitFor) {
-    return z.inputById('input', text)
-        .then( () => z.clickByClassName('submitBtn form-control btn btn-primary') )
-        .then( () => z.waitFor(waitFor || 2))
-}
