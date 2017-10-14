@@ -52,6 +52,7 @@ module.exports = {
     
     scenario,
     logStep,
+    logAssert,
     substep,
     failedScenario,
     endResult
@@ -103,6 +104,10 @@ function logStep() {
     const args = [].slice.apply(arguments)
     args.unshift("    %s")
     console.log.apply( console, args ) 
+}
+
+function logAssert(title, descr) {
+    logStep("assertion:".yellow + " " + title, descr.magenta)
 }
 
 function substep() {
@@ -164,7 +169,7 @@ function waitFor(sec) {
 
 
 function inputById(id, text) {
-    input(By.id(id), "by id: " + id, text)
+    return input(By.id(id), "by id: " + id, text)
 }
 
 /*
@@ -191,6 +196,7 @@ function inputByCss(css, text) {
 function inputByXPath(xpath, text) {
     return input(By.xpath(xpath), "by XPath: " + xpath, text)
 }
+
 function input(locator, descr, text) {
     logStep("writing text to field   " + descr.magenta + ", text: ", text.magenta);
     return act(locator, "clicking element", (e) => e.sendKeys(text) )    
@@ -322,7 +328,7 @@ function act(locator, descr, action) {
     let el;
     return locate(locator)
         .then( e => substep(descr) || action(el = e) )
-        .catch( _ => 
+        .catch( _ =>
             substep("not visible." .yellow + " trying scroll into view")
             || driver
                 .executeScript("arguments[0].focus()", el)
@@ -350,6 +356,13 @@ function scrollToTop() {
 function scrollToBottom() {
     logStep("scrolling to bottom");
     return driver
-             .executeScript("window.scroll(0,500);")
+             .executeScript("window.scroll(0,window.innerHeight);")
+             .then( _ => driver.sleep(500) );
+}
+
+function scrollTo(height) {
+    logStep("scrolling to height: " + height);
+    return driver
+             .executeScript("window.scroll(0," + height + ");")
              .then( _ => driver.sleep(500) );
 }
