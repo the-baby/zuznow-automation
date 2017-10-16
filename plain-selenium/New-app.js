@@ -113,7 +113,7 @@ scenario('Clicking the Customize button opens the Editor Interaction tab')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.waitFor(3))
 .then( _ => z.maximizeWindow() )
-.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'), "the Interaction tab is open")
+.then( _ => z.assertExistsById('newIntentInput'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
 //Feature: Creating a new app with a predefined bank industry
