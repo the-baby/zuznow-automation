@@ -237,6 +237,8 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.inputById ('newIntentInput', 'sample'))
 
+.then( _ => z.waitFor(2))
+
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
 .then( _ => z.clickById ('btnSave'))
@@ -349,6 +351,8 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 .then( _ => z.maximizeWindow() )
 
 .then( _ => z.inputById ('newIntentInput', 'discovery'))
+
+.then( _ => z.waitFor(2))
 
 .then( _ => z.clickByClassName ('input-group-addon btn'))
 
@@ -595,8 +599,6 @@ scenario('It is possible to enter a text response message in the corresponding f
 	
 .then( _ => z.clickById ('btnSave'))
 	
-.then( _ => z.clickByCss('#btnSave'))
-
 .then( _ => z.waitFor(2))
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
@@ -632,7 +634,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(4))
 	
 .then( _ => z.clickByLinkText ('Response'))
 
