@@ -44,6 +44,7 @@ driver
 
 driver
 .then( _ => z.scenario(' Clicking the configuration button opens the general part of the Configuration tab') )
+
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.assertExistsByCss('#tab-1 > div.col-lg-8 > div:nth-child(1) > div.portlet-header > div'), 'the general tab')
 .catch( z.failedScenario )
@@ -65,10 +66,12 @@ driver
 .then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.waitFor(2))
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z. clickById ('log_level_stg'))
 .then( _ => z. clickByCss ('#log_level_stg > option:nth-child(3)'))
 .then( _ => z. clickById('btnSave'))
+.then( _ => z.waitFor(4))
 .then( _ => z. clickByCss ('#btnEdit > i'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
