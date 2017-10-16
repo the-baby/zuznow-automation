@@ -104,7 +104,7 @@ scenario('Sign-in successfully leads to the Editor')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
+.then( _ => z.assertExists(By.id('PublishAlexa'), "Editor" ) )
 
 .catch( z.failedScenario )
 
