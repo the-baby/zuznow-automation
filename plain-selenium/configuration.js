@@ -68,11 +68,11 @@ driver
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.waitFor(2))
 .then( _ => z.clickByLinkText('Staging'))
-.then( _ => z. clickById ('log_level_stg'))
-.then( _ => z. clickByCss ('#log_level_stg > option:nth-child(3)'))
+.then( _ => z. clickById('log_level_stg'))
+.then( _ => z. clickByCss('#log_level_stg > option:nth-child(3)'))
 .then( _ => z. clickById('btnSave'))
 .then( _ => z.waitFor(4))
-.then( _ => z. clickByCss ('#btnEdit > i'))
+.then( _ => z. clickByCss('#btnEdit > i'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( () => z.assertContainsValue(By.css('#log_level_stg'), "the expected text in the element", 'warn') )
@@ -86,6 +86,7 @@ driver
 .then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.waitFor(2))
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Alexa'))
 .then( _ => z.assertExistsByCss('#alexa_support_stg:checked'), 'the checkbox is marked')
@@ -108,7 +109,7 @@ driver
 
 
 //Feature:Google subtab (staging)
-//Google support and Account linking checkboxes are not marked
+//Google support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
 .then( _ => z.openPage(baseUrl + '/editor'))
@@ -116,8 +117,8 @@ driver
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Staging'))
 .then( _ => z.clickByLinkText('Google'))
-.then( _ => z.assertExistsByCss('#google_support_stg:not(:checked)'), 'the checkbox is not marked')
-.then( _ => z.assertExistsByCss('#google_account_linking_stg:not(:checked)'), 'the checkbox is not marked')
+.then( _ => z.assertExistsByCss('#google_support_stg:checked'), 'the checkbox is marked')
+.then( _ => z.assertExistsByCss('#google_account_linking_stg:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 //Feature: Production tab
@@ -173,15 +174,15 @@ driver
 
 
 //Feature: Google subtab (staging)
-//Google support and Account linking checkboxes are not marked
+//Google support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
 .then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickByLinkText('Production'))
 .then( _ => z.clickByLinkText('Google'))
-.then( _ => z.assertExistsByCss('#google_support:not(:checked)'), 'the checkbox is not marked')
-.then( _ => z.assertExistsByCss('#google_account_linking:not(:checked)'), 'the checkbox is not marked')
+.then( _ => z.assertExistsByCss('#google_support:checked'), 'the checkbox is marked')
+.then( _ => z.assertExistsByCss('#google_account_linking:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 //Feature: Delete skill
