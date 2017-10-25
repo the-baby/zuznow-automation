@@ -30,7 +30,7 @@ scenario('Sign-in successfully leads to homepage')
  
 //Successful creation of a predefined banking app
  
-scenario('Clicking the Bot icon marks it')
+scenario('The bot icon is marked by default')
  
 .then( _ => z.openPage(baseUrl + '/new'))
  
@@ -49,8 +49,6 @@ scenario('Clicking the Bot icon marks it')
 .then( _ => z.clickByClassName ('btn btn-success btn-square next button-next full-width'))
  
 .then( _ => z.waitFor(2))
- 
-.then(_ => z.clickByCss('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary > img'))
  
 .then( _ => z.assertElementHasClass(By.css('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary.check > div > div'), "the checkbox is marked", "checkmark draw"))
  
@@ -73,8 +71,16 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
 //Feature: Chat bot button and screen
  
 scenario('The corresponding button opens the chat bot menu')
+
+.then( _ => z.waitFor(2)) 
  
-.then( _ => z.clickByCss('#toggle_simulator'))                               
+.then( _ => z.clickByCss('#toggle_simulator'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickById('chatbot_preview'))
+
+.then( _ => z.waitFor(2))                                          
 
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
  
@@ -84,9 +90,10 @@ scenario('The corresponding button opens the chat bot menu')
 
 .catch( z.failedScenario ) 
 
+
  //Feature: Log In window
  
- .then( _ => z.waitFor(30))
+ .then( _ => z.waitFor(40))
  
  scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
  
@@ -95,6 +102,8 @@ scenario('The corresponding button opens the chat bot menu')
 .then( _ => z.assertBotReply('To continue you must link your account'))
 
 .then( _ => z.assertExistsByLinkText('Open log-in window'))
+
+ .then( _ => z.waitFor(2))
 
 .catch( z.failedScenario ) 
 
@@ -132,32 +141,136 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-/*
+
  scenario('A pincode should be entered to give requests')
  
-.then( _ => z.inputById ('input', 'What is my balance'))
-
-.then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
-
-.then( _ => z.waitFor(2) )
-
-//.then( () => z.assertContainsText(By.css('#conv-wrap > div:nth-child(10) > span'), "the bot requires pincode", 'To continue, please provide your pincode.') ) 
-
-.catch( z.failedScenario )
-
-
- scenario('Entering pincode enables iving the answer to the request')
+.then( _ => z.userSays('What is my balance', 3))
  
-.then( _ => z.inputById ('input', '1234'))
-
-.then( _ => z.clickByClassName('submitBtn form-control btn btn-primary')) 
-
-.then( _ => z.waitFor(1) )
-
-.then( () => z.assertContainsText(By.css('#conv-wrap > div:nth-child(11) > span > p:nth-child(3)'), "the bot approved the pincode", 'Thank you . Your pincode is correct.Auto Loan account balance is.') ) 
+.then( _ => z.assertBotReply('To continue, please provide your pincode.'))
 
 .catch( z.failedScenario )
-*/  
+
+//Feature: Enabled intents
+//Balance intent
+
+ scenario('Entering pincode enables giving the answer to the request')
+ 
+ scenario('Asking about balance gives a proper answer')
+ 
+.then( _ => z.userSays('1234', 3))
+
+.then( _ => z.assertBotReply('Thank you . Your pincode is correct.'))
+
+.then( _ => z.assertBotReply('Auto Loan account balance is'))
+
+.then( _ => z.assertBotReply('Would you like to hear more?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Saying yes gives the continuation of the balance intent info')
+
+.then( _ => z.userSays('yes', 3))
+
+.then( _ => z.assertBotReply('Roth IRA account balance is'))
+
+.then( _ => z.assertBotReply('Would you like to hear more?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Saying no to the continuation of the balance intent gives a reprompt')
+
+.then( _ => z.userSays('no', 3))
+
+.then( _ => z.assertBotReply('Sure. Is there anything else I can help you with?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Asking about specific account type gives the info only about this type')
+
+.then( _ => z.userSays('What is my checking account balance', 3))
+
+.then( _ => z.assertBotReply('Checking account available balance is'))
+
+.catch( z.failedScenario )
+
+/*
+scenario('Waiting for some time makes discovery suggestion')
+
+.then( _ => z.waitFor(3))
+	 
+.then( _ => z.assertBotReply('You can ask me anything, for example'))
+
+.catch( z.failedScenario )
+*/
+
+scenario('Asking about transactions gives the answer about my latest transactions')
+
+.then( _ => z.userSays('what are my latest transactions', 3))
+
+.then( _ => z.assertBotReply('you have recieved'))
+
+.then( _ => z.assertBotReply('you have spent'))
+
+.then( _ => z.assertBotReply('Would you like to hear more?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Saying yes gives the continuation of the Transactions intent info')
+
+.then( _ => z.userSays('yes', 3))
+
+.then( _ => z.assertBotReply('you have spent'))
+
+.then( _ => z.assertBotReply('Would you like to hear more?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Saying no to the continuation of the Transactions intent gives a reprompt')
+
+.then( _ => z.userSays('no', 3))
+
+.then( _ => z.assertBotReply('Sure. Is there anything else I can help you with?'))
+
+.catch( z.failedScenario )
+
+
+scenario('Asking about Insights gives  a proper answer')
+
+.then( _ => z.userSays('tell me how much I spend', 3))
+
+.then( _ => z.assertBotReply('You have spent total of'))
+
+.then( _ => z.assertBotReply('and received total of'))
+
+.catch( z.failedScenario )
+
+
+scenario('Asking about the Exchange rate of Euro gives a proper answer and the card is received')
+
+.then( _ => z.userSays('What is the exchange rate of Euro', 3))
+
+.then( _ => z.assertBotReply('1 United States Dollar equals'))
+
+.then( _ => z.assertBotReply('USD/EUR'))
+
+.catch( z.failedScenario )
+
+
+scenario('Asking about the Exchange rate of Albanian Lek to Armenian Dram gives a proper answer')
+
+.then( _ => z.userSays('What is the exchange rate of Albanian Lek to Armenian Dram', 3))
+
+.then( _ => z.assertBotReply('1 Albanian Lek equals'))
+
+.then( _ => z.assertBotReply('Armenian Dram'))
+
+.catch( z.failedScenario )
+
 
 
 
