@@ -72,19 +72,11 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 scenario('The corresponding button opens the chat bot menu')
 
-.then( _ => z.waitFor(2)) 
- 
-.then( _ => z.clickByCss('#toggle_simulator'))
-
-.then( _ => z.waitFor(2))
+.then( _ => z.clickByClassName('btn btn-show-simulator btn-silver btn-dropdown'))
 
 .then( _ => z.clickById('chatbot_preview'))
-
-.then( _ => z.waitFor(2))                                          
-
+                                     
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
- 
-.then( _ => z.locate(By.css('#conv_input > div'), 'chat frame'))
  
 .then( _ => z.assertExistsByClassName('submitBtn form-control btn btn-primary', 'the Save button'))
 
@@ -125,7 +117,9 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.inputById ('bank_fields_101732002', 'go'))
 
-.then( _ => z.inputById ('user_mobile', '0541234456'))                      
+.then( _ => z.inputById ('user_mobile', '0541234456'))
+                               
+.then( _ => z.inputById ('user_email', 'test@zuznow.com'))                    
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
@@ -133,7 +127,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
   
 .then( _ => z.clickById('login_button'))
 
-.then( _ => z.waitFor(7) )
+.then( _ => z.waitFor(8) )
   
 .then( _ => z.switchTab(1, 'bot screen'))
 
@@ -199,20 +193,19 @@ scenario('Asking about specific account type gives the info only about this type
 /*
 scenario('Waiting for some time makes discovery suggestion')
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(7))
 	 
-.then( _ => z.assertBotReply('You can ask me anything, for example'))
+.then( _ => z.assertBotReply('for example'))
 
 .catch( z.failedScenario )
 */
+//Transactions intent
 
 scenario('Asking about transactions gives the answer about my latest transactions')
 
 .then( _ => z.userSays('what are my latest transactions', 3))
 
-.then( _ => z.assertBotReply('you have recieved'))
-
-.then( _ => z.assertBotReply('you have spent'))
+.then( _ => z.assertExistsByClassName('bubble answer intent_Transactions'))
 
 .then( _ => z.assertBotReply('Would you like to hear more?'))
 
@@ -223,7 +216,7 @@ scenario('Saying yes gives the continuation of the Transactions intent info')
 
 .then( _ => z.userSays('yes', 3))
 
-.then( _ => z.assertBotReply('you have spent'))
+.then( _ => z.assertExistsByClassName('bubble answer intent_Transactions'))
 
 .then( _ => z.assertBotReply('Would you like to hear more?'))
 
@@ -238,18 +231,17 @@ scenario('Saying no to the continuation of the Transactions intent gives a repro
 
 .catch( z.failedScenario )
 
-
+//Insights intent
 scenario('Asking about Insights gives  a proper answer')
 
 .then( _ => z.userSays('tell me how much I spend', 3))
 
-.then( _ => z.assertBotReply('You have spent total of'))
-
-.then( _ => z.assertBotReply('and received total of'))
+.then( _ => z.assertExistsByClassName('bubble answer intent_Insights'))
 
 .catch( z.failedScenario )
 
 
+//Exchange rate intent
 scenario('Asking about the Exchange rate of Euro gives a proper answer and the card is received')
 
 .then( _ => z.userSays('What is the exchange rate of Euro', 3))
@@ -272,5 +264,32 @@ scenario('Asking about the Exchange rate of Albanian Lek to Armenian Dram gives 
 .catch( z.failedScenario )
 
 
+//StockQuote intent
 
+scenario('asking about stock quote for Amazon gives a corresponding answer and a card is received')
+
+.then( _ => z.userSays('what is the quote for Amazon.com', 3))
+
+.then( _ => z.assertBotReply('the end-of-day price for Amazon.com Inc was'))
+
+.then( _ => z.assertBotReply('AMZN'))
+
+.catch( z.failedScenario )
+
+
+scenario('asking about stock quote for Apple gives a corresponding answer')
+
+.then( _ => z.userSays('what is the quote for Apple', 3))
+
+.then( _ => z.assertBotReply(' the end-of-day price for Apple Inc was'))
+
+.catch( z.failedScenario )
+
+//Help intent
+
+.then( _ => z.userSays('Help', 3))
+
+.then( _ => z.assertBotReply('This skill gives you the info about your bank account, the nearest branch and ATM.'))
+
+.catch( z.failedScenario )
 
