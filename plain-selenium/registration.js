@@ -112,6 +112,7 @@ driver
 )
 
 .then( _ => z.clearCookies() )
+.then( _ => waitFor(5))
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
