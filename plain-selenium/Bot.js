@@ -72,7 +72,7 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 scenario('The corresponding button opens the chat bot menu')
 
-.then( _ => z.clickByClassName('btn btn-show-simulator btn-silver btn-dropdown'))
+.then( _ => z.clickById('openSimulatorDropDown'))
 
 .then( _ => z.clickById('chatbot_preview'))
                                      
@@ -150,6 +150,8 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
  scenario('Entering pincode enables giving the answer to the request')
  
  scenario('Asking about balance gives a proper answer')
+ 
+ .then( _ => z.waitFor(2) )
  
 .then( _ => z.userSays('1234', 3))
 
@@ -287,9 +289,75 @@ scenario('asking about stock quote for Apple gives a corresponding answer')
 
 //Help intent
 
+scenario('asking help gives the general info about the skill')
+
 .then( _ => z.userSays('Help', 3))
 
 .then( _ => z.assertBotReply('This skill gives you the info about your bank account, the nearest branch and ATM.'))
 
 .catch( z.failedScenario )
 
+//ATM intent
+
+scenario('asking What is the closest ATM gives the address about the closest ATM')
+
+.then( _ => z.userSays('where is the closest A.T.M.', 3))
+
+.then( _ => z.assertBotReply('The nearest atm is located'))
+
+.then( _ => z.assertBotReply('bon voyage'))
+
+.catch( z.failedScenario )
+
+scenario('asking What is the closest ATM to Austin street San Francisco gives the address of the ATM close to this street')
+
+.then( _ => z.userSays('What is the closest ATM to Austin street San Francisco', 3))
+
+.then( _ => z.assertBotReply('The nearest atm is located in Automated Financial, LLC at 1356 Van Ness Avenue, San Francisco. bon voyage.'))
+
+.catch( z.failedScenario )
+
+//Branch intent
+
+scenario('asking What is the closest branch gives the address about the closest My Bank branch and sends a card')
+
+.then( _ => z.userSays('where is the closest branch', 3))
+
+.then( _ => z.assertBotReply('The nearest my bank branch is located '))
+
+.then( _ => z.assertBotReply('Open now:'))
+
+.catch( z.failedScenario )
+
+
+scenario('asking What is the closest branch to Austin street San Francisco gives the address of the branch close to this street')
+
+.then( _ => z.userSays('What is the closest branch to Austin street San Francisco', 3))
+
+.then( _ => z.assertBotReply('The nearest my bank branch is located'))
+
+.catch( z.failedScenario )
+
+
+/*
+//Feature: Intents that were disabled at the beginning
+//Statement intent
+
+scenario('asking to send the statement makes the question about the statement type appear')
+
+.then( _ => z.userSays('Send me the statement', 3))
+
+.then( _ => z.assertBotReply('What account do you want the statement for?'))
+
+.catch( z.failedScenario )
+
+
+scenario('when the user gives statement type, the bot is expected to send it ')
+
+.then( _ => z.userSays(''checking account', 3))
+
+.then( _ => z.assertBotReply('What account do you want the statement for?'))
+
+.catch( z.failedScenario )
+
+*/
