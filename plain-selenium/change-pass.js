@@ -32,7 +32,9 @@ scenario('Sign-in successfully leads to the Editor')
 driver
 scenario('Clicking the Users button opens the Users screen')
 
-.then( _ => z.clickByClassName('menu-item users') )
+.then( _ => z.clickById('menu_account') )
+
+.then( _ => z.clickById('menu_users') )
 
 .then( _ => z.assertExistsById('user_selection'), "users drop-down menu"  )
 
@@ -76,9 +78,9 @@ scenario('Clicking the Save button adds a new user')
 driver
 scenario('Clicking the Sign out button leads to the Log In screen')
 
-.then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li:nth-child(3) > a') )
+.then( _ => z.clickById('menu_account') )
 
-.then( _ => z.clickByLinkText('Sign Out') )
+.then( _ => z.clickById('menu_logout') )
 
 .then( _ => z.assertExistsById('edit-name'), "The user name field on the Log in screen"  )
 
@@ -125,12 +127,12 @@ scenario('Clicking the User button opens the User menu')
 
 
 
-
-
 driver
 scenario('The Change password button opens the Change password screen')
 
-.then( _ => z.clickByLinkText('Change Password') )
+.then( _ => z.clickById('menu_account') )
+
+.then( _ => z.clickById('menu_change_password') )
 
 .then( _ => z.waitFor(2))
 
@@ -186,9 +188,9 @@ scenario(' Clicking the Save button saves a valid password')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByCss('#topbar > div.topbar-main > ul > li:nth-child(3) > a > span') )
+.then( _ => z.clickById('menu_account') )
 
-.then( _ => z.clickByLinkText('Change Password') )
+.then( _ => z.clickById('menu_change_password') )
 
 .then( _ => z.inputById('edit-field-first-name-und-0-value','ZuzNow') )
 
