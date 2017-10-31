@@ -21,7 +21,8 @@ driver
 
 driver
 .then( _ => z.scenario('Clicking the Users button opens the users tab') )
-.then( _ => z.clickByCss('#main-menu > li.menu-230 > a') )
+.then( _ => z.clickById('menu_account') )
+.then( _ => z.clickById('menu_users') )
 .then( _ => z.clickById('user_selection') )
 .then( _ => z.clickByCss('#user_selection > option:nth-child(5)') )
 .then( _ => z.clickById('btnDeleteUser') ) 
