@@ -25,7 +25,7 @@ driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
 .then( _ => z.openPage(baseUrl + '/userpage'))
 .then( _ => z.maximizeWindow() )
-.then( _ => z.clickByClassName('menu-item new-site'))
+.then( _ => z.clickById('menu_new'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
 .catch( z.failedScenario )                               
 
