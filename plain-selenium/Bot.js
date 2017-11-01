@@ -155,6 +155,8 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
  
 .then( _ => z.userSays('1234', 3))
 
+.then( _ => z.waitFor(2) )
+
 .then( _ => z.assertBotReply('Thank you . Your pincode is correct.'))
 
 .then( _ => z.assertBotReply('Auto Loan account balance is'))
@@ -303,17 +305,31 @@ scenario('asking What is the closest ATM gives the address about the closest ATM
 
 .then( _ => z.userSays('where is the closest A.T.M.', 3))
 
+.then( _ => z.waitFor(3) )
+
 .then( _ => z.assertBotReply('The nearest atm is located'))
 
-.then( _ => z.assertBotReply('bon voyage'))
+.then( _ => z.assertBotReply('Do you want me to text you the location?'))
 
 .catch( z.failedScenario )
+
+
+scenario('saying yes when the bot asks you if you want to get a message with the location gives an error message as my phone number is not valid')
+
+.then( _ => z.userSays('yes', 3))
+
+.then( _ => z.assertBotReply('is not a valid phone number.'))
+
+.catch( z.failedScenario )
+
 
 scenario('asking What is the closest ATM to Austin street San Francisco gives the address of the ATM close to this street')
 
 .then( _ => z.userSays('What is the closest ATM to Austin street San Francisco', 3))
 
-.then( _ => z.assertBotReply('The nearest atm is located in Automated Financial, LLC at 1356 Van Ness Avenue, San Francisco. bon voyage.'))
+.then( _ => z.waitFor(3) )
+
+.then( _ => z.assertBotReply('The nearest atm is located in Automated Financial, LLC at 1356 Van Ness Avenue, San Francisco. Do you want me to text you the location?'))
 
 .catch( z.failedScenario )
 
@@ -322,6 +338,8 @@ scenario('asking What is the closest ATM to Austin street San Francisco gives th
 scenario('asking What is the closest branch gives the address about the closest My Bank branch and sends a card')
 
 .then( _ => z.userSays('where is the closest branch', 3))
+
+.then( _ => z.waitFor(2) )
 
 .then( _ => z.assertBotReply('The nearest my bank branch is located '))
 
