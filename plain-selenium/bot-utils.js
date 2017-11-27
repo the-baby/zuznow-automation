@@ -27,3 +27,6 @@ exports.extend = z => {
             .then( () => z.waitFor(waitFor || 2))
     }    
 }
+
+
+//driver.switchTo().frame("frame1");
