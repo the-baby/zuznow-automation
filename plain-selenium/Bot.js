@@ -72,6 +72,8 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 scenario('The corresponding button opens the chat bot menu')
 
+ .then( _ => z.waitFor(3))
+
 .then( _ => z.clickById('openSimulatorDropDown'))
 
 .then( _ => z.clickById('chatbot_preview'))
@@ -85,7 +87,7 @@ scenario('The corresponding button opens the chat bot menu')
 
  //Feature: Log In window
  
- .then( _ => z.waitFor(40))
+ .then( _ => z.waitFor(200))
  
  scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
  
@@ -165,7 +167,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-
+/*
 scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
@@ -194,15 +196,8 @@ scenario('Asking about specific account type gives the info only about this type
 
 .catch( z.failedScenario )
 
-/*
-scenario('Waiting for some time makes discovery suggestion')
 
-.then( _ => z.waitFor(7))
-	 
-.then( _ => z.assertBotReply('for example'))
 
-.catch( z.failedScenario )
-*/
 //Transactions intent
 
 scenario('Asking about transactions gives the answer about my latest transactions')
@@ -333,6 +328,7 @@ scenario('asking What is the closest ATM to Austin street San Francisco gives th
 
 .catch( z.failedScenario )
 
+
 //Branch intent
 
 scenario('asking What is the closest branch gives the address about the closest My Bank branch and sends a card')
@@ -355,13 +351,48 @@ scenario('asking What is the closest branch to Austin street San Francisco gives
 .then( _ => z.assertBotReply('The nearest my bank branch is located'))
 
 .catch( z.failedScenario )
+*/
 
 
-/*
 //Feature: Intents that were disabled at the beginning
 //Statement intent
+/*
+scenario('clicking the intent opens it')
+
+.then( _ => z.switchTab(0, 'popped up log in window'))
+
+.then( _ => z.clickByCss('#intentsMenuDiv > .intent-link[name="Statement"]') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.assertExistsByClassName('endSessionCheckBox'), "end session checkbox"  )
+
+.catch( z.failedScenario )
+
+
+scenario('clicking the enable button enables the Statement intent')
+
+.then( _ => z.clickByCss('.intent_div[name="Statement"] a.intentDisable') )
+
+.then( _ => z.clickById('btnSave') )
+
+.then( _ => z.waitFor(60) )
+
+.then( _ => z.clickById('btnReset') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="Statement"]') )
+
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Statement"]:not(.disabled)'), "end session checkbox"  )
+
+.catch( z.failedScenario )
+
+
 
 scenario('asking to send the statement makes the question about the statement type appear')
+
+.then( _ => z.switchTab(1, 'the Bot screen'))
 
 .then( _ => z.userSays('Send me the statement', 3))
 
@@ -372,10 +403,85 @@ scenario('asking to send the statement makes the question about the statement ty
 
 scenario('when the user gives statement type, the bot is expected to send it ')
 
-.then( _ => z.userSays(''checking account', 3))
+.then( _ => z.userSays('checking account', 3))
 
 .then( _ => z.assertBotReply('What account do you want the statement for?'))
 
 .catch( z.failedScenario )
-
 */
+
+//Support intent
+
+scenario('clicking the intent opens it')
+
+.then( _ => z.switchTab(0, 'popped up log in window'))
+
+.then( _ => z.clickByCss('#intentsMenuDiv > .intent-link[name="CallSupport"]') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.assertExistsByClassName('endSessionCheckBox'), "end session checkbox"  )
+
+.catch( z.failedScenario )
+
+
+scenario('clicking the enable button enables the Support intent')
+
+.then( _ => z.clickByCss('.intent_div[name="CallSupport"] a.intentDisable') )
+
+.then( _ => z.clickById('btnSave') )
+
+.then( _ => z.waitFor(60) )
+
+.then( _ => z.clickById('btnReset') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
+
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]:not(.disabled)'), "end session checkbox"  )
+
+.catch( z.failedScenario )
+
+
+scenario('clicking the Phone button opens it')
+
+.then( _ => z.clickByLinkText('loadAction();') )
+
+.then( _ => z.assertExistsById('updateAction'), "the Update button"  )               
+
+.catch( z.failedScenario )
+
+
+scenario('It is possible to enter a phone number in the corresponding field')
+
+.then( _ => z.inputByClassName('param_value form-control', '0535301325') )
+
+.then( _ => z.clickById('updateAction') )
+
+.then( _ => z.clickById('btnSave') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.clickById('btnReset') )
+
+.then( _ => z.waitFor(2) )
+
+.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
+
+.then( _ => z.clickByLinkText('loadAction()') )
+
+.then( () => z.assertContainsValue(By.className('param_value form-control'), "the expected text in the element", '0535301325') ) 
+
+.catch( z.failedScenario )
+
+
+scenario('asking about support gives support phone number')
+
+.then( _ => z.switchTab(1, 'the Bot screen'))
+
+.then( _ => z.userSays('How can I contact support', 3))
+
+.then( _ => z.assertBotReply('You can call us at. Would you like to speak with a representative?'))
+
+.catch( z.failedScenario )
