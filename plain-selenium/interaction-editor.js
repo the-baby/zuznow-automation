@@ -29,7 +29,7 @@ scenario('Sign-in successfully leads to Editor')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
+.then( _ => z.assertExistsById('btnSave'), "Editor" ) 
 
 .catch( z.failedScenario )
 
@@ -48,10 +48,6 @@ scenario('Clicking the Next button opens the Test your skill screen')
 .then( _ => z.clickByLinkText('Banking'))
 
 .then( _ => z.inputById ('org-name', 'TJX Rewards'))
-
-//.then( _ => z.clickByCss('#tab1 > div.form-horizontal > div:nth-child(2) > div > ul > li > a > strong'))
-
-//.then( _ => z.clickByClassName ('pager wizard'))
 
 .then( _ => z.waitFor(2))
 
@@ -73,23 +69,7 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.assertExistsById('accordion_interaction'), "the Interaction tab is open")
-
-.catch( z.failedScenario )
-
-
-
-
-
-
-
-//Creating an empty intent
-
-scenario('Creating an empty intent returns an error message')
-
-.then( _ => z.clickByClassName ('input-group-addon btn'))
-
-.then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message')
+.then( _ => z.assertExistsById('LogButton'), "the Interaction tab is open")
 
 .catch( z.failedScenario )
 
@@ -97,20 +77,23 @@ scenario('Creating an empty intent returns an error message')
 
 //Creating a new intent
 
-scenario('Clicking the Add button adds a new intent')
+scenario('Clicking the Add button adds a new intent with a default name')
 
-.then( _ => z.inputById ('newIntentInput', 'test'))
+.then( _ => z.clickByClassName ('new-intent-link'))
 
-.then( _ => z.clickByClassName ('input-group-addon btn'))
+.then( _ => z.clickById ('customIntentBtn'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.waitFor(10))
+	
+.then( _ => z.clickById ('btnReset'))
 
-.then( _ => z.assertExistsByLinkText('test'), 'the new intent')
+.then( _ => z.waitFor(4))
+
+.then( () => z.assertExistsByCss('.intent-link[name="UntitledIntent"]'), 'intent with default name' ) 
 
 .catch( z.failedScenario )
-
 
 
 //Editing Intent name
@@ -120,53 +103,26 @@ scenario('Clicking the Edit name button allows editing intent name')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByXPath ('//*[@id="accordion_interaction"]/div[1]/div[1]/i[1]'))
+.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))
 
-.then( _ => driver.findElement(By.className('newIntentName')).clear())
+.then( _ => z.waitFor(4))
 
-.then( _ => z.inputByClassName('newIntentName', 'exam'))
+.then( _ => z.changeInputByCss('.panel[name="UntitledIntent"] .intent_name','exam'))
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByClassName ('fa fa-check'))
-
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.waitFor(5))
 
-.then( _ => z.assertExistsByLinkText('exam'),'intent name modified' )                        
+.then( _ => z.clickById ('btnReset'))
 
-.catch( z.failedScenario )
+.then( _ => z.waitFor(2))
 
-
-
-
-
-
-
-//Cancelling the Editing of Intent name
-
-scenario('Clicking the Cancel button cancels editing of intent name')
-
-.then( _ => z.openPage(baseUrl + '/editor'))
-
-.then( _ => z.maximizeWindow() )
-	
-.then( _ => z.clickByCss('#accordion_interaction > div:nth-child(1) > div.panel-heading > i.fa.fa-pencil'))
-
-.then( _ => driver.findElement(By.css('#accordion_interaction > div:nth-child(1) > div.panel-heading > input')).clear())
-
-.then( _ => z.inputByClassName('newIntentName', 'flower'))
-
-.then( _ => z.waitFor(3))
-
-.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1)  i.fa.fa-times'))
-
-.then( _ => z.waitFor(3))
-	
-.then( _ => z.assertExistsByLinkText('exam'),'intent name not modified' )                        
+.then( _ => z.assertExistsByCss('.intent-link[name="exam"]'),'intent name modified' )                        
 
 .catch( z.failedScenario )
+
 
 
 
@@ -176,25 +132,26 @@ scenario('Clicking the Cancel button cancels editing of intent name')
 
 scenario('Clicking the Disable button disables intent')
 
-.then( _ => z.openPage(baseUrl + '/editor'))
+.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
-.then( _ => z.maximizeWindow() )
+.then( _ => z.clickByCss('.intent_div[name="Balance"] a.intentDisable') )
+
+.then( _ => z.clickById('btnSave') )
+
+.then( _ => z.waitFor(30) )
+
+.then( _ => z.clickById('btnReset') )
 
 .then( _ => z.waitFor(2) )
 
-.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(2) > div.panel-heading > a.intentDisable.fa.pull-right.fa-toggle-on'))
+.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="Balance"]') )
 
-.then( _ => z.clickById ('btnSave'))
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Balance"].disabled'), "end session checkbox"  )
 
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.clickByClassName ('fa fa-refresh'))
-
-.then( _ => z.waitFor(3) )
-
-.then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
+.then( _ => z.clickById('btnReset') )
 
 .catch( z.failedScenario )
+
 
 
 
@@ -202,9 +159,11 @@ scenario('Clicking the Disable button disables intent')
 
 scenario('Clicking the Delete button deletes intent')
 
-.then( _ => z.assertExistsByCss(' #accordion_interaction > div:nth-child(1) > div.panel-heading > span', 'intent name not modified' ))
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByCss ('#intentsMenuDiv >.intent-link[name="Balance"]'))
 
-.then( _ => z.clickByCss ('#accordion_interaction > div:nth-child(1) > .panel-heading > .deleteIntentButton'))
+.then( _ => z.clickByCss('.intent_div[name="Balance"] a.deleteIntentButton'))
 
 .then( _ => z.waitFor(2))
 
@@ -214,9 +173,11 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.clickById ('btnSave'))
 
+.then( _ => z.waitFor(20))
+
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertNoSuchElements(By.className('exam'), 'the deleted intent' ) )
+.then( _ => z.assertNoSuchElements(By.css('.intent-link[name="Balance"]'), 'the deleted intent' ) )
 
 .catch( z.failedScenario )
 
@@ -235,30 +196,30 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.inputById ('newIntentInput', 'sample'))
+.then( _ => z.clickByCss ('.intent-link[name="exam"]'))
+
+.then( _ => z.inputByCss ('.intent_div[name="exam"] .samples_div input', 'test sample'))
+
+.then( _ => z.clickByCss ('.intent_div[name="exam"] div.samples_div i[title="Add Sample"]') )
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByClassName ('input-group-addon btn'))
-
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(3))
-
-.then( _ => z.inputByCss ('#collapsesample > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence'))
-
-.then( _ => z.waitFor(3))
-
-.then( _ => z.clickByCss ('#collapsesample > div > div > div > div.samples_div > div.input-icon.right > i'))
-
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(10))
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertExistsByCss('#collapsesample > div > div > div > div.samples_div > table > tbody > tr > td.sample_content'), 'the new sample phrase')
+.then( _ => z.waitFor(3))
+	
+.then( _ => z.clickByCss ('.intent-link[name="exam"]'))
 
+.then( _ => z.waitFor(3))
+	
+.then( _ => z.assertContainsText(By.css('.intent_div[name="exam"] div.samples_div .samples_tr:last-child .sample_content span.sampleSpan'), "the expected text in the element", 'test sample') )
+
+
+//.intent_div[name="StockQuote"] div.samples_div .sample_content span
 .catch( z.failedScenario )
 
 
@@ -266,34 +227,17 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 //Unsuccessful adding of a sample sentence
 
-.then( _ => z.openPage(baseUrl + '/editor'))
+scenario('An error message should appear when we use invalid characters in a sample sentence')
 
-.then( _ => z.maximizeWindow() )
+.then( _ => z.inputByCss ('.intent_div[name="exam"] .samples_div input', 'test sample?'))
 
-.then( _ => z.inputById ('newIntentInput', 'larisa'))
-
-.then( _ => z.clickByClassName ('input-group-addon btn'))
-
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(3))
-
-.then( _ => z.scenario('Entering a phrase with invalid characters returns an error message') )
-
-.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence?'))
-
-.then( _ => z.waitFor(3))
-
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByCss ('.intent_div[name="exam"] div.samples_div i[title="Add Sample"]') )
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
-.then( _ => driver.findElement(By.css('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input')).clear())
+.then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .catch( z.failedScenario )
-
-
-
 
 
 
@@ -301,17 +245,33 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 scenario('Clicking the edit button allows editing a sample sentence')
 
-.then( _ => z.inputByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > input', 'new sample sentence'))
+.then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('#collapselarisa > div > div > div > div.samples_div > div.input-icon.right > i'))
+.then( _ => z.clickByClassName ('new-intent-link'))
+
+.then( _ => z.clickById ('customIntentBtn'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(3))
+.then( _ => z.inputByCss ('.intent_div[name="UntitledIntent"] .samples_div input', 'new sample'))
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td:nth-child(2) > a.rename > i'))
+.then( _ => z.clickByCss ('.intent_div[name="UntitledIntent"] div.samples_div i[title="Add Sample"]'))
 
-.then( _ => z.assertExistsByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the field became editable')
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(15))
+
+.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .rename:first-child'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.inputByCss ('.intent_div[name="UntitledIntent"] div.samples_div input.newSample', 'another'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .fa-check'))
+
+.then( _ => z.assertContainsText(By.css('.intent_div[name="UntitledIntent"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), "the expected text in the element", 'anothernew sample') )
 
 .catch( z.failedScenario )
 
@@ -323,17 +283,21 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 scenario('Clicking delete button deletes a sample sentence')
 
-.then( _ => z.clickByCss('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td:nth-child(2) > a.delete > i'))
+.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .fa-trash-o'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(12))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.assertNoSuchElements(By.css('#collapselarisa > div > div > div > div.samples_div > table > tbody > tr > td.sample_content > span.renameSpan > input'), 'the deleted sample sentence' ) )           
+ .then( _ => z.waitFor(2))
 
- .catch( z.failedScenario )
+.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))	 
+
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="UntitledIntent"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
+
+.catch( z.failedScenario )
 
 
 
@@ -346,29 +310,23 @@ scenario('Clicking delete button deletes a sample sentence')
 
 scenario('It is possible to add a discovery suggestion is the corresponding field')
 
-.then( _ => z.openPage(baseUrl + '/editor'))
-
-.then( _ => z.maximizeWindow() )
-
-.then( _ => z.inputById ('newIntentInput', 'discovery'))
-
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByClassName ('input-group-addon btn'))
+.then( _ => z.inputByCss('.intent_div[name="UntitledIntent"] div.discoveryDiv .form-control.discoveryInput', 'discovery test message'))
 
-.then( _ => z.scrollToTop())
-
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.inputByCss('#collapsediscovery > div > div > div > div.response_div.param_div > div.form-group.discoveryDiv > input', 'what is my mark'))
-
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(2))
 	
-.then( _ => z.scrollToTop())
-
 .then( _ => z.clickById ('btnSave'))
 
-.then( () => z.assertContainsValue(By.css('#collapsediscovery > div > div > div > div.response_div.param_div > div.form-group.discoveryDiv > input'), "the expected text in the element", 'what is my mark') ) 
+.then( _ => z.waitFor(15))
+	
+.then( _ => z.clickByClassName ('fa fa-refresh'))
+
+.then( _ => z.waitFor(2))
+	 
+.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))
+
+.then( () => z.assertContainsValue(By.css('.intent_div[name="UntitledIntent"] div.discoveryDiv .form-control.discoveryInput'), "the expected text in the element", 'discovery test message') ) 
 
 .catch( z.failedScenario )
 
@@ -381,43 +339,45 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 scenario('Clicking the add entity button allows adding a new entity')
 
-.then( _ => z.openPage(baseUrl + '/editor'))
+.then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.maximizeWindow() )
+.then( _ => z.waitFor(3))
 
-.then( _ => z.inputById ('newIntentInput', 'NewEntity'))
+.then( _ => z.clickByClassName ('new-intent-link'))
 
-.then( _ => z.clickByClassName ('input-group-addon btn'))
+.then( _ => z.clickById ('customIntentBtn'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
-
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'class'))
+.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Entity'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
+.then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-angle-right'))
+
+.then( _ => z.inputByCss('.intent_div[name="Entity"] div.entities_div input.form-control', 'class'))
+
+.then( _ => z.waitFor(3))
+	
+.then( _ => z.clickByCss('.intent_div[name="Entity"] div.entities_div .fa-plus-square'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(5))
 
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByLinkText ('NewEntity'))
+.then( _ => z.clickByCss ('.intent-link[name="Entity"]'))
 
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
+.then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-angle-right'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.assertExistsByCss('.intent_div[name="Entity"] div.entities_div input.form-control'), 'the new entity was added')
 
-.then( _ => z.assertExistsByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr > td.entity_name > input'), 'the new entity was added')
-
- .catch( z.failedScenario )
+.catch( z.failedScenario )
  
  
 
@@ -425,42 +385,19 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 scenario('Creating an empty entity should return an error message')
 
-.then( _ => z.openPage(baseUrl + '/editor'))
-
-.then( _ => z.maximizeWindow() )
-
-.then( _ => z.clickByLinkText ('NewEntity'))
-
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
-
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
+.then( _ => z.clickByCss('.intent_div[name="Entity"] div.entities_div .fa-plus-square'))
 
 .then( _ => z.assertExistsById('jGrowl'), 'error message appeared')
 
- .catch( z.failedScenario )
+.catch( z.failedScenario )
  
 
 //Deleting entity
 
 scenario('Clicking delete button deletes an entity')
 
-.then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => z.maximizeWindow() )
-
-.then( _ => z.clickByLinkText ('NewEntity'))
-
-.then( _ => z.clickByCss ('#collapseNewEntity > div > div > div > div.samples_div > h4:nth-child(7) > i'))
-
-.then( _ => z.inputByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > input', 'DeleteEntity'))
-
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > div > i'))
-
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByCss('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td:nth-child(3) > a > i'))
+.then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-trash-o'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -468,280 +405,292 @@ scenario('Clicking delete button deletes an entity')
 	
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(3))
 	
-.then( _ => z.clickByLinkText ('NewEntity'))
+.then( _ => z.clickByCss ('.intent-link[name="Entity"]'))
 
-.then( _ => z.assertNoSuchElements(By.css('#collapseNewEntity > div > div > div > div.samples_div > div.entities_div.panel-collapse.collapse.in > table > tbody > tr:nth-child(2) > td.entity_name > input'), 'the deleted entity' ) ) 
+.then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-angle-right'))
+
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Entity"] div.entities_div input.entityInput'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
  
  
  
  
+ //Feature: Response
  
- //Feature: Parameters
+ //Code adding
  
-//Adding of a new key
-scenario('It is possible to enter a key in the corresponding field')
+ scenario('It is possible to enter and save the code in the corresponding response section')
+ 
+.then( _ => z.openPage(baseUrl + '/editor'))
+
+.then( _ => z.clickByClassName ('new-intent-link'))
+
+.then( _ => z.clickById ('customIntentBtn'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(10))
+	
+.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Code'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(5))
+	
+.then( _ => z.clickByCss('.panel[name="Code"] a.action-link.newAction'))
+
+.then( _ => z.clickByCss ('.modal-body div#preAction_code.preaction'))  
+
+.then( _ => z.inputByCss ('.actionDiv textarea.form-control', 'return checkTransactions(context, req, res);'))
+
+.then( _ => z.clickById ('updateAction')) 
+
+.then( _ => z.clickById ('btnSave'))
+       
+.then( _ => z.waitFor(10))
+	
+.then( _ => z.clickById ('btnReset'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByCss ('.intent-link[name="Code"]'))
+	
+.then( _ => z.clickByCss ('.intent_div[name="Code"]  .action-link[action-name="code"]'))
+
+.then( () => z.assertContainsValue(By.css('.actionDiv textarea.form-control'), "the expected text in the element", 'return checkTransactions(context, req, res);') )
+
+.catch( z.failedScenario )
+
+ 
+//Text adding and deleting
+scenario('It is possible to enter text response in the corresponding field')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => z.maximizeWindow() )
+.then( _ => z.waitFor(3))
 
-.then( _ => z.inputById ('newIntentInput', 'osher'))
+.then( _ => z.clickByClassName ('new-intent-link'))
 
-.then( _ => z.clickByClassName ('input-group-addon btn'))
-
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', 'house'))
-
-.then( _ => z.scrollToTop())
+.then( _ => z.clickById ('customIntentBtn'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( () => z.assertContainsValue(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', 'house'), "the expected text in the element", 'house') ) 
+.then( _ => z.waitFor(10))
+	
+.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Response'))
+
+.then( _ => z.clickById ('btnSave'))
+
+.then( _ => z.waitFor(5))
+	
+.then( _ => z.clickByCss('.panel[name="Response"] a.action-link.newAction'))
+
+.then( _ => z.clickByCss ('.modal-body div#preAction_code.preaction'))  
+
+.then( _ => z.inputByCss ('.actionDiv textarea.form-control', 'return checkTransactions(context, req, res);'))
+
+.then( _ => z.clickById ('updateAction')) 
+
+.then( _ => z.clickById ('btnSave'))
+       
+.then( _ => z.waitFor(10))
+	
+.then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
+
+.then( _ => z.inputByCss('.modal-content input.textRes_input.form-control', 'text for test')) 
+
+.then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square')) 
+ 
+.then( () => z.assertContainsValue(By.css('.modal-content .textRes_tr:not(.template) input.textRes_span'), "the expected text in the element", 'text for test') ) 
 
 .catch( z.failedScenario )
 
 
-//Successful adding of a new value and saving the parameter
+scenario('It is possible to delete the text by clicking the corresponding button')
 
-scenario('It is possible to enter a value in the corresponding field')
+.then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template) .fa-trash-o'))
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'number'))
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickById ('customModalButton'))
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.assertNoSuchElements(By.css('.modal-content .textRes_tr:not(.template) input.textRes_span'), 'deleted text' ) )
+
+.then( _ => z.clickById ('updateAction'))
+
+.catch( z.failedScenario )
+
+
+//Remove text response completely
+
+scenario('It is possible to remove the text response completely')
+
+.then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
+
+.then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square'))
+
+.then( _ => z.clickById ('updateAction'))
+
+.then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
+
+.then( _ => z.clickByCss ('.modal-content .fa-trash'))
+
+.then( _ => z.clickById ('customModalButton')) 
+
+.then( _ => z.assertNoSuchElements(By.css('.panel[name="Response"]  .action-link[action-name="text"]'), 'no tesxt response' ) )          
+
+
+
+
+
+//Adding of did you mean sentence
+scenario('It is possible to enter a did you mean senetence and save it')
+
+.then( _ => z.waitFor(2))
+
+.then( _ => z.inputByCss('.intent_div[name="Response"] div.suggestDiv .form-control.suggestInput', 'what did you mean'))
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.scrollToTop())
-	
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.scrollToTop())
-
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(2))
-
+.then( _ => z.waitFor(15))
+	
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
 .then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByLinkText ('osher'))
+	 
+.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.assertExistsByCss('#collapseosher > div > div > div > div.response_div.param_div > table > tbody > tr > td.param_key > span'), 'the key and value fields are present' ) 
+.then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.suggestDiv .form-control.suggestInput'), "the expected text in the element", 'what did you mean') ) 
 
 .catch( z.failedScenario )
 
 
-//Adding of invalid key
-scenario('Adding invalid key should return an error message')
 
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', '123'))
-
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'tulip'))
-
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
-
-.then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
-
-.catch( z.failedScenario )
-
-
-//Adding of an empty parameter
-scenario('Trying to enter an empty parameter should return an error message')
-
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input')).clear())
-
-.then( _ => driver.findElement(By.css('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input')).clear())
-
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > input', ''))
-
-.then( _ => z.inputByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > input', 'tulip'))
-
-.then( _ => z.scrollToTop())
-
-.then( _ => z.clickByCss('#collapseosher > div > div > div > div.response_div.param_div > div.form-inline > div > i' ))
+//Adding of reprompt message
+scenario('It is possible to enter a reprompt senetence and save it')
 
 .then( _ => z.waitFor(2))
 
-.then (_ => z.assertExistsByClassName ('jGrowl-notification'), 'error message appeared')
-
-.catch( z.failedScenario )
- 
- 
- 
- //Feature: Response section
-
-//Enter text response message
-scenario('It is possible to enter a text response message in the corresponding field')
-
-.then( _ => z.openPage(baseUrl + '/editor'))
-
-.then( _ => z.maximizeWindow() )
-
-.then( _ => z.inputById ('newIntentInput', 'Response'))
-
-.then( _ => z.clickByClassName ('input-group-addon btn'))
-
-.then( _ => z.scrollToTop())
-
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(2))
-
-.then( _ => z.inputByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(3) > input', 'new message'))
+.then( _ => z.inputByCss('.intent_div[name="Response"] div.repromtDiv .form-control.repromtInput', 'reprompt test message'))
 
 .then( _ => z.waitFor(2))
 	
 .then( _ => z.clickById ('btnSave'))
-	
-.then( _ => z.waitFor(2))
 
+.then( _ => z.waitFor(15))
+	
 .then( _ => z.clickByClassName ('fa fa-refresh'))
 
-.then( _ => z.waitFor(2))
-	
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(3) > input'), "the expected text in the element", 'new message') ) 
+.then( _ => z.waitFor(4))
+	 
+.then( _ => z.clickByCss('.intent-link[name="Response"]'))
+
+.then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.suggestDiv .form-control.repromtInput'), "the expected text in the element", 'reprompt test message') ) 
 
 .catch( z.failedScenario )
-
-//TODO: Find out how to scroll the page up
-
-
-/*
-//Enter code response 
-scenario('It is possible to enter code response in the corresponding field')
-
-.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.col-md-4.response_div > div:nth-child(2) > div > select'))
-
-.then( _ => z.clickByCss(''))
-
-//TODO: how to select an item from the drop-down list
-
-// */
-
-
+ 
+ 
+ 
+ 
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
-.then( _ => z.clickByLinkText ('Response'))
+.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
-.then( _ => z.clickByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(4) > label > input'))
+.then( _ => z.clickByCss('.intent_div[name="Response"]  input.endSessionCheckBox') )
 
 .then( _ => saveAndRefresh() )
 
 .then( _ => z.waitFor(4))
 	
-.then( _ => z.clickByLinkText ('Response'))
+.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.assertExistsByCss('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(4) > label > input:checked'), 'the box is checked')
+.then( _ => z.assertExistsByCss('.intent_div[name="Response"]  input.endSessionCheckBox:checked'), 'the box is checked')
 
 .catch( z.failedScenario )
 
-
-
-//Adding reprompt text
-
-scenario('It is possible to add and save reprompt message')
-
-.then( _ => z.inputByCss ('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(5) > input', 'How can I help you'))
-
-.then( _ => z.clickByCss ('#btnSave'))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
-
-.then( _ => z.waitFor(2))
-	
-.then( _ => z.clickByLinkText ('Response'))
-
-.then( _ => z.waitFor(2))
-
-.then( () => z.assertContainsValue(By.css('#collapseResponse > div > div > div > div.response_div.param_div > div:nth-child(5) > input'), "the expected text in the element", 'How can I help you') )
-
-.catch( z.failedScenario )
-
-//TODO: Find out how to scroll the page up
-
-  
  
-  
-//Feature: Manage entities section
+ 
+//Feature: Edit entities section
 
 //The section contanins the list of entities
 
-scenario('Clicking “Manage entities” button opens the corresponding section')
+scenario('Clicking “Edit entities” button opens the corresponding section')
 
 .then( _ => z.openPage(baseUrl + '/editor'))
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
+.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
-.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(2) > td.entityName'), 'the list of entities is present')
+.then( _ => z.assertExistsByCss('div.entity-link[name="LOAN_TYPES"]'), 'the section contains the necessary parts')
+
+.then( _ => z.assertExistsByCss('div.entity-link[name="LIST_OF_TYPES"]'), 'the section contains the necessary parts')
 
 .catch( z.failedScenario )
 
 
 //Successful adding of a new entity
 
-scenario('Clicking Create button creates a new entity')
+scenario('it is possible to add and save a new entity')
 
-.then( _ => z.inputByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > input', 'zuznow'))
-
-.then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
+.then( _ => z.clickByCss('div.entity-link.new-entity-link'))                            
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.assertExistsByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName'), 'the new entity is added')
+.then( _ => z.clickByCss('div.intent-link.entities-link'))
+
+.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
+
+.then( _ => z.assertExistsByCss('div.entity-link[name="UntitledEntity"]'), 'the new entity is added')
 
 .catch( z.failedScenario )
 
-//TODO: Find out how to scroll the page up
 
 
+//Adding of entity values
 
-//Adding of an empty entity
+scenario('Entity value can be added and saved')
 
-scenario('An error message should appear when trying to create an empty entity')
+//.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
-.then( _ => z.openPage(baseUrl + '/editor'))
+.then( _ => z.waitFor(4))
+	
+.then( _ => z.inputByCss ('.entity_div[name="UntitledEntity"] textarea.entitiesTextarea', 'test value'))
 
-.then( _ => z.maximizeWindow() )
+.then( _ => saveAndRefresh() )
 
-.then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
+.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
-.then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > div > i'))
+.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
-.then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
+.then( _ => z.assertExistsByCss('.entity_div[name="UntitledEntity"] textarea.entitiesTextarea'), 'test value')
 
 .catch( z.failedScenario )
-
  
  //Deleting entity
  
  scenario('Clicking delete button deletes an entity')
+ 
+// .then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
-.then( _ => z.openPage(baseUrl + '/editor'))
-
-.then( _ => z.maximizeWindow() )
-
-.then( _ => z.clickByCss('#editbox_interaction_gui > div.panel.panel-grey.manageEntities > div.panel-heading > a > i'))
-
-.then( _ => z.clickByCss('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td:nth-child(2) > a.delete > i'))
+.then( _ => z.clickByCss('div.panel.entity_div[name="UntitledEntity"] div.panel-heading .fa-trash'))
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.assertNoSuchElements(By.css('#collapseEntities > div > form > div > div > div.col-md-4.entityTypeDiv > table > tbody > tr:nth-child(5) > td.entityName.bold'), 'the deleted entity' ) ) 
+.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
- .catch( z.failedScenario )
+.then( _ => z.assertNoSuchElements(By.css('div.panel.entity_div[name="UntitledEntity"]'), 'the deleted entity' ) ) 
+
+.catch( z.failedScenario )
+ 
  
  driver
 .then( _ => z.endResult() )
