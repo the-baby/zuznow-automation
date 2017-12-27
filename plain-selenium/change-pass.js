@@ -78,6 +78,8 @@ scenario('Clicking the Save button adds a new user')
 driver
 scenario('Clicking the Sign out button leads to the Log In screen')
 
+.then( _ => z.scrollToTop())
+
 .then( _ => z.clickById('menu_account') )
 
 .then( _ => z.clickById('menu_logout') )
@@ -219,6 +221,8 @@ scenario('successful log in of admin user with applications should show Editor')
 
 .then( _ => z.inputById('edit-pass', 'Larisa1'))
 
+.then( _ => z.waitFor(1))
+	
 .then( _ => z.clickByClassName('form-submit') )
 
 .then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
