@@ -23,7 +23,7 @@ exports.extend = z => {
 
     function userSays(text, waitFor) {
         return z.inputById('input', text)
-            .then( () => z.clickByClassName('submitBtn form-control btn btn-primary') )
+            .then( () => z.clickByClassName('submitBtn') )
             .then( () => z.waitFor(waitFor || 2))
     }    
 }
