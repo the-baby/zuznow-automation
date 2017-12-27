@@ -54,7 +54,7 @@ scenario('Checking that demo content is present in the custom app')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.locate(By.id('btnSave')))
 .then( _ => z.waitFor(2))
-.then( _ => z.assertExistsByLinkText('CalcIntent'), 'intent from the demo content')
+.then( _ => z.assertExistsByCss('.intent-link[name="CalcIntent"]'), 'intent from the demo content')
 .catch( z.failedScenario )
 
 
@@ -113,7 +113,8 @@ scenario('Clicking the Customize button opens the Editor Interaction tab')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.waitFor(3))
 .then( _ => z.maximizeWindow() )
-.then( _ => z.assertExistsById('newIntentInput'), "the Interaction tab is open")
+.then( _ => z.waitFor(2))
+.then( _ => z.assertExistsByCss('.intent-link[name="CON1.Fallback"]'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
 //Feature: Creating a new app with a predefined bank industry
@@ -135,7 +136,7 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
 .then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
 .then( _ => z.locate(By.id('btnSave')))
 .then( _ => z.waitFor(2))
-.then( _ => z.assertExistsById('accordion_interaction'), "the Interaction tab is open")
+.then( _ => z.assertExistsByCss('.intent-link[name="Balance"]'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
 //Publishing of a new predefined banking app
