@@ -49,13 +49,16 @@ module.exports = {
     assertExistsByXPath,
     assertExistsByCss,
     assertExists,
-    
+    changeValue,
+	changeInputById,
+	changeInputByCss,
     scenario,
     logStep,
     logAssert,
     substep,
     failedScenario,
-    endResult
+    endResult,
+	
 };
 
 
@@ -345,6 +348,11 @@ function locate(locator) {
         )
 }
 
+function changeValue(selector, value)	{
+	console.log('test1');
+	logStep("changin value by selector: ",selector);
+	return driver.findElement(By.css(selector)).sendKeys(Key.chord(Key.CONTROL, "a"),value);
+}
 
 function scrollToTop() {
     logStep("scrolling to top");
@@ -366,3 +374,14 @@ function scrollTo(height) {
              .executeScript("window.scroll(0," + height + ");")
              .then( _ => driver.sleep(500) );
 }
+
+function changeInputById(id, text) {
+    logStep("writing text to field by id: ", id, text);
+    driver.findElement(By.id(id)).sendKeys('\uE009a');
+    return driver.findElement(By.id(id)).sendKeys(text)
+}
+
+function changeInputByCss(css, text) {
+	driver.findElement(By.css(css)).sendKeys('\uE009a');
+    return driver.findElement(By.css(css)).sendKeys(text)
+	}
