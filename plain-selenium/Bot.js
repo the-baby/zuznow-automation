@@ -70,9 +70,11 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 //Feature: Chat bot button and screen
  
-scenario('The corresponding button opens the chat bot menu')
-
- .then( _ => z.waitFor(3))
+ 
+ // if the cog symbol is still there, I need to continue waiting.
+ scenario('The corresponding button opens the chat bot menu')
+ 
+ .then( _ => z.waitFor(2))
 
 .then( _ => z.clickById('openSimulatorDropDown'))
 
@@ -80,16 +82,16 @@ scenario('The corresponding button opens the chat bot menu')
                                      
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
  
-.then( _ => z.assertExistsByClassName('submitBtn form-control btn btn-primary', 'the Save button'))
+.then( _ => z.assertExistsByClassName('submitBtn', 'the Save button'))
 
 .catch( z.failedScenario ) 
 
 
  //Feature: Log In window
  
- .then( _ => z.waitFor(200))
- 
  scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
+ 
+.then( _ => z.waitFor(200))
  
 .then( _ => z.userSays('What is my balance', 3))
 
@@ -121,7 +123,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.inputById ('user_mobile', '0541234456'))
                                
-.then( _ => z.inputById ('user_email', 'test@zuznow.com'))                    
+.then( _ => z.inputById ('user_email', 'larisa@zuznow.com'))                    
                                  
 .then( _ => z.inputById ('user_pincode', '1234')) 
 
@@ -129,15 +131,17 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
   
 .then( _ => z.clickById('login_button'))
 
-.then( _ => z.waitFor(8) )
+.then( _ => z.waitFor(14) )
   
 .then( _ => z.switchTab(1, 'bot screen'))
 
 .then( _ => z.assertBotReply('Thank you for linking your account'))
 
+.then( _ => z.assertBotReply('To continue, please provide your pincode.'))
+
 .catch( z.failedScenario )
 
-
+/*
  scenario('A pincode should be entered to give requests')
  
 .then( _ => z.userSays('What is my balance', 3))
@@ -145,6 +149,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 .then( _ => z.assertBotReply('To continue, please provide your pincode.'))
 
 .catch( z.failedScenario )
+*/
 
 //Feature: Enabled intents
 //Balance intent
@@ -167,7 +172,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-/*
+
 scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
@@ -183,7 +188,7 @@ scenario('Saying no to the continuation of the balance intent gives a reprompt')
 
 .then( _ => z.userSays('no', 3))
 
-.then( _ => z.assertBotReply('Sure. Is there anything else I can help you with?'))
+.then( _ => z.assertBotReply('Sure'))
 
 .catch( z.failedScenario )
 
@@ -226,7 +231,7 @@ scenario('Saying no to the continuation of the Transactions intent gives a repro
 
 .then( _ => z.userSays('no', 3))
 
-.then( _ => z.assertBotReply('Sure. Is there anything else I can help you with?'))
+.then( _ => z.assertBotReply('Sure'))
 
 .catch( z.failedScenario )
 
@@ -351,15 +356,15 @@ scenario('asking What is the closest branch to Austin street San Francisco gives
 .then( _ => z.assertBotReply('The nearest my bank branch is located'))
 
 .catch( z.failedScenario )
-*/
+
 
 
 //Feature: Intents that were disabled at the beginning
 //Statement intent
-/*
+
 scenario('clicking the intent opens it')
 
-.then( _ => z.switchTab(0, 'popped up log in window'))
+.then( _ => z.switchTab(0, 'editor window'))
 
 .then( _ => z.clickByCss('#intentsMenuDiv > .intent-link[name="Statement"]') )
 
@@ -386,6 +391,10 @@ scenario('clicking the enable button enables the Statement intent')
 
 .then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Statement"]:not(.disabled)'), "end session checkbox"  )
 
+.then( _ => z.clickById('btnReset') )
+
+.then( _ => z.waitFor(3) )
+
 .catch( z.failedScenario )
 
 
@@ -408,7 +417,7 @@ scenario('when the user gives statement type, the bot is expected to send it ')
 .then( _ => z.assertBotReply('What account do you want the statement for?'))
 
 .catch( z.failedScenario )
-*/
+
 
 //Support intent
 
@@ -446,7 +455,7 @@ scenario('clicking the enable button enables the Support intent')
 
 scenario('clicking the Phone button opens it')
 
-.then( _ => z.clickByLinkText('loadAction();') )
+.then( _ => z.clickByCss('.action-link[action-name="PhoneCall"]') )
 
 .then( _ => z.assertExistsById('updateAction'), "the Update button"  )               
 
@@ -457,19 +466,23 @@ scenario('It is possible to enter a phone number in the corresponding field')
 
 .then( _ => z.inputByClassName('param_value form-control', '0535301325') )
 
+.then( _ => z.waitFor(2) )
+
 .then( _ => z.clickById('updateAction') )
+
+.then( _ => z.waitFor(2) )
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(2) )
+.then( _ => z.waitFor(5) )
 
 .then( _ => z.clickById('btnReset') )
 
-.then( _ => z.waitFor(2) )
+.then( _ => z.waitFor(3) )
 
 .then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
 
-.then( _ => z.clickByLinkText('loadAction()') )
+.then( _ => z.clickByCss('.action-link[action-name="PhoneCall"]') )
 
 .then( () => z.assertContainsValue(By.className('param_value form-control'), "the expected text in the element", '0535301325') ) 
 
@@ -480,8 +493,12 @@ scenario('asking about support gives support phone number')
 
 .then( _ => z.switchTab(1, 'the Bot screen'))
 
+.then( _ => z.waitFor(30) )
+
 .then( _ => z.userSays('How can I contact support', 3))
 
-.then( _ => z.assertBotReply('You can call us at. Would you like to speak with a representative?'))
+.then( _ => z.assertBotReply('You can call us at 0535301325.'))
+
+.then( _ => z.assertBotReply('Would you like to speak with a representative?'))
 
 .catch( z.failedScenario )
