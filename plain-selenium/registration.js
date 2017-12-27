@@ -95,12 +95,12 @@ driver
 
 
 
-.then( _ => waitFor(1))
+.then( _ => waitFor(5))
 .then( _ => clickByClassName('RveJvd snByac') )
-.then( _ => waitFor(1))
+.then( _ => waitFor(5))
 	
 .then( _ => clickByPartialLinkText( 'Your conversational apps are on their way!' ) )
-.then( _ => waitFor(3))
+.then( _ => waitFor(4))
 	
 .then( _ =>
   substep('finding activation link')
@@ -112,7 +112,7 @@ driver
 )
 
 .then( _ => z.clearCookies() )
-.then( _ => waitFor(8))
+.then( _ => waitFor(25))
 .then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
 .then( _ => inputById('edit-pass-pass2','Aabcd5') )
 .then( _ => clickById('edit-submit') )
