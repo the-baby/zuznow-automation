@@ -102,7 +102,7 @@ driver
 .then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
 .then( _ => z.waitFor(3))
 .then( _ => driver.switchTo().alert().accept() ) 
-.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
+//.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen') - needs to be changes
 .catch(z.failedScenario)
 
 
