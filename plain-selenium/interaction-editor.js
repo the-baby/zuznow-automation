@@ -659,8 +659,6 @@ scenario('it is possible to add and save a new entity')
 
 scenario('Entity value can be added and saved')
 
-//.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
-
 .then( _ => z.waitFor(4))
 	
 .then( _ => z.inputByCss ('.entity_div[name="UntitledEntity"] textarea.entitiesTextarea', 'test value'))
@@ -679,8 +677,6 @@ scenario('Entity value can be added and saved')
  
  scenario('Clicking delete button deletes an entity')
  
-// .then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
-
 .then( _ => z.clickByCss('div.panel.entity_div[name="UntitledEntity"] div.panel-heading .fa-trash'))
 
 .then( _ => saveAndRefresh() )
