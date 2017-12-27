@@ -44,8 +44,10 @@ driver
 
 driver
 .then( _ => z.scenario(' Clicking the configuration button opens the general part of the Configuration tab') )
-
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.waitFor(2))
+//.then( _ => driver.switchTo().alert().accept() ) 
+.then( _ => z.waitFor(2))
 .then( _ => z.assertExistsByCss('#tab-1 > div.col-lg-8 > div:nth-child(1) > div.portlet-header > div'), 'the general tab')
 .catch( z.failedScenario )
 
@@ -57,6 +59,7 @@ driver
 .then( _ => z.scenario('Clicking the Staging button opens the Staging subtab') )
 .then( _ => z.waitFor(2))
 .then( _ => z.clickByLinkText('Staging'))
+//.then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsByCss('#settings-panel-stg > div.portlet-header > div'), 'the staging tab opened')
 .catch( z.failedScenario )
 
@@ -195,7 +198,7 @@ driver
 .then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
 .then( _ => z.waitFor(3))
 .then( _ => driver.switchTo().alert().accept() ) 
-.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen')
+//.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen') - needs to be changed
 .catch(z.failedScenario)
 
 driver
