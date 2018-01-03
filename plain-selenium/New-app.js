@@ -94,7 +94,7 @@ scenario('Clicking the Customize button opens the Editor Interaction tab')
 .then( _ => z.waitFor(3))
 .then( _ => z.clickByCss ('#btnFinish'))
 .then( _ => z.waitFor(3))
-.then( _ => z.assertExistsById('editbox_interaction_gui_intent_template'), "the Interaction tab is open")
+.then( _ => z.assertExistsById('inputFilterIntents'), "the Interaction tab is open")
 .catch( z.failedScenario )
 
 //Successful creation of a custom app without demo content 
