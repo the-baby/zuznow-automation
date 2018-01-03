@@ -85,7 +85,7 @@ scenario('Clicking the Add button adds a new intent with a default name')
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(10))
+.then( _ => z.waitFor(15))
 	
 .then( _ => z.clickById ('btnReset'))
 
@@ -142,11 +142,11 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.clickById('btnReset') )
 
-.then( _ => z.waitFor(2) )
+.then( _ => z.waitFor(10) )
 
 .then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="Balance"]') )
 
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Balance"].disabled'), "end session checkbox"  )
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Balance"].disabled'), "the intent is disabled"  )
 
 .then( _ => z.clickById('btnReset') )
 
@@ -175,7 +175,7 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.waitFor(20))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.assertNoSuchElements(By.css('.intent-link[name="Balance"]'), 'the deleted intent' ) )
 
@@ -208,7 +208,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.waitFor(10))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(3))
 	
@@ -235,7 +235,7 @@ scenario('An error message should appear when we use invalid characters in a sam
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .catch( z.failedScenario )
 
@@ -289,7 +289,7 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.waitFor(12))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
  .then( _ => z.waitFor(2))
 
@@ -320,7 +320,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.waitFor(15))
 	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(2))
 	 
@@ -339,7 +339,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 scenario('Clicking the add entity button allows adding a new entity')
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(3))
 
@@ -367,9 +367,9 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.waitFor(5))
 
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById('btnReset'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(12))
 	
 .then( _ => z.clickByCss ('.intent-link[name="Entity"]'))
 
@@ -403,7 +403,7 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById('btnReset'))
 
 .then( _ => z.waitFor(3))
 	
@@ -454,7 +454,7 @@ scenario('Clicking delete button deletes an entity')
 	
 .then( _ => z.clickById ('btnReset'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(12))
 	
 .then( _ => z.clickByCss ('.intent-link[name="Code"]'))
 	
@@ -559,9 +559,9 @@ scenario('It is possible to enter a did you mean senetence and save it')
 	
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(15))
+.then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(2))
 	 
@@ -580,19 +580,19 @@ scenario('It is possible to enter a reprompt senetence and save it')
 
 .then( _ => z.inputByCss('.intent_div[name="Response"] div.repromtDiv .form-control.repromtInput', 'reprompt test message'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(3))
 	
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(15))
+.then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByClassName ('fa fa-refresh'))
+.then( _ => z.clickById ('btnReset'))
 
-.then( _ => z.waitFor(4))
+.then( _ => z.waitFor(10))
 	 
 .then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
-.then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.suggestDiv .form-control.repromtInput'), "the expected text in the element", 'reprompt test message') ) 
+.then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.repromtDiv .form-control.repromtInput'), "the expected text in the element", 'reprompt test message') ) 
 
 .catch( z.failedScenario )
  
@@ -602,7 +602,7 @@ scenario('It is possible to enter a reprompt senetence and save it')
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
-.then( _ => z.clickByCss('.intent-link[name="Response"]'))
+//.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
 .then( _ => z.clickByCss('.intent_div[name="Response"]  input.endSessionCheckBox') )
 
@@ -647,6 +647,8 @@ scenario('it is possible to add and save a new entity')
 
 .then( _ => z.clickByCss('div.intent-link.entities-link'))
 
+.then( _ => z.waitFor(2))
+
 .then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
 .then( _ => z.assertExistsByCss('div.entity-link[name="UntitledEntity"]'), 'the new entity is added')
@@ -665,7 +667,11 @@ scenario('Entity value can be added and saved')
 
 .then( _ => saveAndRefresh() )
 
+.then( _ => z.waitFor(3))
+
 .then( _ => z.clickByCss('div.intent-link.entities-link'))
+
+.then( _ => z.waitFor(10))
 
 .then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
@@ -699,7 +705,7 @@ function saveAndRefresh() {
         .then( _ => z.scrollToTop())
         .then( _ => z.clickById ('btnSave'))
         .then( _ => z.waitFor(2))
-        .then( _ => z.clickByClassName ('fa fa-refresh'))
+        .then( _ => z.clickById ('btnReset'))
         .then( _ => z.waitFor(2))
 }
 
