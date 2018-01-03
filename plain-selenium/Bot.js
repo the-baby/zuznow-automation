@@ -23,6 +23,8 @@ scenario('Sign-in successfully leads to homepage')
 .then( _ => z.waitFor(3) )
  
 .then( _ => z.assertExistsByClassName('menu-item new-site', 'editor') )
+
+.then( _ => z.clickById('closeTopMessageBar') )
  
 .catch( z.failedScenario )
  
@@ -71,14 +73,13 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
 //Feature: Chat bot button and screen
  
  
- // if the cog symbol is still there, I need to continue waiting.
  scenario('The corresponding button opens the chat bot menu')
  
- .then( _ => z.waitFor(2))
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickById('btnMoreOptions'))
 
-.then( _ => z.clickById('openSimulatorDropDown'))
-
-.then( _ => z.clickById('chatbot_preview'))
+.then( _ => z.clickByLinkText('Open Chatbot'))
                                      
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
  
@@ -448,14 +449,16 @@ scenario('clicking the enable button enables the Support intent')
 
 .then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
 
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]:not(.disabled)'), "end session checkbox"  )
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]:not(.disabled)'), "enabled intent"  )
 
 .catch( z.failedScenario )
 
 
 scenario('clicking the Phone button opens it')
 
-.then( _ => z.clickByCss('.action-link[action-name="PhoneCall"]') )
+.then( _ => z.waitFor(12) )
+
+.then( _ => z.clickByCss('.intent_div[name="CallSupport"] .action-link[action-name="PhoneCall"]') )
 
 .then( _ => z.assertExistsById('updateAction'), "the Update button"  )               
 
