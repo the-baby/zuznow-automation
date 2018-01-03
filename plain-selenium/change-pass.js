@@ -64,6 +64,8 @@ scenario('Clicking the Save button adds a new user')
 
 .then( _ => z. inputById ('new_user_password2', 'Zuznow1'))
 
+.then( _ => z.scrollToBottom())
+
 .then( _ => z.clickById('new_user_admin_all_domains') )
 
 .then( _ => z.clickById('btnSaveNewUser') )
@@ -113,7 +115,7 @@ scenario('Sign-in successfully leads to the Editor')
 .catch( z.failedScenario )
 
 
-
+/*
 driver
 scenario('Clicking the User button opens the User menu')
 
@@ -126,7 +128,7 @@ scenario('Clicking the User button opens the User menu')
 .then( _ => z.assertExistsByClassName('btn btn-sm zuz-btn-pink'), "home page"  )
 
 .catch( z.failedScenario )
-
+*/
 
 
 driver
@@ -154,6 +156,8 @@ scenario('Entering wrong current password returns an error message')
 .then( _ => z.inputById('edit-pass-pass1','Larisa1') )
 
 .then( _ => z.inputById('edit-pass-pass2','Larisa1') )
+
+.then( _ => z.scrollToBottom())
 
 .then( _ => z.clickById('edit-submit') )  
 
@@ -203,6 +207,8 @@ scenario(' Clicking the Save button saves a valid password')
 .then( _ => z.inputById('edit-pass-pass1','Larisa1') )
 
 .then( _ => z.inputById('edit-pass-pass2','Larisa1') )
+
+.then( _ => z.scrollToBottom())
 
 .then( _ => z.clickByClassName('form-submit btn btn-success') )  
 
