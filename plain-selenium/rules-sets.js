@@ -20,27 +20,35 @@ driver
 .then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
 .catch( z.failedScenario )
 
-
-
-driver
-.then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
-.then( _ => z.openPage(baseUrl + '/userpage'))
-.then( _ => z.maximizeWindow() )
+scenario('Clicking the next button should open the Add sample screen')
 .then( _ => z.clickById('menu_new'))
-.then( _ => z.assertExistsById('org-name', 'company name field') )  
-.catch( z.failedScenario )                               
-
-.then( _ => z.scenario('Clicking the next button should open the New app Ready screen') )
-.then( _ => z.openPage(baseUrl + '/new'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
-.then( _ => z.clickByLinkText('Education')) 
-.then( _ => z.inputById ('org-name', 'test'))
-.then( _ => z.clickByClassName ('btn btn-success btn-square next button-next full-width'))
+.then( _ => z.waitFor(3) ) 
+.then( _ => z.clickByCss('#s2id_industry_select b'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(6)')) 
+.then( _ => z.clickById('btnNext')) 
+.then( _ => z.inputById ('org-name', 'school'))
+.then( _ => z.clickByClassName('btn  button-next'))
 .then( _ => z.waitFor(2))
-.then( _ => z. clickById ('btnNext'))
-.then( _ => z.waitFor(4))
-.then( _ => z.clickById('btnFinish'))
+.then( _ => z.clickByClassName('device device-chatbot'))           
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.assertExistsByClassName('form-control newIntentSample first') )  
+.catch( z.failedScenario ) 
+
+scenario('Checking that it is possible to add samples to the app')
+.then( _ => z.inputByClassName('form-control newIntentSample first', 'How old are you'))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.assertExistsByClassName('form-control newTextResponse first'), 'new text response')
+.catch( z.failedScenario )
+
+scenario('Clickingthe Customize button opens the Editor')
+.then( _ => z.inputByClassName('form-control newTextResponse first', 'I am 20'))
+.then( _ => z.waitFor(3))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.clickById('closeTopMessageBar'))
+.then( _ => z.waitFor(3))
+.then( _ => z.clickByClassName('publish-btn btn editor'))
+.then( _ => z.assertExistsById('btnSave'), 'save button')                 
+.catch( z.failedScenario )
 
 //Scenario: Clicking the Sets button opens the rules sets section
 driver
@@ -57,7 +65,6 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Plus button adds a rules set') )
 .then( _ => z. clickById ('btnAddRulesSet'))
-.then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.waitFor(3))
 .then( _ => z.assertExistsByCss('#rulesSetTableBody > tr.dd-handle.selected > td.setName'), "rules sets section"  )
 .catch( z.failedScenario )
@@ -99,10 +106,9 @@ driver
 
 .then( _ => z.scenario('Clicking Delete button deletes the app') )
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.clickByCss ('#btnDelete > i.fa.fa-trash-o') )
+.then( _ => z.clickById ('btnDelete') )
 .then( _ => z.waitFor(3))
 .then( _ => driver.switchTo().alert().accept() ) 
-//.then( _ => z.assertExistsByCss('#domains_table > div.panel-heading > span'), 'the user is on My Apps screen') - needs to be changes
 .catch(z.failedScenario)
 
 
