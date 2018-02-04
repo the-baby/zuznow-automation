@@ -81,11 +81,11 @@ driver
  
  scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
  
-.then( _ => z.waitFor(200))
+.then( _ => z.waitFor(140))
  
-.then( _ => z.userSays('What is my balance', 3))
+.then( _ => z.userSays('What is my balance', 6))
 
-.then( _ => z.assertBotReply('To continue you must link your account'))
+.then( _ => z.assertBotReply('To continue you must link your account.'))
 
 .then( _ => z.assertExistsByLinkText('Open log-in window'))
 
@@ -146,9 +146,9 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.waitFor(2) )
 
-.then( _ => z.assertBotReply('Thank you . Your pincode is correct.'))
+.then( _ => z.assertBotReply('Your pincode'))
 
-.then( _ => z.assertBotReply('account balance is'))
+.then( _ => z.assertBotReply('Auto Loan account balance is'))
 
 .then( _ => z.assertBotReply('Would you like to hear more?'))
 
@@ -159,9 +159,9 @@ scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
 
-.then( _ => z.assertBotReply('account balance is'))
+.then( _ => z.assertBotReply('The statement closing balance is'))
 
-.then( _ => z.assertBotReply('Would you like to hear more?'))
+.then( _ => z.assertBotReply('to hear'))
 
 .catch( z.failedScenario )
 
@@ -170,7 +170,7 @@ scenario('Saying no to the continuation of the balance intent gives a reprompt')
 
 .then( _ => z.userSays('no', 3))
 
-.then( _ => z.assertBotReply('Sure'))
+.then( _ => z.assertBotReply('anything else'))
 
 .catch( z.failedScenario )
 
@@ -204,7 +204,7 @@ scenario('Saying yes gives the continuation of the Transactions intent info')
 
 .then( _ => z.assertExistsByClassName('bubble answer intent_Transactions'))
 
-.then( _ => z.assertBotReply('Would you like to hear more?'))
+.then( _ => z.assertBotReply('Do you want hear transactions that go further back?'))
 
 .catch( z.failedScenario )
 
@@ -213,7 +213,7 @@ scenario('Saying no to the continuation of the Transactions intent gives a repro
 
 .then( _ => z.userSays('no', 3))
 
-.then( _ => z.assertBotReply('Sure'))
+.then( _ => z.assertBotReply('anything else'))
 
 .catch( z.failedScenario )
 
@@ -467,7 +467,7 @@ scenario('asking about support gives support phone number')
 
 .then( _ => z.userSays('How can I contact support', 3))
 
-.then( _ => z.assertBotReply('You can call us at 0535301325.'))
+.then( _ => z.assertBotReply('at 0535301325.'))
 
 .then( _ => z.assertBotReply('Would you like to speak with a representative?'))
 
