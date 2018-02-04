@@ -32,41 +32,28 @@ scenario('Sign-in successfully leads to homepage')
  
 //Successful creation of a predefined banking app
  
-scenario('The bot icon is marked by default')
- 
-.then( _ => z.openPage(baseUrl + '/new'))
- 
-.then( _ => z.maximizeWindow() ) 
- 
-.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
- 
-.then( _ => z.clickByLinkText('Banking'))
- 
-.then( _ => z.inputById ('org-name', 'My'))
- 
+driver
+.then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
+.then( _ => z.openPage(baseUrl + '/userpage'))
+.then( _ => z.maximizeWindow() )
+.then( _ => z.clickById('menu_new'))
+.then( _ => z.assertExistsById('org-name', 'company name field') )  
+.catch( z.failedScenario )                               
+
+.then( _ => z.maximizeWindow() )
 .then( _ => z.waitFor(3))
- 
-.then( _ => z. clickByCss ('#tab1 > div.form-horizontal > div:nth-child(2) > div > ul > li:nth-child(1) > a'))
- 
-.then( _ => z.clickByClassName ('btn btn-success btn-square next button-next full-width'))
- 
+.then( _ => z.clickByCss('#s2id_industry_select b'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(2)')) 
+.then( _ => z.clickById('btnNext')) 
+.then( _ => z.inputById('org-name', 'My'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByCss('#organizationTab > div.form-horizontal > div > ul > li:nth-child(1) > a'))                                         
+.then( _ => z.clickByClassName('btn  button-next'))
 .then( _ => z.waitFor(2))
- 
-.then( _ => z.assertElementHasClass(By.css('#tab3 > div.form-horizontal > div > div:nth-child(6) > label.selection-btn-primary.check > div > div'), "the checkbox is marked", "checkmark draw"))
- 
-.then( _ => z. clickById ('btnNext'))
- 
-.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6', 'the Play simulator button' ))
- 
-.catch( z.failedScenario )
- 
-
-
-scenario('Clicking the Customize button opens the Interaction Editor tab')
- 
-.then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
- 
-.catch( z.failedScenario )
+.then( _ => z.clickByClassName('device device-chatbot'))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.clickByClassName('publish-btn btn editor'))
+.catch( z.failedScenario )  
  
 
  
@@ -77,9 +64,11 @@ scenario('Clicking the Customize button opens the Interaction Editor tab')
  
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickById('btnMoreOptions'))
+//.then( _ => z.clickById('btnMoreOptions'))
 
-.then( _ => z.clickByLinkText('Open Chatbot'))
+//.then( _ => z.clickByLinkText('Open Chatbot'))
+
+.then( _ => z.clickById('chatbot_preview'))
                                      
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
  
@@ -142,15 +131,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-/*
- scenario('A pincode should be entered to give requests')
- 
-.then( _ => z.userSays('What is my balance', 3))
- 
-.then( _ => z.assertBotReply('To continue, please provide your pincode.'))
 
-.catch( z.failedScenario )
-*/
 
 //Feature: Enabled intents
 //Balance intent
@@ -167,7 +148,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.assertBotReply('Thank you . Your pincode is correct.'))
 
-.then( _ => z.assertBotReply('Auto Loan account balance is'))
+.then( _ => z.assertBotReply('account balance is'))
 
 .then( _ => z.assertBotReply('Would you like to hear more?'))
 
@@ -178,7 +159,7 @@ scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
 
-.then( _ => z.assertBotReply('Roth IRA account balance is'))
+.then( _ => z.assertBotReply('account balance is'))
 
 .then( _ => z.assertBotReply('Would you like to hear more?'))
 
@@ -296,7 +277,7 @@ scenario('asking help gives the general info about the skill')
 
 .then( _ => z.userSays('Help', 3))
 
-.then( _ => z.assertBotReply('This skill gives you the info about your bank account, the nearest branch and ATM.'))
+.then( _ => z.assertBotReply('We can provide you information about your bank account, the nearest branch of your bank and ATM.'))
 
 .catch( z.failedScenario )
 
@@ -308,9 +289,9 @@ scenario('asking What is the closest ATM gives the address about the closest ATM
 
 .then( _ => z.waitFor(3) )
 
-.then( _ => z.assertBotReply('The nearest atm is located'))
+.then( _ => z.assertBotReply('Tel Aviv-Yafo'))
 
-.then( _ => z.assertBotReply('Do you want me to text you the location?'))
+//.then( _ => z.assertBotReply('location?'))
 
 .catch( z.failedScenario )
 
@@ -330,7 +311,7 @@ scenario('asking What is the closest ATM to Austin street San Francisco gives th
 
 .then( _ => z.waitFor(3) )
 
-.then( _ => z.assertBotReply('The nearest atm is located in Automated Financial, LLC at 1356 Van Ness Avenue, San Francisco. Do you want me to text you the location?'))
+.then( _ => z.assertBotReply('Automated Financial, LLC1356 Van Ness Avenue, San Francisco.'))
 
 .catch( z.failedScenario )
 
@@ -343,7 +324,7 @@ scenario('asking What is the closest branch gives the address about the closest 
 
 .then( _ => z.waitFor(2) )
 
-.then( _ => z.assertBotReply('The nearest my bank branch is located '))
+.then( _ => z.assertBotReply('my bank branch'))
 
 .then( _ => z.assertBotReply('Open now:'))
 
@@ -354,7 +335,7 @@ scenario('asking What is the closest branch to Austin street San Francisco gives
 
 .then( _ => z.userSays('What is the closest branch to Austin street San Francisco', 3))
 
-.then( _ => z.assertBotReply('The nearest my bank branch is located'))
+.then( _ => z.assertBotReply('my bank branch'))
 
 .catch( z.failedScenario )
 
@@ -382,15 +363,9 @@ scenario('clicking the enable button enables the Statement intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(60) )
+.then( _ => z.waitFor(100) )
 
-.then( _ => z.clickById('btnReset') )
-
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="Statement"]') )
-
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Statement"]:not(.disabled)'), "end session checkbox"  )
+.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Statement"]:not(.disabled)'), "enabled intent"  )
 
 .then( _ => z.clickById('btnReset') )
 
@@ -404,7 +379,7 @@ scenario('asking to send the statement makes the question about the statement ty
 
 .then( _ => z.switchTab(1, 'the Bot screen'))
 
-.then( _ => z.userSays('Send me the statement', 3))
+.then( _ => z.userSays('Send me the statement', 40))
 
 .then( _ => z.assertBotReply('What account do you want the statement for?'))
 
@@ -413,9 +388,9 @@ scenario('asking to send the statement makes the question about the statement ty
 
 scenario('when the user gives statement type, the bot is expected to send it ')
 
-.then( _ => z.userSays('checking account', 3))
+.then( _ => z.userSays('checking account', 12))
 
-.then( _ => z.assertBotReply('What account do you want the statement for?'))
+.then( _ => z.assertBotReply('ok, the statement was sent to your email'))
 
 .catch( z.failedScenario )
 
@@ -441,13 +416,9 @@ scenario('clicking the enable button enables the Support intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(60) )
+.then( _ => z.waitFor(40) )
 
-.then( _ => z.clickById('btnReset') )
-
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
+//.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
 
 .then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]:not(.disabled)'), "enabled intent"  )
 
@@ -479,11 +450,7 @@ scenario('It is possible to enter a phone number in the corresponding field')
 
 .then( _ => z.waitFor(5) )
 
-.then( _ => z.clickById('btnReset') )
-
-.then( _ => z.waitFor(3) )
-
-.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
+//.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
 
 .then( _ => z.clickByCss('.action-link[action-name="PhoneCall"]') )
 
@@ -505,3 +472,6 @@ scenario('asking about support gives support phone number')
 .then( _ => z.assertBotReply('Would you like to speak with a representative?'))
 
 .catch( z.failedScenario )
+
+driver
+.then( _ => z.endResult() )
