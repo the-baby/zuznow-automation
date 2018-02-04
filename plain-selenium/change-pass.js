@@ -110,7 +110,7 @@ scenario('Sign-in successfully leads to the Editor')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.assertExists(By.id('PublishAlexa'), "Editor" ) )
+.then( _ => z.assertExists(By.id('btnReset'), "Editor" ) )
 
 .catch( z.failedScenario )
 
