@@ -13,8 +13,6 @@ const driver = z.getDriver();
 //Feature: Creating a new intent and editing its name
 
 
-
-
 scenario('Sign-in successfully leads to Editor')
 
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
@@ -43,45 +41,49 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByClassName('btn btn-default dropdown-toggle')) 
+driver
+.then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
+.then( _ => z.openPage(baseUrl + '/userpage'))
+.then( _ => z.maximizeWindow() )
+.then( _ => z.clickById('menu_new'))
+.then( _ => z.assertExistsById('org-name', 'company name field') )  
+.catch( z.failedScenario )                               
 
-.then( _ => z.clickByLinkText('Banking'))
-
-.then( _ => z.inputById ('org-name', 'TJX Rewards'))
-
+.then( _ => z.maximizeWindow() )
+.then( _ => z.waitFor(3))
+.then( _ => z.clickByCss('#s2id_industry_select b'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(2)')) 
+.then( _ => z.clickById('btnNext')) 
+.then( _ => z.inputById('org-name', 'My'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByCss('#organizationTab > div.form-horizontal > div > ul > li:nth-child(1) > a'))                                         
+.then( _ => z.clickByClassName('btn  button-next'))
 .then( _ => z.waitFor(2))
-
-.then( _ => z. clickById ('btnNext'))
-
-.then( _ => z.assertExistsByClassName('fa fa-play-circle fa-6'),'the Play simulator button' )
-
-.catch( z.failedScenario )
-
-
-
-scenario('Clicking the Customize button opens the Interaction Editor tab')
-
-.then( _ => z. clickById ('btnNext'))
-
-.then( _ => z.clickByXPath ('//*[@id="btnFinish"]/span'))
-
-.then( _ => z.locate(By.id('btnSave')))
-
-.then( _ => z.waitFor(2))
-
-.then( _ => z.assertExistsById('LogButton'), "the Interaction tab is open")
-
-.catch( z.failedScenario )
+.then( _ => z.clickByClassName('device device-chatbot'))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.clickById('closeTopMessageBar'))
+.then( _ => z.waitFor(3))
+.then( _ => z.clickByClassName('publish-btn btn editor'))
+.catch( z.failedScenario )  
 
 
 
 //Creating a new intent
 
-scenario('Clicking the Add button adds a new intent with a default name')
+scenario('Clicking the Add button opens the New intent window')
 
-.then( _ => z.clickByClassName ('new-intent-link'))
+.then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickById ('customIntentBtn'))
+.then( _ => z.assertExistsByCss('.preintent[name="AreYouABot"]'),'the list of intents' )
+
+.catch( z.failedScenario ) 
+ 
+
+scenario('Selecting a certain predefined intent adds it to the list')
+
+.then( _ => z.clickByCss ('.preintent[name="AreYouABot"]'))
+
+.then( _ => z.waitFor(3))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -91,7 +93,7 @@ scenario('Clicking the Add button adds a new intent with a default name')
 
 .then( _ => z.waitFor(4))
 
-.then( () => z.assertExistsByCss('.intent-link[name="UntitledIntent"]'), 'intent with default name' ) 
+.then( () => z.assertExistsByCss('.intent-link[name="AreYouABot"]'), 'intent with default name' ) 
 
 .catch( z.failedScenario )
 
@@ -99,15 +101,15 @@ scenario('Clicking the Add button adds a new intent with a default name')
 //Editing Intent name
 
 
-scenario('Clicking the Edit name button allows editing intent name')
+scenario('It is possible to edit intent name')
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(8))
 
-.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))
+.then( _ => z.clickByCss ('.intent-link[name="AreYouABot"]'))
 
 .then( _ => z.waitFor(4))
 
-.then( _ => z.changeInputByCss('.panel[name="UntitledIntent"] .intent_name','exam'))
+.then( _ => z.changeInputByCss('.panel[name="AreYouABot"] .intent_name','ChatBot'))
 
 .then( _ => z.waitFor(2))
 
@@ -119,7 +121,7 @@ scenario('Clicking the Edit name button allows editing intent name')
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.assertExistsByCss('.intent-link[name="exam"]'),'intent name modified' )                        
+.then( _ => z.assertExistsByCss('.intent-link[name="ChatBot"]'),'intent name modified' )                        
 
 .catch( z.failedScenario )
 
@@ -196,11 +198,11 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.clickByCss ('.intent-link[name="exam"]'))
+.then( _ => z.clickByCss ('.intent-link[name="ChatBot"]'))
 
-.then( _ => z.inputByCss ('.intent_div[name="exam"] .samples_div input', 'test sample'))
+.then( _ => z.inputByCss ('.intent_div[name="ChatBot"] .samples_div input', 'test sample'))
 
-.then( _ => z.clickByCss ('.intent_div[name="exam"] div.samples_div i[title="Add Sample"]') )
+.then( _ => z.clickByCss ('.intent_div[name="ChatBot"] div.samples_div i[title="Add Sample"]') )
 
 .then( _ => z.waitFor(2))
 
@@ -211,12 +213,12 @@ scenario('Clicking the Add button adds a new sample phrase')
 .then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(3))
-	
-.then( _ => z.clickByCss ('.intent-link[name="exam"]'))
+
+.then( _ => z.clickByCss ('.intent-link[name="ChatBot"]'))
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.assertContainsText(By.css('.intent_div[name="exam"] div.samples_div .samples_tr:last-child .sample_content span.sampleSpan'), "the expected text in the element", 'test sample') )
+.then( _ => z.assertContainsText(By.css('.intent_div[name="ChatBot"] div.samples_div .samples_tr:last-child .sample_content span.sampleSpan'), "the expected text in the element", 'test sample') )
 
 
 //.intent_div[name="StockQuote"] div.samples_div .sample_content span
@@ -229,9 +231,9 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 scenario('An error message should appear when we use invalid characters in a sample sentence')
 
-.then( _ => z.inputByCss ('.intent_div[name="exam"] .samples_div input', 'test sample?'))
+.then( _ => z.inputByCss ('.intent_div[name="ChatBot"] .samples_div input', 'test sample?'))
 
-.then( _ => z.clickByCss ('.intent_div[name="exam"] div.samples_div i[title="Add Sample"]') )
+.then( _ => z.clickByCss ('.intent_div[name="ChatBot"] div.samples_div i[title="Add Sample"]') )
 
 .then( _ => z.assertExistsByClassName('jGrowl-notification'), 'error message appeared')
 
@@ -247,31 +249,39 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByClassName ('new-intent-link'))
+.then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickById ('customIntentBtn'))
+.then( _ => z.inputByClassName ('form-control newIntentSample first', 'Mood'))
+
+.then( _ => z.clickByClassName ('btn btn-default nextButton'))
+
+.then( _ => z.inputByClassName ('form-control newTextResponse first', 'Fine'))
+
+.then( _ => z.clickByClassName ('btn btn-default finishButton'))
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.inputByCss ('.intent_div[name="UntitledIntent"] .samples_div input', 'new sample'))
+//.then( _ => z.inputByCss ('.intent_div[name="Mood"] .samples_div input', 'new sample'))
 
-.then( _ => z.clickByCss ('.intent_div[name="UntitledIntent"] div.samples_div i[title="Add Sample"]'))
 
-.then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(15))
+//.then( _ => z.clickByCss ('.intent_div[name="Mood"] div.samples_div i[title="Add Sample"]'))
 
-.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .rename:first-child'))
+//.then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(2))
+//.then( _ => z.waitFor(15))
 
-.then( _ => z.inputByCss ('.intent_div[name="UntitledIntent"] div.samples_div input.newSample', 'another'))
+.then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div tr:nth-child(1) .rename'))
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .fa-check'))
+.then( _ => z.inputByCss ('.intent_div[name="Mood"] div.samples_div input.newSample', 'another'))
 
-.then( _ => z.assertContainsText(By.css('.intent_div[name="UntitledIntent"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), "the expected text in the element", 'anothernew sample') )
+.then( _ => z.waitFor(2))
+
+.then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div .fa-check'))
+
+.then( _ => z.assertContainsText(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), "the expected text in the element", 'anotherMood') )
 
 .catch( z.failedScenario )
 
@@ -283,7 +293,7 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 scenario('Clicking delete button deletes a sample sentence')
 
-.then( _ => z.clickByCss('.intent_div[name="UntitledIntent"] div.samples_div .fa-trash-o'))
+.then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div .delete'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -291,11 +301,11 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.clickById ('btnReset'))
 
- .then( _ => z.waitFor(2))
+.then( _ => z.waitFor(2))
 
-.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))	 
+.then( _ => z.clickByCss('.intent-link[name="Mood"]'))	 
 
-.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="UntitledIntent"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
 
 .catch( z.failedScenario )
 
@@ -312,7 +322,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.inputByCss('.intent_div[name="UntitledIntent"] div.discoveryDiv .form-control.discoveryInput', 'discovery test message'))
+.then( _ => z.inputByCss('.intent_div[name="Mood"] div.discoveryDiv .form-control.discoveryInput', 'discovery test message'))
 
 .then( _ => z.waitFor(2))
 	
@@ -324,9 +334,9 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.waitFor(2))
 	 
-.then( _ => z.clickByCss('.intent-link[name="UntitledIntent"]'))
+.then( _ => z.clickByCss('.intent-link[name="Mood"]'))
 
-.then( () => z.assertContainsValue(By.css('.intent_div[name="UntitledIntent"] div.discoveryDiv .form-control.discoveryInput'), "the expected text in the element", 'discovery test message') ) 
+.then( () => z.assertContainsValue(By.css('.intent_div[name="Mood"] div.discoveryDiv .form-control.discoveryInput'), "the expected text in the element", 'discovery test message') ) 
 
 .catch( z.failedScenario )
 
@@ -343,15 +353,15 @@ scenario('Clicking the add entity button allows adding a new entity')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByClassName ('new-intent-link'))
+.then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickById ('customIntentBtn'))
+.then( _ => z.clickByCss ('.preintent[name="Offer"]'))
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Entity'))
+.then( _ => z.changeInputByCss('.panel[name="Offer"] .intent_name','Entity'))
 
 .then( _ => z.waitFor(3))
 
@@ -414,7 +424,7 @@ scenario('Clicking delete button deletes an entity')
 .then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Entity"] div.entities_div input.entityInput'), 'the deleted entity' ) ) 
 
  .catch( z.failedScenario )
- 
+
  
  
  
@@ -426,15 +436,15 @@ scenario('Clicking delete button deletes an entity')
  
 .then( _ => z.openPage(baseUrl + '/editor'))
 
-.then( _ => z.clickByClassName ('new-intent-link'))
+.then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickById ('customIntentBtn'))
+.then( _ => z.clickByCss('.preintent[name="Contact"]'),'the list of intents' )
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(10))
 	
-.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Code'))
+.then( _ => z.changeInputByCss('.panel[name="Contact"] .intent_name','Code'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -472,15 +482,15 @@ scenario('It is possible to enter text response in the corresponding field')
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByClassName ('new-intent-link'))
+.then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickById ('customIntentBtn'))
+.then( _ => z.clickByCss('.preintent[name="Contact"]'),'the list of intents' )
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(10))
 	
-.then( _ => z.changeInputByCss('.panel[name="UntitledIntentA"] .intent_name','Response'))
+.then( _ => z.changeInputByCss('.panel[name="Contact"] .intent_name','Response'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -504,14 +514,20 @@ scenario('It is possible to enter text response in the corresponding field')
 
 .then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square')) 
  
-.then( () => z.assertContainsValue(By.css('.modal-content .textRes_tr:not(.template) input.textRes_span'), "the expected text in the element", 'text for test') ) 
+.then( () => z.assertContainsValue(By.css('.modal-content .textRes_tr:not(.template):last-child input.textRes_span'), "the expected text in the element", 'text for test') ) 
 
 .catch( z.failedScenario )
 
 
 scenario('It is possible to delete the text by clicking the corresponding button')
 
-.then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template) .fa-trash-o'))
+.then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
+
+.then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByCss('#customModalButton'))
+
+.then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
 
 .then( _ => z.waitFor(2))
 
@@ -534,11 +550,19 @@ scenario('It is possible to remove the text response completely')
 
 .then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square'))
 
+.then( _ => z.waitFor(2))
+
 .then( _ => z.clickById ('updateAction'))
+
+.then( _ => z.waitFor(2))
 
 .then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
 
+.then( _ => z.waitFor(2))
+
 .then( _ => z.clickByCss ('.modal-content .fa-trash'))
+
+.then( _ => z.waitFor(2))
 
 .then( _ => z.clickById ('customModalButton')) 
 
@@ -598,7 +622,7 @@ scenario('It is possible to enter a reprompt senetence and save it')
  
  
  
- 
+
 //End session checkbox
 scenario('It is possible to check the corresponding box and the mark is saved')
 
@@ -711,3 +735,4 @@ function saveAndRefresh() {
 
 driver
 .then( _ => z.endResult() )
+
