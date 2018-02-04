@@ -54,7 +54,7 @@ driver
 .then( _ => z.inputById('edit-name','Polly@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Newuser1'))
 .then( _ => z.clickById('edit-submit') )
-.then( _ => z.assertExists(By.id('industry'), "select industry" ) )
+.then( _ => z.assertExists(By.id('s2id_industry_select'), "select industry" ) )
 .catch( z.failedScenario )
 
 driver
