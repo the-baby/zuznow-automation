@@ -37,7 +37,7 @@ scenario('Checking that it is possible to add other assistants to the app')
 .then( _ => z.clickByClassName('device device-chatbot'))
 .then( _ => z.clickByClassName('device device-amazon-alexa'))
 .then( _ => z.clickByClassName('device device-google-home'))
-
+//.then( _ => z.clickByClassName('device device-brain'))
 .then( _ => z.clickByClassName('btn  button-next'))
 .then( _ => z.waitFor(8))
 .then( _ => z.clickById('closeTopMessageBar'))
@@ -182,14 +182,22 @@ driver
 //Feature: Google subtab (production)
 //Google support and Account linking checkboxes are marked
 
-.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
+.then( _ => z.scenario('Google support and Account linking checkboxes are marked') )
 .then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickById('menu_btn_google'))
 .then( _ => z.assertExistsByCss('#google_support:checked'), 'the checkbox is marked')
 .then( _ => z.assertExistsByCss('#google_account_linking:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
-
+/*
+//Feature:Brain (production)
+.then( _ => z.scenario('Brain checkbox is marked') )
+.then( _ => z.openPage(baseUrl + '/editor'))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickById('menu_btn_brain'))
+.then( _ => z.assertExistsByCss('#brain_support:checked'), 'the checkbox is marked')
+.catch(z.failedScenario)
+*/
 
 //Feature: Delete skill
 //Clicking Delete button deletes the app
@@ -201,6 +209,7 @@ driver
 .then( _ => z.clickById('btnDelete') )
 .then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.waitFor(5))
+	
 .then( _ => z.assertExistsByCss('.app_settings[style *= "display: none"]'), 'the app is deleted')
 .catch(z.failedScenario)
 
