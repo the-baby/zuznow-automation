@@ -55,6 +55,21 @@ driver
 .then( _ => z.assertExistsById('name'), 'the production tab')
 .catch( z.failedScenario )
 
+//Feature:Permissions
+driver
+.then( _ => z.scenario('The user selected from the permissions drop-down menu is saved') )
+.then( _ => z.scrollToBottom())
+.then( _ => z.clickById('s2id_user0'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(2)'))
+.then( _ => z.scrollToTop())
+.then( _ => z.clickById('btnSave'))
+.then( _ => z.clickById('btnEdit'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.scrollToBottom())
+.then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
+.catch( z.failedScenario )
+
 
 //Feature: Staging tab
 //Clicking the Staging button opens the Staging subtab
@@ -189,6 +204,7 @@ driver
 .then( _ => z.assertExistsByCss('#google_support:checked'), 'the checkbox is marked')
 .then( _ => z.assertExistsByCss('#google_account_linking:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
+
 /*
 //Feature:Brain (production)
 .then( _ => z.scenario('Brain checkbox is marked') )
