@@ -74,26 +74,18 @@ scenario('Clicking the Add button opens the New intent window')
 
 .then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.assertExistsByCss('.preintent[name="AreYouABot"]'),'the list of intents' )
+.then( _ => z.assertExistsByCss('.preintent[name="Chatter"]'),'the list of intents' )
 
 .catch( z.failedScenario ) 
  
 
 scenario('Selecting a certain predefined intent adds it to the list')
 
-.then( _ => z.clickByCss ('.preintent[name="AreYouABot"]'))
+.then( _ => z.clickByCss ('.preintent[name="Chatter"]'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickById ('btnSave'))
-
-.then( _ => z.waitFor(15))
-	
-.then( _ => z.clickById ('btnReset'))
-
-.then( _ => z.waitFor(4))
-
-.then( () => z.assertExistsByCss('.intent-link[name="AreYouABot"]'), 'intent with default name' ) 
+.then( () => z.assertExistsByCss('.preintent.grouped[name="AreYouABot"]'), 'intent with default name' ) 
 
 .catch( z.failedScenario )
 
@@ -103,9 +95,7 @@ scenario('Selecting a certain predefined intent adds it to the list')
 
 scenario('It is possible to edit intent name')
 
-.then( _ => z.waitFor(8))
-
-.then( _ => z.clickByCss ('.intent-link[name="AreYouABot"]'))
+.then( _ => z.clickByCss ('.preintent.grouped[name="AreYouABot"]'))
 
 .then( _ => z.waitFor(4))
 
@@ -134,6 +124,8 @@ scenario('It is possible to edit intent name')
 
 scenario('Clicking the Disable button disables intent')
 
+.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+
 .then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
 .then( _ => z.clickByCss('.intent_div[name="Balance"] a.intentDisable') )
@@ -146,9 +138,11 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.waitFor(10) )
 
-.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="Balance"]') )
+.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+	
+//.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Balance"].disabled'), "the intent is disabled"  )
+.then( _ => z.assertExistsByCss('.intent-link.disabled[name="Balance"].disabled'), "the intent is disabled"  )
 
 .then( _ => z.clickById('btnReset') )
 
@@ -163,7 +157,9 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByCss ('#intentsMenuDiv >.intent-link[name="Balance"]'))
+.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+	
+.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
 .then( _ => z.clickByCss('.intent_div[name="Balance"] a.deleteIntentButton'))
 
@@ -178,6 +174,10 @@ scenario('Clicking the Delete button deletes intent')
 .then( _ => z.waitFor(20))
 
 .then( _ => z.clickById ('btnReset'))
+
+.then( _ => z.waitFor(5))
+
+.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
 
 .then( _ => z.assertNoSuchElements(By.css('.intent-link[name="Balance"]'), 'the deleted intent' ) )
 
@@ -261,15 +261,15 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.clickById ('btnSave'))
 
-//.then( _ => z.inputByCss ('.intent_div[name="Mood"] .samples_div input', 'new sample'))
+.then( _ => z.inputByCss ('.intent_div[name="Mood"] .samples_div input', 'new sample'))
 
 
 
-//.then( _ => z.clickByCss ('.intent_div[name="Mood"] div.samples_div i[title="Add Sample"]'))
+.then( _ => z.clickByCss ('.intent_div[name="Mood"] div.samples_div i[title="Add Sample"]'))
 
-//.then( _ => z.clickById ('btnSave'))
+.then( _ => z.clickById ('btnSave'))
 
-//.then( _ => z.waitFor(15))
+.then( _ => z.waitFor(15))
 
 .then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div tr:nth-child(1) .rename'))
 
