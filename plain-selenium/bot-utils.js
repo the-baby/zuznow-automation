@@ -6,7 +6,7 @@ exports.extend = z => {
       assertBotReply
     })
     
-    function assertBotReply(reply) {  
+    function assertBotReply(...replies) {
         z.logAssert('Account link successfull', 'bot replies "' + reply + '"')
         return z.locate(By.id('conv-wrap'))
           .then(e => z.substep('retrieving conversation text') || e.getAttribute("innerText"))
@@ -15,12 +15,18 @@ exports.extend = z => {
               text
                 .trim()
                 .split(/[\n\r]+/)
-                .some(line => line.indexOf(reply) != -1 )
+                .some( line =>
+                  replies.some(reply =>
+                    reply instanceof RegExp
+                      ? line => line.match(reply)
+                      : line => line.includes(reply)
+                  )
+                )
               ? z.logStep(" - OK!".green)
               : Promise.reject(new Error('conversation does not contain expected reply'))
           )
     }
-
+   
     function userSays(text, waitFor) {
         return z.inputById('input', text)
             .then( () => z.clickByClassName('submitBtn') )
