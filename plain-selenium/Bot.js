@@ -146,7 +146,12 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .then( _ => z.waitFor(2) )
 
-.then( _ => z.assertBotReply('Your pincode'))
+.then( _ => z.assertBotReply('Your pin code has been verified we can now proceed.',
+'Your pin code is correct we can now proceed.',
+'Thanks, your pin code has been verified.',
+'Great! Your pin code is correct.',
+'your pin code has now been verified.'
+))
 
 .then( _ => z.assertBotReply('Auto Loan account balance is'))
 
@@ -154,7 +159,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-
+/*
 scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
@@ -475,3 +480,4 @@ scenario('asking about support gives support phone number')
 
 driver
 .then( _ => z.endResult() )
+*/
