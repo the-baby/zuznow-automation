@@ -7,7 +7,7 @@ exports.extend = z => {
     })
     
     function assertBotReply(...replies) {
-        z.logAssert('Account link successfull', 'bot replies "' + replies + '"')
+        z.logAssert('Account link successfull', 'bot replies [' + replies + ']')
         return z.locate(By.id('conv-wrap'))
           .then(e => z.substep('retrieving conversation text') || e.getAttribute("innerText"))
           .then(text =>
