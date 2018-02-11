@@ -81,7 +81,7 @@ driver
  
  scenario('Asking about balance without connecting account makes bot prompt to connect account and the Log-In link appear')
  
-.then( _ => z.waitFor(140))
+.then( _ => z.waitFor(100))
  
 .then( _ => z.userSays('What is my balance', 6))
 
@@ -160,7 +160,7 @@ scenario('Valid credentials should open a ‘successful account linking’ messa
 
 .catch( z.failedScenario )
 
-/*
+
 scenario('Saying yes gives the continuation of the balance intent info')
 
 .then( _ => z.userSays('yes', 3))
@@ -199,7 +199,7 @@ scenario('Asking about transactions gives the answer about my latest transaction
 
 .then( _ => z.assertExistsByClassName('bubble answer intent_Transactions'))
 
-.then( _ => z.assertBotReply('Would you like to hear more?'))
+.then( _ => z.assertBotReply('to hear'))
 
 .catch( z.failedScenario )
 
@@ -210,11 +210,16 @@ scenario('Saying yes gives the continuation of the Transactions intent info')
 
 .then( _ => z.assertExistsByClassName('bubble answer intent_Transactions'))
 
-.then( _ => z.assertBotReply('Do you want hear transactions that go further back?'))
+.then( _ => z.assertBotReply('Do you want hear transactions that go further back?',
+'Would you like to hear other transactions?',
+'Do you want to go back to previous transactions?',
+'Did you want access to prior transactions?',
+'Did you want to hear any others?',
+))
 
 .catch( z.failedScenario )
 
-
+/*
 scenario('Saying no to the continuation of the Transactions intent gives a reprompt')
 
 .then( _ => z.userSays('no', 3))
