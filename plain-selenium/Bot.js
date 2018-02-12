@@ -214,19 +214,25 @@ scenario('Saying yes gives the continuation of the Transactions intent info')
 'Would you like to hear other transactions?',
 'Do you want to go back to previous transactions?',
 'Did you want access to prior transactions?',
-'Did you want to hear any others?',
+'Did you want to hear any others?'
 ))
 
 .catch( z.failedScenario )
 
-/*
+
 scenario('Saying no to the continuation of the Transactions intent gives a reprompt')
 
 .then( _ => z.userSays('no', 3))
 
-.then( _ => z.assertBotReply('anything else'))
+.then( _ => z.assertBotReply('Sure. Is there anything else I can help you with?',
+'No worries. Anything else we can help you with today?',
+'No problem. Did you need anymore assistance?',
+'Ok. Is there anything else you needed today?',
+'Absolutely. Was there something else we can help you with today?'	
+))
 
 .catch( z.failedScenario )
+
 
 //Insights intent
 scenario('Asking about Insights gives  a proper answer')
@@ -288,13 +294,15 @@ scenario('asking help gives the general info about the skill')
 
 .then( _ => z.userSays('Help', 3))
 
-.then( _ => z.assertBotReply('We can provide you information about your bank account, the nearest branch of your bank and ATM.'))
+.then( _ => z.assertBotReply('bank account'))
 
 .catch( z.failedScenario )
 
+
+
 //ATM intent
 
-scenario('asking What is the closest ATM gives the address about the closest ATM')
+scenario('asking What is the closest ATM gives the address of the closest ATM and the card with the pic')
 
 .then( _ => z.userSays('where is the closest A.T.M.', 3))
 
@@ -302,7 +310,7 @@ scenario('asking What is the closest ATM gives the address about the closest ATM
 
 .then( _ => z.assertBotReply('Tel Aviv-Yafo'))
 
-//.then( _ => z.assertBotReply('location?'))
+.then( _ => z.assertBotReply('Open now:'))
 
 .catch( z.failedScenario )
 
@@ -359,7 +367,9 @@ scenario('clicking the intent opens it')
 
 .then( _ => z.switchTab(0, 'editor window'))
 
-.then( _ => z.clickByCss('#intentsMenuDiv > .intent-link[name="Statement"]') )
+.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+
+.then( _ => z.clickByCss('.intent-link[name="Statement"]') )
 
 .then( _ => z.waitFor(2) )
 
@@ -374,9 +384,9 @@ scenario('clicking the enable button enables the Statement intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(100) )
+.then( _ => z.waitFor(80) )
 
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="Statement"]:not(.disabled)'), "enabled intent"  )
+.then( _ => z.assertExistsByCss('.intent-link[name="Statement"]:not(.disabled)'), "enabled intent"  )
 
 .then( _ => z.clickById('btnReset') )
 
@@ -390,7 +400,7 @@ scenario('asking to send the statement makes the question about the statement ty
 
 .then( _ => z.switchTab(1, 'the Bot screen'))
 
-.then( _ => z.userSays('Send me the statement', 40))
+.then( _ => z.userSays('Send me the statement', 25))
 
 .then( _ => z.assertBotReply('What account do you want the statement for?'))
 
@@ -412,7 +422,9 @@ scenario('clicking the intent opens it')
 
 .then( _ => z.switchTab(0, 'popped up log in window'))
 
-.then( _ => z.clickByCss('#intentsMenuDiv > .intent-link[name="CallSupport"]') )
+.then( _ => z.clickByCss ('.folder-link[name="Information"]'))
+
+.then( _ => z.clickByCss('.intent-link[name="CallSupport"]') )
 
 .then( _ => z.waitFor(2) )
 
@@ -431,7 +443,7 @@ scenario('clicking the enable button enables the Support intent')
 
 //.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
 
-.then( _ => z.assertExistsByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]:not(.disabled)'), "enabled intent"  )
+.then( _ => z.assertExistsByCss('.intent-link[name="CallSupport"]:not(.disabled)'), "enabled intent"  )
 
 .catch( z.failedScenario )
 
@@ -486,4 +498,3 @@ scenario('asking about support gives support phone number')
 
 driver
 .then( _ => z.endResult() )
-*/
