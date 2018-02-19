@@ -261,6 +261,8 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.clickById ('btnSave'))
 
+.then( _ => z.waitFor(6))
+
 .then( _ => z.inputByCss ('.intent_div[name="Mood"] .samples_div input', 'new sample'))
 
 
@@ -273,11 +275,11 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div tr:nth-child(1) .rename'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(5))
 
 .then( _ => z.inputByCss ('.intent_div[name="Mood"] div.samples_div input.newSample', 'another'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(5))
 
 .then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div .fa-check'))
 
@@ -305,7 +307,7 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.clickByCss('.intent-link[name="Mood"]'))	 
 
-.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:second-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
 
 .catch( z.failedScenario )
 
