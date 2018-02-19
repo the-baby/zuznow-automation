@@ -77,6 +77,7 @@ driver
 driver
 .then( _ => z.scenario('Clicking the Staging button opens the Staging subtab') )
 .then( _ => z.waitFor(2))
+.then( _ => z.scrollToTop())
 .then( _ => z.clickByCss('#tab-3link>a'))
 //.then( _ => driver.switchTo().alert().accept() ) 
 .then( _ => z.assertExistsById('name_stg'), 'the staging tab opened')
@@ -205,7 +206,7 @@ driver
 .then( _ => z.assertExistsByCss('#google_account_linking:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
-/*
+
 //Feature:Brain (production)
 .then( _ => z.scenario('Brain checkbox is marked') )
 .then( _ => z.openPage(baseUrl + '/editor'))
@@ -213,7 +214,7 @@ driver
 .then( _ => z.clickById('menu_btn_brain'))
 .then( _ => z.assertExistsByCss('#brain_support:checked'), 'the checkbox is marked')
 .catch(z.failedScenario)
-*/
+
 
 //Feature: Delete skill
 //Clicking Delete button deletes the app
