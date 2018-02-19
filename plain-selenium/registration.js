@@ -113,8 +113,8 @@ driver
 
 .then( _ => z.clearCookies() )
 .then( _ => waitFor(25))
-.then( _ => inputById('edit-pass-pass1', 'Aabcd5') )
-.then( _ => inputById('edit-pass-pass2','Aabcd5') )
+.then( _ => inputById('edit-name', 'test') )
+.then( _ => inputById('edit-pass','Aabcd5') )
 .then( _ => clickById('edit-submit') )
 .then( _ => logStep("TODO: what is checked here?".yellow) )
 .catch( failedScenario )
