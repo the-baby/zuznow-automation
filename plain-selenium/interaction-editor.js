@@ -132,13 +132,13 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(30) )
+.then( _ => z.waitFor(40) )
 
 .then( _ => z.clickById('btnReset') )
 
 .then( _ => z.waitFor(10) )
 
-.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+//.then( _ => z.clickByCss('.folder-link[name="Account"]'))
 	
 //.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
@@ -157,9 +157,9 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.waitFor(2))
 	
-.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
+//.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
 	
-.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
+//.then( _ => z.clickByCss ('.intent-link[name="Balance"]'))
 
 .then( _ => z.clickByCss('.intent_div[name="Balance"] a.deleteIntentButton'))
 
@@ -208,17 +208,17 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(10))
+.then( _ => z.waitFor(16))
 
 .then( _ => z.clickById ('btnReset'))
 
 .then( _ => z.waitFor(3))
 
-.then( _ => z.clickByCss ('.intent-link[name="ChatBot"]'))
+//.then( _ => z.clickByCss ('.intent-link[name="ChatBot"]'))
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.assertContainsText(By.css('.intent_div[name="ChatBot"] div.samples_div .samples_tr:last-child .sample_content span.sampleSpan'), "the expected text in the element", 'test sample') )
+.then( _ => z.assertContainsText(By.css('.intent_div[name="ChatBot"] div.samples_div .samples_tr:last-child .sample_content span.sampleSpan'), "the expected text in the element", 'test') )
 
 
 //.intent_div[name="StockQuote"] div.samples_div .sample_content span
@@ -305,9 +305,9 @@ scenario('Clicking delete button deletes a sample sentence')
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByCss('.intent-link[name="Mood"]'))	 
+//.then( _ => z.clickByCss('.intent-link[name="Mood"]'))	 
 
-.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:second-child .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Mood"] div.samples_div .samples_tr:nth-child(2) .sample_content span.sampleSpan'), 'the deleted sample sentence' ) )           
 
 .catch( z.failedScenario )
 
@@ -336,7 +336,7 @@ scenario('It is possible to add a discovery suggestion is the corresponding fiel
 
 .then( _ => z.waitFor(2))
 	 
-.then( _ => z.clickByCss('.intent-link[name="Mood"]'))
+//.then( _ => z.clickByCss('.intent-link[name="Mood"]'))
 
 .then( () => z.assertContainsValue(By.css('.intent_div[name="Mood"] div.discoveryDiv .form-control.discoveryInput'), "the expected text in the element", 'discovery test message') ) 
 
@@ -419,7 +419,7 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.waitFor(3))
 	
-.then( _ => z.clickByCss ('.intent-link[name="Entity"]'))
+//.then( _ => z.clickByCss ('.intent-link[name="Entity"]'))
 
 .then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-angle-right'))
 
@@ -591,7 +591,7 @@ scenario('It is possible to enter a did you mean senetence and save it')
 
 .then( _ => z.waitFor(2))
 	 
-.then( _ => z.clickByCss('.intent-link[name="Response"]'))
+//.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
 .then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.suggestDiv .form-control.suggestInput'), "the expected text in the element", 'what did you mean') ) 
 
@@ -603,6 +603,8 @@ scenario('It is possible to enter a did you mean senetence and save it')
 scenario('It is possible to enter a reprompt senetence and save it')
 
 .then( _ => z.waitFor(2))
+	
+.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
 .then( _ => z.inputByCss('.intent_div[name="Response"] div.repromtDiv .form-control.repromtInput', 'reprompt test message'))
 
@@ -616,7 +618,7 @@ scenario('It is possible to enter a reprompt senetence and save it')
 
 .then( _ => z.waitFor(10))
 	 
-.then( _ => z.clickByCss('.intent-link[name="Response"]'))
+//.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
 .then( () => z.assertContainsValue(By.css('.intent_div[name="Response"] div.repromtDiv .form-control.repromtInput'), "the expected text in the element", 'reprompt test message') ) 
 
@@ -636,7 +638,7 @@ scenario('It is possible to check the corresponding box and the mark is saved')
 
 .then( _ => z.waitFor(4))
 	
-.then( _ => z.clickByCss('.intent-link[name="Response"]'))
+//.then( _ => z.clickByCss('.intent-link[name="Response"]'))
 
 .then( _ => z.assertExistsByCss('.intent_div[name="Response"]  input.endSessionCheckBox:checked'), 'the box is checked')
 
@@ -671,11 +673,11 @@ scenario('it is possible to add and save a new entity')
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.clickByCss('div.intent-link.entities-link'))
+//.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
 .then( _ => z.waitFor(2))
 
-.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
+//.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
 .then( _ => z.assertExistsByCss('div.entity-link[name="UntitledEntity"]'), 'the new entity is added')
 
@@ -693,13 +695,11 @@ scenario('Entity value can be added and saved')
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.waitFor(3))
-
-.then( _ => z.clickByCss('div.intent-link.entities-link'))
+//.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
 .then( _ => z.waitFor(10))
 
-.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
+//.then( _ => z.clickByCss('div.entity-link[name="UntitledEntity"]'))
 
 .then( _ => z.assertExistsByCss('.entity_div[name="UntitledEntity"] textarea.entitiesTextarea'), 'test value')
 
@@ -713,7 +713,7 @@ scenario('Entity value can be added and saved')
 
 .then( _ => saveAndRefresh() )
 
-.then( _ => z.clickByCss('div.intent-link.entities-link'))
+//.then( _ => z.clickByCss('div.intent-link.entities-link'))
 
 .then( _ => z.assertNoSuchElements(By.css('div.panel.entity_div[name="UntitledEntity"]'), 'the deleted entity' ) ) 
 
