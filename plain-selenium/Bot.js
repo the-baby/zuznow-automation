@@ -384,11 +384,11 @@ scenario('clicking the enable button enables the Statement intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(80) )
+.then( _ => z.waitFor(120) )
 
 .then( _ => z.assertExistsByCss('.intent-link[name="Statement"]:not(.disabled)'), "enabled intent"  )
 
-.then( _ => z.clickById('btnReset') )
+//.then( _ => z.clickById('btnReset') )
 
 .then( _ => z.waitFor(3) )
 
