@@ -416,11 +416,19 @@ scenario('when the user gives statement type, the bot is expected to send it ')
 .catch( z.failedScenario )
 
 
+
+
 //Support intent
 
 scenario('clicking the intent opens it')
 
-.then( _ => z.switchTab(0, 'popped up log in window'))
+.then( _ => z.switchTab(0, 'editor window'))
+
+.then( _ => z.waitFor(3) )
+
+.then( _ => z.clickByCss('div[name="Statement"] .fa.fa-angle-double-left'))
+
+.then( _ => z.clickByCss('div[name="Account"] .fa.fa-angle-double-left'))
 
 .then( _ => z.clickByCss ('.folder-link[name="Information"]'))
 
@@ -454,10 +462,9 @@ scenario('clicking the Phone button opens it')
 
 .then( _ => z.clickByCss('.intent_div[name="CallSupport"] .action-link[action-name="PhoneCall"]') )
 
-.then( _ => z.assertExistsById('updateAction'), "the Update button"  )               
+
 
 .catch( z.failedScenario )
-
 
 scenario('It is possible to enter a phone number in the corresponding field')
 
