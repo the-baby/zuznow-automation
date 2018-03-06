@@ -1,0 +1,98 @@
+const config = require('config')
+const baseUrl = config.baseUrl
+const admin = config.creds.admin
+
+const { By } = require('selenium-webdriver');
+const z = require('./common');
+const scenario = z.scenario;
+const driver = z.getDriver();
+
+scenario('Sign-in successfully leads to the Editor')
+.then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
+.then( _ => z.maximizeWindow() )
+.then( _ => z.inputById('edit-name', admin.user) )
+.then( _ => z.inputById('edit-pass', admin.password) )
+.then( _ => z.clickById('edit-submit') )
+.then( _ => z.waitFor(3) )
+.then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
+.catch( z.failedScenario )
+
+//Adding predefined intents to the custom app
+scenario('Clicking the intent button adds the selected intent to the app')
+.then( _ => z.openPage(baseUrl + '/new')) 
+.then( _ => z.maximizeWindow() )
+.then( _ => z.clickById('menu_new'))
+.then( _ => z.assertExistsById('org-name', 'company name field') )
+.then( _ => z.waitFor(3))
+.then( _ => z.clickById('closeTopMessageBar'))
+.then( _ => z.clickByCss('#s2id_industry_select b'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(6)')) 
+.then( _ => z.clickById('btnNext')) 
+.then( _ => z.inputById('org-name', 'MyTest'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.waitFor(2))
+.then( _ => z.clickByClassName('device device-chatbot'))
+.then( _ => z.clickByClassName('btn  button-next'))
+.then( _ => z.clickByCss('.preintent[name="Contact"]'))
+.then( _ => z.waitFor(12))
+.then( _ => driver.switchTo().frame("chatbot-preview"))
+.then( _ => z.waitFor(12))
+.then( _ => z.inputById('input','how can I call you?'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByClassName('submitBtn form-control c1Icon c1Icon-paper-plane'))
+.then( _ => z.waitFor(4))
+.then( () => z.assertContainsText(By.id('conv-wrap'), "the expected text in the element", 'You can call us at (000) 000-0000') )
+.catch( z.failedScenario )
+
+scenario('Clicking the Customize button leads to the Editor')
+.then( _ => driver.switchTo().defaultContent())
+.then( _ => z.clickByClassName('publish-btn btn editor'))
+.then( _ => z.assertExistsById('bigNewIntentBtn'), 'new intent button')                                   
+.catch( z.failedScenario )
+
+scenario('It is possible to change phone number in text response')
+.then( _ => z.clickByCss('.intent-link[name="Contact"]'))
+.then( _ => z.clickByCss('.panel[name="Contact"]  .action-link[action-name="text"]'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByCss('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickById ('customModalButton'))
+.then( _ => z.waitFor(2))
+.then( _ => z.inputByCss('.modal-content input.textRes_input.form-control', "You can call us at <say-as interpret-as='telephone'>+1 (646) 869-2931"))
+.then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square')) 
+.then( _ => z.clickById ('updateAction'))
+.then( _ => z.clickById ('btnSave'))
+.then( _ => z.waitFor(5))
+
+.catch( z.failedScenario )
+
+scenario('The new answer is displayed in the Chatbot')
+.then( _ => driver.switchTo().frame("chatbot_simulator"))
+.then( _ => z.inputById('input','how can I call you?'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByClassName('submitBtn form-control c1Icon c1Icon-paper-plane'))
+.then( _ => z.waitFor(4))
+.then( () => z.assertContainsText(By.id('conv-wrap'), "the expected text in the element", 'You can call us at +1 (646) 869-2931') )
+.catch( z.failedScenario )
+
+scenario('The Opening hours intent is added')
+.then( _ => driver.switchTo().defaultContent())
+.then( _ => z.clickById ('bigNewIntentBtn'))
+.then( _ => z.clickByCss ('.preintent[name="OpeningHours"]'))
+.then( _ => z.waitFor(3))
+.then( () => z.assertExistsByCss(('.intent_div[name="OpeningHours"] div.samples_div .samples_tr:first-child .sample_content span.sampleSpan'), "the expected text in the element", 'What are your opening hours') )
+.then( _ => z.clickById ('btnSave'))
+.then( _ => z.waitFor(30))
+.catch( z.failedScenario )
+
+scenario('The new answer is displayed in the Chatbot')
+.then( _ => driver.switchTo().frame("chatbot_simulator"))
+.then( _ => z.inputById('input','when are you open?'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickByClassName('submitBtn form-control c1Icon c1Icon-paper-plane'))
+.then( _ => z.waitFor(4))
+.then( () => z.assertContainsText(By.id('conv-wrap'), "the expected text in the element", 'We are open every weekday, between 9:00 AM and 5:00 PM') )
+.catch( z.failedScenario )
+
+
