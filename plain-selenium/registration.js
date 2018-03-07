@@ -20,6 +20,7 @@ const {
 	locate,
 	assertExistsByName,
 	assertExistsByClassName,
+	assertExistsByCss,
 	scenario,
 	logStep, 
 	substep,
@@ -79,6 +80,8 @@ driver
 .catch( failedScenario )
 
 //submission of valid form details should succeed
+
+/*
 var mailUser = "reg-tst-" + Math.random().toString().replace("0.","").substr(0,20)
 driver	
 .then( _ => scenario('submission of valid form details should succeed') )
@@ -122,5 +125,19 @@ driver
 
 driver
 .then( _ => endResult() )
+*/
+
+driver
+.then( _ => scenario('submission of valid form details should succeed') )
+.then( _ => openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => inputById('edit-mail','automationlarisa@gmail.com') )
+.then( _ => inputById('edit-field-first-name-und-0-value','registration') )
+.then( _ => inputById('edit-field-last-name-und-0-value','test') )
+.then( _ => inputById('edit-pass-pass1','Aabcd5') )
+.then( _ => inputById('edit-pass-pass2','Aabcd5') )
+.then( _ => clickById('edit-submit') )
+.then( _ => assertExistsByCss('#s2id_industry_select b') )
+.catch( failedScenario )
+
 
 
