@@ -38,6 +38,7 @@ scenario('Checking that it is possible to add other assistants to the app')
 .then( _ => z.clickByClassName('device device-amazon-alexa'))
 .then( _ => z.clickByClassName('device device-google-home'))
 //.then( _ => z.clickByClassName('device device-brain'))
+.then( _ => z.scrollToBottom())
 .then( _ => z.clickByClassName('btn  button-next'))
 .then( _ => z.waitFor(8))
 .then( _ => z.clickById('closeTopMessageBar'))
@@ -69,6 +70,20 @@ driver
 .then( _ => z.scrollToBottom())
 .then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
 .catch( z.failedScenario )
+
+driver
+.then( _ => z.scenario('The user selected from the permissions drop-down menu is present after making changes in the configuration') )
+.then( _ => z.scrollToTop())
+.then( _ => z.clickByCss('#tab-3link>a'))
+.then( _ => z. clickById('s2id_log_level_stg'))
+.then( _ => z. clickByCss('.select2-result:first-child'))
+.then( _ => z. clickById('btnSave'))
+.then( _ => z.waitFor(4))
+.then( _ => z. clickByCss('#btnEdit > i'))
+.then( _ => z.waitFor(4))
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.scrollToBottom())
+.then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
 
 
 //Feature: Staging tab
