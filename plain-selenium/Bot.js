@@ -417,7 +417,7 @@ scenario('when the user gives statement type, the bot is expected to send it ')
 
 
 
-
+/*
 //Support intent
 
 scenario('clicking the intent opens it')
@@ -487,7 +487,7 @@ scenario('It is possible to enter a phone number in the corresponding field')
 .then( () => z.assertContainsValue(By.className('param_value form-control'), "the expected text in the element", '0535301325') ) 
 
 .catch( z.failedScenario )
-
+*/
 
 scenario('asking about support gives support phone number')
 
@@ -497,7 +497,7 @@ scenario('asking about support gives support phone number')
 
 .then( _ => z.userSays('How can I contact support', 3))
 
-.then( _ => z.assertBotReply('at 0535301325.'))
+.then( _ => z.assertBotReply('at +1800-000-000'))
 
 .then( _ => z.assertBotReply('Would you like to speak with a representative?'))
 
