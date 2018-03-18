@@ -409,7 +409,7 @@ scenario('Creating an empty entity should return an error message')
 scenario('Clicking delete button deletes an entity')
 
 
-.then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-trash-o'))
+.then( _ => z.clickByCss ('.intent_div[name="Entity"] .entities_tr[entity_index="0"] .delete'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -423,9 +423,9 @@ scenario('Clicking delete button deletes an entity')
 
 .then( _ => z.clickByCss ('.intent_div[name="Entity"] .fa-angle-right'))
 
-.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Entity"] div.entities_div input.entityInput'), 'the deleted entity' ) ) 
+.then( _ => z.assertNoSuchElements(By.css('.intent_div[name="Entity"] div.entities_div input.entityInput'), 'the deleted entity')) 
 
- .catch( z.failedScenario )
+.catch( z.failedScenario )
 
  
  
@@ -737,4 +737,3 @@ function saveAndRefresh() {
 
 driver
 .then( _ => z.endResult() )
-
