@@ -1,7 +1,11 @@
 module.exports = {
   baseUrl: 'https://dashboard.conversation.one',
   creds: {
-    nonadmin: {
+    admin: {
+      user:         '',
+      password:     ''
+    },
+    regularUser: {
       user:         'AutomationTest',
       password:     'Automation123'
     }

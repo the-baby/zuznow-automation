@@ -1,6 +1,6 @@
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.admin
+const creds = config.creds.regularUser
 
 const { By } = require('selenium-webdriver');
 const z = require('./common');
@@ -10,8 +10,8 @@ const driver = z.getDriver();
 scenario('Sign-in successfully leads to the Editor')
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 .then( _ => z.maximizeWindow() )
-.then( _ => z.inputById('edit-name', admin.user) )
-.then( _ => z.inputById('edit-pass', admin.password) )
+.then( _ => z.inputById('edit-name', creds.user) )
+.then( _ => z.inputById('edit-pass', creds.password) )
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.waitFor(3) )
 .then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )
