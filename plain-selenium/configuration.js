@@ -6,14 +6,14 @@ const driver = z.getDriver();
 
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.admin
+const admin = config.creds.regularUser
 
 driver
 .then( _ => z.scenario('Sign-in successfully leads to Editor') )
 .then( _ => z.openPage(baseUrl + '/user/login', 'login page') )
 .then( _ => z.maximizeWindow() )
-.then( _ => z.inputById('edit-name','admin') )
-.then( _ => z.inputById('edit-pass','vs8Sr7aU') )
+.then( _ => z.inputById('edit-name', creds.user) )
+.then( _ => z.inputById('edit-pass', creds.password) )
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.waitFor(3))
 .then( _ => z.assertExists(By.css('#s2id_domain_selection > a > span'), "Editor" ) )

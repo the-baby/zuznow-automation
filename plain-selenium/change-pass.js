@@ -6,7 +6,7 @@ const driver = z.getDriver();
 
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.admin
+const admin = config.creds.regularUser
 
 
 driver
@@ -16,9 +16,9 @@ scenario('Sign-in successfully leads to the Editor')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.inputById('edit-name','Admin') )
+.then( _ => z.inputById('edit-name', creds.user) )
 
-.then( _ => z.inputById('edit-pass','vs8Sr7aU') )
+.then( _ => z.inputById('edit-pass', creds.password) )
 
 .then( _ => z.clickById('edit-submit') )                       
 

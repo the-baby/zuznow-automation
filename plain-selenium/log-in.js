@@ -4,7 +4,7 @@ const driver = z.getDriver();
 
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.admin
+const admin = config.creds.regularUser
 
 //Log In functionality testing with an admin user
 driver

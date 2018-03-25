@@ -1,9 +1,8 @@
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.admin
+const creds = config.creds.regularUser
 
 const { By } = require('selenium-webdriver');
-
 const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
@@ -19,9 +18,9 @@ scenario('Sign-in successfully leads to Editor')
 
 .then( _ => z.maximizeWindow() )
 
-.then( _ => z.inputById('edit-name', admin.user) )
+.then( _ => z.inputById('edit-name', creds.user) )
 
-.then( _ => z.inputById('edit-pass', admin.password) )
+.then( _ => z.inputById('edit-pass', creds.password) )
 
 .then( _ => z.clickById('edit-submit') )
 
