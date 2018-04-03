@@ -1,6 +1,9 @@
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.regularUser
+const creds = config.creds.regularUser
+
+
+
 
 const { By } = require('selenium-webdriver');
 const z = require('./common');
@@ -64,11 +67,11 @@ driver
  
 .then( _ => z.waitFor(2))
 	
-//.then( _ => z.clickById('btnMoreOptions'))
+.then( _ => z.clickById('btnMoreOptions'))
 
-//.then( _ => z.clickByLinkText('Open Chatbot'))
+.then( _ => z.clickByLinkText('Open Chatbot'))
 
-.then( _ => z.clickById('chatbot_preview'))
+//.then( _ => z.clickById('chatbot_preview'))
                                      
 .then( _ => z.switchTab(1, 'popped up conversation window'))  
  
