@@ -2,12 +2,12 @@ module.exports = {
   baseUrl: 'https://dashboard-beta.conversation.one',
   creds: {
     admin: {
-      user:         'admin',
-      password:     'vs8Sr7aU'
+      user:         'Tom@zuznow.com',
+      password:     'Adminuser1'
     },
     regularUser: {
-      user:         'admin',
-      password:     'vs8Sr7aU'
+      user:         'Tom@zuznow.com',
+      password:     'Adminuser1'
     }
   }
 }
