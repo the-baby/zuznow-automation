@@ -1,12 +1,11 @@
-const { By } = require('selenium-webdriver');
+const config = require('config')
+const baseUrl = config.baseUrl
+const creds = config.creds.regularUser
 
+const { By } = require('selenium-webdriver');
 const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
-
-const config = require('config')
-const baseUrl = config.baseUrl
-const admin = config.creds.regularUser
 
 
 driver
