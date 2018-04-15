@@ -1,12 +1,11 @@
-const { By } = require('selenium-webdriver');
+const config = require('config')
+const baseUrl = config.baseUrl
+const creds = config.creds.regularUser
 
+const { By } = require('selenium-webdriver');
 const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
-
-const config = require('config')
-const baseUrl = config.baseUrl
-const admin = config.creds.regularUser
 
 driver
 .then( _ => z.scenario('Sign-in successfully leads to Editor') )
@@ -68,6 +67,7 @@ driver
 .then( _ => z.waitFor(4))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.scrollToBottom())
+.then( _ => z.waitFor(3))
 .then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
 .catch( z.failedScenario )
 
@@ -101,10 +101,6 @@ driver
 //Selecting a certain value from the Log level drop-down menu
 
 .then( _ => z.scenario('It is possible to select a certain value from the Log level drop-down menu ') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/editor'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.waitFor(2))
 .then( _ => z.clickByCss('#tab-3link>a'))
 .then( _ => z. clickById('s2id_log_level_stg'))
 .then( _ => z. clickByCss('.select2-result:first-child'))
@@ -121,14 +117,10 @@ driver
 //Alexa support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
-.then( _ => z.openPage(baseUrl + '/editor'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.waitFor(2))
-.then( _ => z.clickByCss('#tab-3link>a'))
 .then( _ => z.clickById('menu_btn_alexa_stg'))
-.then( _ => z.assertExistsByCss('#alexa_support_stg:checked'), 'the checkbox is marked')
-.then( _ => z.assertExistsByCss('#alexa_account_linking_stg:checked'), 'the checkbox is marked')
+.then( _ => z.waitFor(2))
+.then( _ => z.assertExistsByClassName('toggle alexa_support_stgOn'), 'the checkbox is marked')
+.then( _ => z.assertExistsByClassName('toggle alexa_account_linking_stgOn'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 
@@ -143,7 +135,7 @@ driver
 .then( _ => z.inputById('alexa_redirect_urls_stg', 'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q/nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
 .then( _ => z.scrollToBottom())
 .then( _ => z.clickById('btnGenerateAlexaLinking_stg', 'Generate button')  )
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(4))
 .then( _ => z.assertContainsValue(By.id('alexa_client_id_stg'), "the expected text in the element", 'alexa_'))
 //.then( _ => z.assertContainsValue(By.id('alexa_client_secret_stg'), "the expected text in the element", 'lM01me7zL6'))
 .catch(z.failedScenario)
@@ -152,14 +144,11 @@ driver
 //Feature:Google subtab (staging)
 //Google support and Account linking checkboxes are marked
 
-.then( _ => z.scenario('Google support and Account linking checkboxes are not marked') )
-.then( _ => z.openPage(baseUrl + '/editor'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.clickByCss('#tab-3link>a'))
+.then( _ => z.scenario('Google support and Account linking checkboxes are marked') )
 .then( _ => z.clickById('menu_btn_google_stg'))
-.then( _ => z.assertExistsByCss('#google_support_stg:checked'), 'the checkbox is marked')
-.then( _ => z.assertExistsByCss('#google_account_linking_stg:checked'), 'the checkbox is marked')
+.then( _ => z.waitFor(5))
+.then( _ => z.assertExistsByClassName('toggle google_support_stgOn'), 'the checkbox is marked')
+.then( _ => z.assertExistsByClassName('toggle google_account_linking_stgOn'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 
@@ -186,26 +175,20 @@ driver
 //Alexa support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
-.then( _ => z.openPage(baseUrl + '/editor'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickById('menu_btn_alexa'))
-.then( _ => z.assertExistsByCss('#alexa_support:checked'), 'the checkbox is marked')
-.then( _ => z.assertExistsByCss('#alexa_account_linking:checked'), 'the checkbox is marked')
+.then( _ => z.waitFor(3))
+.then( _ => z.assertExistsByClassName('alexa_supportOn'), 'the checkbox is marked')
+.then( _ => z.assertExistsByClassName('alexa_account_linkingOn'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 
 //Clicking the Generate button generates client id and client secret values
 .then( _ => z.scenario('Clicking the Generate button generates client id and client secret values') )
-.then( _ => z.openPage(baseUrl + '/editor'))
-.then( _ => z.maximizeWindow() )
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.clickById('menu_btn_alexa'))
 .then( _ => z.inputById('alexa_redirect_urls', 'https://layla.amazon.com/api/skill/link/M1QDRNZCTF1O3Q/nhttps://pitangui.amazon.com/api/skill/link/M1QDRNZCTF1O3Q'))
 .then( _ => z.scrollToBottom())
 .then( _ => z.clickById('btnGenerateAlexaLinking', 'Generate button')  )
-.then( _ => z.waitFor(3))
-.then( _ => z.assertContainsValue(By.id('alexa_client_id'), "the expected text in the element", 'alexa'))
+.then( _ => z.waitFor(4))
+.then( _ => z.assertContainsValue(By.id('alexa_client_id'), "the expected text in the element", 'alexa_'))
 //.then( _ => z.assertContainsValue(By.id('alexa_client_secret'), "the expected text in the element", 'lM01me7zL6'))
 .catch(z.failedScenario)
 
@@ -214,11 +197,10 @@ driver
 //Google support and Account linking checkboxes are marked
 
 .then( _ => z.scenario('Google support and Account linking checkboxes are marked') )
-.then( _ => z.openPage(baseUrl + '/editor'))
-.then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.clickById('menu_btn_google'))
-.then( _ => z.assertExistsByCss('#google_support:checked'), 'the checkbox is marked')
-.then( _ => z.assertExistsByCss('#google_account_linking:checked'), 'the checkbox is marked')
+.then( _ => z.waitFor(3))
+.then( _ => z.assertExistsByClassName('google_supportOn'), 'the checkbox is marked')
+.then( _ => z.assertExistsByClassName('google_account_linkingOn'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 
@@ -226,8 +208,9 @@ driver
 .then( _ => z.scenario('Brain checkbox is marked') )
 .then( _ => z.openPage(baseUrl + '/editor'))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.waitFor(3))
 .then( _ => z.clickById('menu_btn_brain'))
-.then( _ => z.assertExistsByCss('#brain_support:checked'), 'the checkbox is marked')
+.then( _ => z.assertExistsByClassName('brain_supportOn'), 'the checkbox is marked')
 .catch(z.failedScenario)
 
 
