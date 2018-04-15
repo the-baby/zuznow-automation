@@ -1,6 +1,6 @@
 const config = require('config')
 const baseUrl = config.baseUrl
-const admin = config.creds.regularUser
+const creds = config.creds.regularUser
 
 const { By } = require('selenium-webdriver');
 const z = require('./common');
