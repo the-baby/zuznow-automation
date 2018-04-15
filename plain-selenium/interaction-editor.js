@@ -7,6 +7,13 @@ const z = require('./common');
 const scenario = z.scenario;
 const driver = z.getDriver();
 
+function saveAndRefresh() {
+    return driver
+        .then( _ => z.clickById ('btnSave'))
+        .then( _ => z.waitFor(2))
+        .then( _ => z.clickById ('btnReset'))
+        .then( _ => z.waitFor(2))
+}
 
 
 //Feature: Creating a new intent and editing its name
@@ -24,7 +31,7 @@ scenario('Sign-in successfully leads to Editor')
 
 .then( _ => z.clickById('edit-submit') )
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(10))
 
 .then( _ => z.assertExistsById('btnSave'), "Editor" ) 
 
@@ -42,7 +49,6 @@ scenario('Clicking the Next button opens the Test your skill screen')
 
 driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
-.then( _ => z.openPage(baseUrl + '/userpage'))
 .then( _ => z.maximizeWindow() )
 .then( _ => z.clickById('menu_new'))
 .then( _ => z.assertExistsById('org-name', 'company name field') )  
@@ -72,6 +78,8 @@ driver
 scenario('Clicking the Add button opens the New intent window')
 
 .then( _ => z.clickById ('bigNewIntentBtn'))
+
+.then( _ => z.waitFor(3))
 
 .then( _ => z.assertExistsByCss('.preintent[name="Chatter"]'),'the list of intents' )
 
@@ -725,14 +733,4 @@ scenario('Entity value can be added and saved')
 //TODO: Find out how to delete entity
 
 
-function saveAndRefresh() {
-    return driver
-        .then( _ => z.scrollToTop())
-        .then( _ => z.clickById ('btnSave'))
-        .then( _ => z.waitFor(2))
-        .then( _ => z.clickById ('btnReset'))
-        .then( _ => z.waitFor(2))
-}
 
-driver
-.then( _ => z.endResult() )
