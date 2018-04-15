@@ -48,23 +48,23 @@ driver
 .catch( z.failedScenario )
 
 driver
-.then( _ => z.scenario('successful log in of users with applications should show editor')) 
+.then( _ => z.scenario('successful log in of users without applications should show New app screen')) 
 .then( _ => z.clearCookies() )
 .then( _ => z.openPage (baseUrl + '/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Polly@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Newuser1'))
 .then( _ => z.clickById('edit-submit') )
-.then( _ => z.assertExists(By.id('btnMyApps'), "the Editor is open" ) )
+.then( _ => z.assertExists(By.id('s2id_industry_select'), "new app screen" ) )
 .catch( z.failedScenario )
 
 driver
-.then( _ => z.scenario('successful log in of non-admin user without applications should show new app screen')) 
+.then( _ => z.scenario('successful log in of non-admin user with applications should show Editor')) 
 .then( _ => z.clearCookies() )
 .then( _ => z.openPage (baseUrl + '/user/login', 'login page') )
 .then( _ => z.inputById('edit-name','Martin@zuznow.com'))
 .then( _ => z.inputById('edit-pass', 'Newuser2'))
 .then( _ => z.clickById('edit-submit') )
-.then( _ => z.assertExists(By.id('s2id_industry_select'), "new app screen" ) )
+.then( _ => z.assertExists(By.className('menu-item new-site'), "new app point" ) )
 .catch( z.failedScenario )
 
 driver
