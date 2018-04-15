@@ -358,6 +358,7 @@ function scrollToTop() {
     logStep("scrolling to top");
     return driver
              .executeScript("window.scroll(0,0);")
+			 //.SendKeys(Keys.Home)
              .then( _ => driver.sleep(500) );
 }
 
