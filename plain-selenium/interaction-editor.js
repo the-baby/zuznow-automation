@@ -139,7 +139,7 @@ scenario('Clicking the Disable button disables intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(40) )
+.then( _ => z.waitFor(45) )
 
 .then( _ => z.clickById('btnReset') )
 
@@ -162,7 +162,7 @@ scenario('Clicking the Disable button disables intent')
 
 scenario('Clicking the Delete button deletes intent')
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(4))
 	
 //.then( _ => z.clickByCss ('.folder-link[name="Account"]'))
 	
@@ -170,11 +170,11 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.clickByCss('.intent_div[name="Balance"] a.deleteIntentButton'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(4))
 
 .then( _ => z.clickByClassName( 'btn btn-danger'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(8))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -182,7 +182,7 @@ scenario('Clicking the Delete button deletes intent')
 
 .then( _ => z.clickById ('btnReset'))
 
-.then( _ => z.waitFor(5))
+.then( _ => z.waitFor(4))
 
 .then( _ => z.clickByCss ('.folder-link[name="Account"]'))
 
@@ -532,17 +532,17 @@ scenario('It is possible to delete the text by clicking the corresponding button
 
 .then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(3))
 	
 .then( _ => z.clickByCss('#customModalButton'))
 
 .then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(3))
 
 .then( _ => z.clickById ('customModalButton'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(3))
 
 .then( _ => z.assertNoSuchElements(By.css('.modal-content .textRes_tr:not(.template) input.textRes_span'), 'deleted text' ) )
 
