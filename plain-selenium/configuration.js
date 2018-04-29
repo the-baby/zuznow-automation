@@ -59,8 +59,10 @@ driver
 driver
 .then( _ => z.scenario('The user selected from the permissions drop-down menu is saved') )
 .then( _ => z.scrollToBottom())
-.then( _ => z.clickById('s2id_user0'))
-.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(2)'))
+.then( _ => z.clickByCss('.c1Icon.c1Icon-user-plus'))
+//.then( _ => z.clickById('s2id_user0'))
+.then( _ => z.clickByCss('#s2id_autogen1>a'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(5)'))
 .then( _ => z.scrollToTop())
 .then( _ => z.clickById('btnSave'))
 .then( _ => z.clickById('btnEdit'))
@@ -68,7 +70,7 @@ driver
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.scrollToBottom())
 .then( _ => z.waitFor(3))
-.then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
+.then( _ => z.assertContainsText(By.css('tr.permission:last-child .user'), "the expected text in the element", 'Martin@zuznow.com') )
 .catch( z.failedScenario )
 
 driver
@@ -83,9 +85,11 @@ driver
 .then( _ => z.waitFor(4))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.scrollToBottom())
-.then( _ => z.assertContainsText(By.css('#s2id_user0'), "the expected text in the element", 'Tom@zuznow.com') )
+.then( _ => z.waitFor(3))
+.then( _ => z.assertContainsText(By.css('tr.permission:nth-child(5) .user'), "the expected text in the element", 'Martin@zuznow.com') )
+.catch( z.failedScenario )
 
-
+/*
 //Feature: Staging tab
 //Clicking the Staging button opens the Staging subtab
 
@@ -113,9 +117,23 @@ driver
 .catch(z.failedScenario)
 
 
+//Adding a language
+.then( _ => z.scenario('It is possible to add languages to the app') )
+.then( _ => z.inputByCss('#s2id_languages_stg input.select2-input', 'de'))
+.then( _ => z.waitFor(2))
+.then( _ => z.clickByCss('.select2-results .select2-match'))
+.then( _ => z. clickById('btnSave'))
+.then( _ => z.waitFor(3))
+.then( _ => z. clickByCss('#btnEdit > i'))
+.then( _ => z.waitFor(2))
+.then( _ => z.assertExistsByCss('.lang[lang="de"]'), 'German language')
+
+
+
 //Feature: Alexa subtab (staging)
 //Alexa support and Account linking checkboxes are marked
-
+.then( _ => z.clickById('btnMyApps', 'configuration button')  )
+.then( _ => z.clickByCss('#tab-3link>a'))
 .then( _ => z.scenario('Alexa support and Account linking checkboxes are marked when we open Alexa tab') )
 .then( _ => z.clickById('menu_btn_alexa_stg'))
 .then( _ => z.waitFor(2))
@@ -230,3 +248,4 @@ driver
 
 driver
 .then( _ => z.endResult() )
+*/
