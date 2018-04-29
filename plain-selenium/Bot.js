@@ -374,7 +374,7 @@ scenario('clicking the intent opens it')
 
 .then( _ => z.clickByCss('.intent-link[name="Statement"]') )
 
-.then( _ => z.waitFor(2) )
+.then( _ => z.waitFor(8) )
 
 .then( _ => z.assertExistsByClassName('endSessionCheckBox'), "end session checkbox"  )
 
@@ -387,7 +387,7 @@ scenario('clicking the enable button enables the Statement intent')
 
 .then( _ => z.clickById('btnSave') )
 
-.then( _ => z.waitFor(120) )
+.then( _ => z.waitFor(130) )
 
 .then( _ => z.assertExistsByCss('.intent-link[name="Statement"]:not(.disabled)'), "enabled intent"  )
 
