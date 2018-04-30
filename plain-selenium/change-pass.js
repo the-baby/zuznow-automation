@@ -35,7 +35,7 @@ scenario('Clicking the Users button opens the Users screen')
 
 .then( _ => z.clickById('menu_users') )
 
-.then( _ => z.assertExistsById('user_selection'), "users drop-down menu"  )
+.then( _ => z.assertExistsById('group_selection'), "groups drop-dowmn menu"  )
 
 .then( _ => z.waitFor(3))
 
@@ -45,7 +45,7 @@ scenario('Clicking the Users button opens the Users screen')
 driver
 scenario('Clicking the add User button opens the Add Users screen')
 
-.then( _ => z.clickByCss('#node-18 > div > div > div > div > div:nth-child(3) > div > div.panel-heading.portlet-header > div > i.fa.fa-plus') )
+.then( _ => z.clickByCss('#node-18 > div > div > div > div > div:nth-child(4) > div > div.panel-heading.portlet-header > div > i.fa.fa-plus') )
 
 .then( _ => z.assertExistsById('new_user_name'), "a field to enter user name"  )
 
@@ -71,7 +71,7 @@ scenario('Clicking the Save button adds a new user')
 
 .then( _ => z.waitFor(3))
                      
-.then( _ => z.assertExistsById('user_selection'), "the user form closed"  )
+.then( _ => z.assertExistsById('group_selection'), "the user form closed"  )
 
 .catch( z.failedScenario )
 
