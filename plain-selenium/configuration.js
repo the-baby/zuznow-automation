@@ -86,7 +86,7 @@ driver
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
 .then( _ => z.scrollToBottom())
 .then( _ => z.waitFor(3))
-.then( _ => z.assertContainsText(By.css('tr.permission:nth-child(5) .user'), "the expected text in the element", 'Martin@zuznow.com') )
+.then( _ => z.assertContainsText(By.css('#users_permission_table .permission .user label[username="Martin@zuznow.com"]'), "the expected text in the element", 'Martin@zuznow.com') )
 .catch( z.failedScenario )
 
 /*
