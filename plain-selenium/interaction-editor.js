@@ -112,11 +112,11 @@ scenario('It is possible to edit intent name')
 
 .then( _ => z.clickById ('btnSave'))
 
-.then( _ => z.waitFor(5))
+.then( _ => z.waitFor(8))
 
 .then( _ => z.clickById ('btnReset'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(5))
 
 .then( _ => z.assertExistsByCss('.intent-link[name="ChatBot"]'),'intent name modified' )                        
 
@@ -515,7 +515,7 @@ scenario('It is possible to enter text response in the corresponding field')
 
 .then( _ => z.clickById ('btnSave'))
        
-.then( _ => z.waitFor(10))
+.then( _ => z.waitFor(20))
 	
 .then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
 
@@ -538,11 +538,11 @@ scenario('It is possible to delete the text by clicking the corresponding button
 
 .then( _ => z.clickByCss ('.modal-content .textRes_tr:not(.template):last-child  .fa-trash-o'))
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(8))
 
 .then( _ => z.clickById ('customModalButton'))
 
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(5))
 
 .then( _ => z.assertNoSuchElements(By.css('.modal-content .textRes_tr:not(.template) input.textRes_span'), 'deleted text' ) )
 
@@ -557,9 +557,11 @@ scenario('It is possible to remove the text response completely')
 
 .then( _ => z.clickByCss ('.panel[name="Response"]  .action-link[action-name="text"]'))
 
+.then( _ => z.waitFor(4))
+
 .then( _ => z.clickByCss('#actionsEditor div.modal-body.actionDiv.form-horizontal  i.fa-plus-square'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(6))
 
 .then( _ => z.clickById ('updateAction'))
 
@@ -571,7 +573,7 @@ scenario('It is possible to remove the text response completely')
 
 .then( _ => z.clickByCss ('.modal-content .fa-trash'))
 
-.then( _ => z.waitFor(2))
+.then( _ => z.waitFor(6))
 
 .then( _ => z.clickById ('customModalButton')) 
 
