@@ -41,6 +41,7 @@ module.exports = {
     assertNoSuchElements,
     assertElementHasClass,
     assertContainsValue,
+	assertContainsEmptyValue,
     assertContainsText,
     assertExistsById,
     assertExistsByName,
@@ -297,6 +298,20 @@ function assertContainsValue(locator, descr, text) {
         return Promise.resolve()
     })
 }
+
+function assertContainsEmptyValue(locator, descr, text) {
+    logStep("assertion:".yellow + " " + descr , ('value should contain text `' - text - '`').magenta);
+    driver.findElement(locator)
+    .getAttribute('value')
+    .then( value => {
+        if (value.indexOf(text) == -1)
+            return Promise.reject(new Error('element value does not include `' + text + '`'));
+
+        logStep(" - OK!".green)
+        return Promise.resolve()
+    })
+}
+
 function assertContainsText(locator,descr,text) {
     logStep("assertion:".yellow + " " + descr , ('element text should contain text `' + text + '`').magenta);
     driver.findElement(locator)
@@ -325,9 +340,7 @@ function assertNoSuchElements(locator, text) {
       })
 }
 
-
-
-function act(locator, descr, action) {
+ function act(locator, descr, action) {
     let el;
     return locate(locator)
         .then( e => substep(descr) || action(el = e) )
