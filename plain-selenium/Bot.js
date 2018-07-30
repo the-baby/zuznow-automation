@@ -3,8 +3,6 @@ const baseUrl = config.baseUrl
 const creds = config.creds.regularUser
 
 
-
-
 const { By } = require('selenium-webdriver');
 const z = require('./common');
 require('./bot-utils').extend(z);
@@ -23,7 +21,7 @@ scenario('Sign-in successfully leads to homepage')
  
 .then( _ => z.clickById('edit-submit') )
  
-.then( _ => z.waitFor(3) )
+.then( _ => z.waitFor(5) )
  
 .then( _ => z.assertExistsByClassName('menu-item new-site', 'editor') )
 
@@ -39,8 +37,9 @@ driver
 .then( _ => z.scenario('Clicking the new app button opens the Create new app screen') )
 //.then( _ => z.openPage(baseUrl + '/userpage'))
 .then( _ => z.maximizeWindow() )
+.then( _ => z.waitFor(5) )
 .then( _ => z.clickById('menu_new'))
-.then( _ => z.assertExistsById('org-name', 'company name field') )  
+.then( _ => z.assertExistsById('org-name', 'company name field') ) 
 .catch( z.failedScenario )                               
 
 .then( _ => z.maximizeWindow() )
@@ -362,7 +361,7 @@ scenario('asking What is the closest branch to Austin street San Francisco gives
 .catch( z.failedScenario )
 
 
-
+/*
 //Feature: Intents that were disabled at the beginning
 //Statement intent
 
@@ -396,12 +395,12 @@ scenario('clicking the enable button enables the Statement intent')
 .then( _ => z.waitFor(3) )
 
 .catch( z.failedScenario )
-
+*/
 
 
 scenario('asking to send the statement makes the question about the statement type appear')
 
-.then( _ => z.switchTab(1, 'the Bot screen'))
+//.then( _ => z.switchTab(1, 'the Bot screen'))
 
 .then( _ => z.userSays('Send me the statement', 25))
 
@@ -420,83 +419,11 @@ scenario('when the user gives statement type, the bot is expected to send it ')
 
 
 
-/*
-//Support intent
-
-scenario('clicking the intent opens it')
-
-.then( _ => z.switchTab(0, 'editor window'))
-
-.then( _ => z.waitFor(3) )
-
-.then( _ => z.clickByCss('div[name="Statement"] .fa.fa-angle-double-left'))
-
-.then( _ => z.clickByCss('div[name="Account"] .fa.fa-angle-double-left'))
-
-.then( _ => z.clickByCss ('.folder-link[name="Information"]'))
-
-.then( _ => z.clickByCss('.intent-link[name="CallSupport"]') )
-
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.assertExistsByClassName('endSessionCheckBox'), "end session checkbox"  )
-
-.catch( z.failedScenario )
-
-
-scenario('clicking the enable button enables the Support intent')
-
-.then( _ => z.clickByCss('.intent_div[name="CallSupport"] a.intentDisable') )
-
-.then( _ => z.clickById('btnSave') )
-
-.then( _ => z.waitFor(40) )
-
-//.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
-
-.then( _ => z.assertExistsByCss('.intent-link[name="CallSupport"]:not(.disabled)'), "enabled intent"  )
-
-.catch( z.failedScenario )
-
-
-scenario('clicking the Phone button opens it')
-
-.then( _ => z.waitFor(12) )
-
-.then( _ => z.clickByCss('.intent_div[name="CallSupport"] .action-link[action-name="PhoneCall"]') )
-
-
-
-.catch( z.failedScenario )
-
-scenario('It is possible to enter a phone number in the corresponding field')
-
-.then( _ => z.inputByClassName('param_value form-control', '0535301325') )
-
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.clickById('updateAction') )
-
-.then( _ => z.waitFor(2) )
-
-.then( _ => z.clickById('btnSave') )
-
-.then( _ => z.waitFor(5) )
-
-//.then( _ => z.clickByCss('#intentsMenuDiv >.intent-link[name="CallSupport"]') )
-
-.then( _ => z.clickByCss('.action-link[action-name="PhoneCall"]') )
-
-.then( () => z.assertContainsValue(By.className('param_value form-control'), "the expected text in the element", '0535301325') ) 
-
-.catch( z.failedScenario )
-*/
-
 scenario('asking about support gives support phone number')
 
-.then( _ => z.switchTab(1, 'the Bot screen'))
+//.then( _ => z.switchTab(1, 'the Bot screen'))
 
-.then( _ => z.waitFor(30) )
+//.then( _ => z.waitFor(30) )
 
 .then( _ => z.userSays('How can I contact support', 3))
 
@@ -505,6 +432,38 @@ scenario('asking about support gives support phone number')
 .then( _ => z.assertBotReply('Would you like to speak with a representative?'))
 
 .catch( z.failedScenario )
+
+
+scenario('It is possible to transfer the given sum from one account to another one')
+
+.then( _ => z.userSays('transfer 500 dollars from Checking account to Credit card account', 3))
+
+.then( _ => z.assertBotReply('You want to transfer 500 USD from your Checking account to your Credit card account. Is this correct?'))
+
+.then( _ => z.userSays('Yes', 3))
+
+.then( _ => z.assertBotReply('Thank you. I have successfully transfered 500 USD from your Checking account to your Credit card account.'))
+
+.catch( z.failedScenario )
+
+
+scenario('ASking about the routing number gives the number')
+
+.then( _ => z.userSays('what is the routing number', 3))
+
+.then( _ => z.assertBotReply('The routing number is 123456789'))
+
+.catch( z.failedScenario )
+
+
+scenario('Asking to cancel the credit card cancels it')
+
+.then( _ => z.userSays('I want to cancel my credit card', 3))
+
+.then( _ => z.assertBotReply('example response for I want to cancel my credit card'))
+
+.catch( z.failedScenario )
+
 
 driver
 .then( _ => z.endResult() )
