@@ -7,7 +7,7 @@ module.exports = {
     },
     regularUser: {
       user:         'AutomationTest',
-      password:     'Automation123'
+      password:     'Tests123456'
     }
   }
 }
