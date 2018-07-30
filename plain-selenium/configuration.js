@@ -110,7 +110,7 @@ driver
 .then( _ => z. clickByCss('#btnEdit > i'))
 .then( _ => z.waitFor(3))
 .then( _ => z.clickById('btnMyApps', 'configuration button')  )
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(5))
 .then( _ => z.clickByCss('#tab-3link>a'))
 .then( _ => z.waitFor(4))
 .then( () => z.assertContainsValue(By.id('env_config_stg'), "the expected text in the element", '{"bar": "foo with plus+is it there"}') ) 
