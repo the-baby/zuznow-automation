@@ -299,14 +299,13 @@ function assertContainsValue(locator, descr, text) {
     })
 }
 
-function assertContainsEmptyValue(locator, descr, text) {
-    logStep("assertion:".yellow + " " + descr , ('value should contain text `' - text - '`').magenta);
+function assertContainsEmptyValue(locator, descr) {
+    logStep("assertion:".yellow + " " + descr , ('value should be empty').magenta);
     driver.findElement(locator)
     .getAttribute('value')
     .then( value => {
-        if (value.indexOf(text) == -1)
-            return Promise.reject(new Error('element value does not include `' + text + '`'));
-
+        if (value !== "")
+            return Promise.reject(new Error('element value is not empty = `' + value + '`'));
         logStep(" - OK!".green)
         return Promise.resolve()
     })
