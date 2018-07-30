@@ -57,7 +57,7 @@ driver
 .then( _ => z.scenario('Clicking the Sets button opens the rules sets section') )
 .then( _ => z.maximizeWindow() )
 .then( _ => z. clickById ('btnShowEditInfo'))
-.then( _ => z.waitFor(3))
+.then( _ => z.waitFor(6))
 .then( _ => z.assertExistsByCss('#rulesSetTableBody > tr:nth-child(1) > td.setName'), "rules sets section"  )
 .catch( z.failedScenario )                          
 
