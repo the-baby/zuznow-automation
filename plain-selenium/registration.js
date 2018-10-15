@@ -21,7 +21,7 @@ driver
 driver
 
 .then( _ => scenario('error messages of create account form') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register?auto=true', 'register page') )
 .then( _ => z.inputById('edit-mail','Name@LastName') )
 .then( _ => z.inputById('edit-field-first-name-und-0-value','Name') )
 .then( _ => z.inputById('edit-field-last-name-und-0-value','LastName') )
@@ -34,7 +34,7 @@ driver
 //multiple errors of create account form
 driver
 .then( _ => scenario('multiple error messages of create account form') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register?auto=true', 'register page') )
 .then( _ => z.waitFor(3))
 .then( _ => z.clickById('edit-submit') )
 .then( _ => z.waitFor(3))
@@ -46,7 +46,7 @@ driver
 //submission of a mail in use should offer the recover password message
 driver
 .then( _ => scenario('submission of a mail in use should offer the recover password message') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register?auto=true', 'register page') )
 .then( _ => z.inputById('edit-mail','Tom@zuznow.com') )
 .then( _ => z.inputById('edit-field-first-name-und-0-value','Name') )
 .then( _ => z.inputById('edit-field-last-name-und-0-value','LastName') )
@@ -106,7 +106,7 @@ driver
 
 driver
 .then( _ => scenario('submission of valid form details should succeed') )
-.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register', 'register page') )
+.then( _ => z.openPage('https://dashboard-beta.conversation.one/user/register?auto=true', 'register page') )
 .then( _ => z.inputById('edit-mail','automationlarisa@gmail.com') )
 .then( _ => z.inputById('edit-field-first-name-und-0-value','registration') )
 .then( _ => z.inputById('edit-field-last-name-und-0-value','test') )
