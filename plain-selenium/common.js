@@ -53,6 +53,7 @@ module.exports = {
     changeValue,
 	changeInputById,
 	changeInputByCss,
+	goToRelativePath,
     scenario,
     logStep,
     logAssert,
@@ -398,3 +399,10 @@ function changeInputByCss(css, text) {
 	driver.findElement(By.css(css)).sendKeys('\uE009a');
     return driver.findElement(By.css(css)).sendKeys(text)
 	}
+	
+	function goToRelativePath(pathToReplace,replaceWith){
+    logStep("realtive path replace: " + pathToReplace + " with: " + replaceWith);
+    return driver
+    .executeScript("location.href = location.pathname.replace('"+pathToReplace+"','"+replaceWith+"')")
+    .then( _ => driver.sleep(500) );
+}
