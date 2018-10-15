@@ -154,3 +154,21 @@ driver
 .then( _ => z.waitFor(6))
 .then( () => z.assertContainsText(By.id('conv-wrap'), "the expected text in the element", 'Um 6 Uhr') )
 .catch( z.failedScenario )
+
+//Adding a language from the Editor
+.then( _ => z.scenario('Clicking the Add button opens the language selection window') )
+.then( _ => driver.switchTo().defaultContent())
+.then( _ => z.clickByClassName('addLang'))
+.then( _ => z.assertExistsById('s2id_defaultLanguage'), 'the default language field')
+.catch( z.failedScenario )
+
+.then( _ => z.scenario('The selected language is added and saved') )
+.then( _ => z.clickById('s2id_languages'))
+.then( _ => z.clickByCss('body > div.select2-drop.select2-drop-active > ul > li:nth-child(1)')) 
+.then( _ => z.clickById ('saveAddLang'))
+.then( _ => z.clickById ('btnSave'))
+.then( _ => z.waitFor(20)) 
+.then( _ => z.clickById ('btnReset'))
+.then( _ => z.waitFor(2))
+.then( _ => z.assertExistsByCss('.lang[lang="pt-BR"]'), 'the newly-added language')
+.catch( z.failedScenario )
