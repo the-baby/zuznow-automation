@@ -238,7 +238,7 @@ scenario('Clicking the Add button adds a new sample phrase')
 
 scenario('An error message should appear when we use invalid characters in a sample sentence')
 
-.then( _ => z.inputByCss ('.intent_div[name="ChatBot"] .samples_div input', 'test sample?'))
+.then( _ => z.inputByCss ('.intent_div[name="ChatBot"] .samples_div input', 'test sample!'))
 
 .then( _ => z.clickByCss ('.intent_div[name="ChatBot"] div.samples_div i[title="Add Sample"]') )
 
@@ -286,7 +286,7 @@ scenario('Clicking the edit button allows editing a sample sentence')
 
 .then( _ => z.inputByCss ('.intent_div[name="Mood"] div.samples_div input.newSample', 'another'))
 
-.then( _ => z.waitFor(5))
+.then( _ => z.waitFor(7))
 
 .then( _ => z.clickByCss('.intent_div[name="Mood"] div.samples_div .fa-check'))
 
@@ -493,13 +493,13 @@ scenario('It is possible to enter text response in the corresponding field')
 
 .then( _ => z.clickById ('bigNewIntentBtn'))
 
-.then( _ => z.clickByCss('.preintent[name="Contact"]'),'the list of intents' )
+.then( _ => z.clickByCss('.preintent[name="Address"]'),'the list of intents' )
 
 .then( _ => z.clickById ('btnSave'))
 
 .then( _ => z.waitFor(10))
 	
-.then( _ => z.changeInputByCss('.panel[name="Contact"] .intent_name','Response'))
+.then( _ => z.changeInputByCss('.panel[name="Address"] .intent_name','Response'))
 
 .then( _ => z.clickById ('btnSave'))
 
@@ -578,6 +578,8 @@ scenario('It is possible to remove the text response completely')
 .then( _ => z.clickById ('customModalButton')) 
 
 .then( _ => z.assertNoSuchElements(By.css('.panel[name="Response"]  .action-link[action-name="text"]'), 'no tesxt response' ) )          
+
+
 
 
 
