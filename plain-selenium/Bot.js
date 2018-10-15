@@ -85,11 +85,11 @@ driver
  
 .then( _ => z.waitFor(100))
  
-.then( _ => z.userSays('What is my balance', 6))
+.then( _ => z.userSays('What is my balance', 8))
 
 .then( _ => z.assertBotReply('To continue you must link your account.'))
 
-.then( _ => z.assertExistsByLinkText('Open log-in window'))
+.then( _ => z.assertExistsByCss('.accountLinking span.bubble-content'))
 
  .then( _ => z.waitFor(2))
 
@@ -98,7 +98,7 @@ driver
  
  scenario('The Log in window opens the log in screen')
  
-.then( _ => z.clickByLinkText('Open log-in window'))
+.then( _ => z.clickByCss('.accountLinking span.bubble-content'))
 
 .then( _ => z.switchTab(2, 'popped up log in window'))
 
