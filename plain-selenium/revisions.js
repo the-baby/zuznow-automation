@@ -65,7 +65,9 @@ scenario('Clicking the Interaction Rules Revisions button opens the Revisions sc
 .then( _ => z.clickByCss('.revision-group button') )
 .then( _ => z.clickByLinkText('Interaction Rules Revisions') )
 .then( _ => z.assertExists(By.id('btnRevertInteractionRevision'), "Revisions screen" ) )
+.then( _ => z.waitFor(3))
 .catch( z.failedScenario )
+
 
 scenario('Clicking the Revert revision button reverts revision')
 .then( _ => z.clickByCss('.revisionsDataTable_tr_selected+tr') )
